@@ -282,8 +282,7 @@ function send_bulk_sms($user, $sender_id, $recipients, $message, $route, $conn) 
             $log_api_response = is_string($response) ? $response : json_encode($response);
             $status = 'success';
             $stmt_log = $conn->prepare("INSERT INTO messages (user_id, sender_id, recipients, message, cost, status, api_response, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt_log->bind_param("isssdsss", $user['id'], $sender_id, $recipients, $message,.
-            $total_cost, $status, $log_api_response, $route);
+            $stmt_log->bind_param("isssdsss", $user['id'], $sender_id, $recipients, $message, $total_cost, $status, $log_api_response, $route);
             if (!$stmt_log->execute()) {
                 throw new mysqli_sql_exception("Failed to insert into messages table: " . $stmt_log->error);
             }

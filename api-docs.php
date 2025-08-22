@@ -271,14 +271,43 @@ curl --location --request POST '<?php echo SITE_URL; ?>/api/voice_audio.php' \
         </div>
         <!-- End Send WhatsApp Endpoint -->
 
-        <!-- Send OTP Endpoint -->
-        <div id="send-otp" class="api-endpoint">
-            <h5>Send OTP</h5>
+        <!-- Generate and Send OTP Endpoint -->
+        <div id="generate-otp" class="api-endpoint">
+            <h5>Generate and Send OTP</h5>
+            <p>
+                <span class="method text-success">POST</span>
+                <span class="url"><?php echo SITE_URL; ?>/api/sendotp.php</span>
+            </p>
+            <p>This endpoint generates a new OTP and sends it to the recipient, handling the generation and verification flow. This is the recommended method for most OTP use cases.</p>
+            <h6>Parameters</h6>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>token</code></td><td>string</td><td><strong>Required.</strong> Your API Key.</td></tr>
+                        <tr><td><code>senderID</code></td><td>string</td><td><strong>Required.</strong> An approved Sender ID.</td></tr>
+                        <tr><td><code>recipients</code></td><td>string</td><td><strong>Required.</strong> The recipient's phone number.</td></tr>
+                        <tr><td><code>appnamecode</code></td><td>string</td><td><strong>Required.</strong> Your application's name or code.</td></tr>
+                        <tr><td><code>templatecode</code></td><td>string</td><td><strong>Required.</strong> The unique code for your approved OTP template.</td></tr>
+                        <tr><td><code>otp_type</code></td><td>string</td><td><em>Optional.</em> Type of OTP. Can be <code>NUMERIC</code>, <code>ALPHANUMERIC</code>, or <code>ALPHABETIC</code>. Defaults to <code>NUMERIC</code>.</td></tr>
+                        <tr><td><code>otp_length</code></td><td>integer</td><td><em>Optional.</em> Length of the OTP. Defaults to <code>6</code>.</td></tr>
+                        <tr><td><code>otp_duration</code></td><td>integer</td><td><em>Optional.</em> Duration in minutes for which the OTP is valid. Defaults to <code>5</code>.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- End Generate and Send OTP Endpoint -->
+
+        <!-- Send Pre-Generated OTP Endpoint -->
+        <div id="send-pregenerated-otp" class="api-endpoint">
+            <h5>Send Pre-Generated OTP</h5>
             <p>
                 <span class="method text-success">POST</span>
                 <span class="url"><?php echo SITE_URL; ?>/api/send_otp.php</span>
             </p>
-            <p>This endpoint sends a pre-defined OTP message to a recipient. You must first create and get approval for an OTP template in the dashboard.</p>
+            <p>This endpoint sends an OTP that you have already generated within your own application.</p>
 
             <h6>Parameters</h6>
             <div class="table-responsive">
@@ -290,42 +319,87 @@ curl --location --request POST '<?php echo SITE_URL; ?>/api/voice_audio.php' \
                     <tr><td><code>token</code></td><td>string</td><td><strong>Required.</strong> Your API Key.</td></tr>
                     <tr><td><code>senderID</code></td><td>string</td><td><strong>Required.</strong> An approved Sender ID.</td></tr>
                     <tr><td><code>recipients</code></td><td>string</td><td><strong>Required.</strong> The recipient's phone number.</td></tr>
-                    <tr><td><code>otp</code></td><td>string</td><td><strong>Required.</strong> The One-Time Password to be sent.</td></tr>
+                    <tr><td><code>otp</code></td><td>string</td><td><strong>Required.</strong> The One-Time Password you have generated.</td></tr>
                     <tr><td><code>templatecode</code></td><td>string</td><td><strong>Required.</strong> The unique code for your approved OTP template.</td></tr>
                 </tbody>
                 </table>
             </div>
-
-            <h6>Example Request (cURL)</h6>
-            <pre><code>
-curl --location --request POST '<?php echo SITE_URL; ?>/api/send_otp.php' \
---header 'Content-Type: application/x-www-form-urlencoded' \
---data-urlencode 'token=<?php echo htmlspecialchars($user['api_key']); ?>' \
---data-urlencode 'senderID=YourSenderID' \
---data-urlencode 'recipients=2348012345678' \
---data-urlencode 'otp=123456' \
---data-urlencode 'templatecode=YOUR_TEMPLATE_CODE'
-            </code></pre>
-
-            <h6>Example Success Response</h6>
-            <pre><code>
-{
-    "success": true,
-    "message": "OTP sent successfully.",
-    "data": {
-        "status": "success",
-        "error_code": "000",
-        "cost": "3.50",
-        "data": "2348012345678|message-uuid",
-        "msg": "Message received Successfully",
-        "length": 26,
-        "page": 1,
-        "balance": "102954.20"
-    }
-}
-            </code></pre>
         </div>
-        <!-- End Send OTP Endpoint -->
+        <!-- End Send Pre-Generated OTP Endpoint -->
+
+        <!-- Verify OTP Endpoint -->
+        <div id="verify-otp" class="api-endpoint">
+            <h5>Verify OTP</h5>
+            <p>
+                <span class="method text-success">POST</span>
+                <span class="url"><?php echo SITE_URL; ?>/api/verifyotp.php</span>
+            </p>
+            <p>This endpoint verifies an OTP that was previously sent to a recipient.</p>
+
+            <h6>Parameters</h6>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>token</code></td><td>string</td><td><strong>Required.</strong> Your API Key.</td></tr>
+                    <tr><td><code>recipient</code></td><td>string</td><td><strong>Required.</strong> The recipient's phone number.</td></tr>
+                    <tr><td><code>otp</code></td><td>string</td><td><strong>Required.</strong> The One-Time Password to be verified.</td></tr>
+                </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- End Verify OTP Endpoint -->
+
+        <!-- Submit Sender ID Endpoint -->
+        <div id="submit-senderid" class="api-endpoint">
+            <h5>Submit Sender ID</h5>
+            <p>
+                <span class="method text-success">POST</span>
+                <span class="url"><?php echo SITE_URL; ?>/api/senderID.php</span>
+            </p>
+            <p>This endpoint allows you to programmatically submit a new Sender ID for approval.</p>
+
+            <h6>Parameters</h6>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                     <thead>
+                        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>token</code></td><td>string</td><td><strong>Required.</strong> Your API Key.</td></tr>
+                        <tr><td><code>senderID</code></td><td>string</td><td><strong>Required.</strong> The Sender ID you want to register (max 11 characters).</td></tr>
+                        <tr><td><code>message</code></td><td>string</td><td><strong>Required.</strong> A sample message you intend to send with this Sender ID.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- End Submit Sender ID Endpoint -->
+
+        <!-- Check Sender ID Endpoint -->
+        <div id="check-senderid" class="api-endpoint">
+            <h5>Check Sender ID Status</h5>
+            <p>
+                <span class="method text-success">POST</span>
+                <span class="url"><?php echo SITE_URL; ?>/api/check_senderID.php</span>
+            </p>
+            <p>This endpoint checks the approval status of a Sender ID you have submitted.</p>
+
+            <h6>Parameters</h6>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                     <thead>
+                        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>token</code></td><td>string</td><td><strong>Required.</strong> Your API Key.</td></tr>
+                        <tr><td><code>senderID</code></td><td>string</td><td><strong>Required.</strong> The Sender ID you want to check.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- End Check Sender ID Endpoint -->
 
     </div>
 </div>

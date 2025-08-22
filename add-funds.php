@@ -115,11 +115,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_manual_payment'
 // NOTE: The Paystack initiation logic has been moved to payment-gateway/paystack-init.php
 // This keeps this file cleaner.
 
+// Fetch user's deposit history
+$deposit_history = [];
+$history_stmt = $conn->prepare("SELECT * FROM transactions WHERE user_id = ? AND type = 'deposit' ORDER BY created_at DESC LIMIT 10");
+$history_stmt->bind_param("i", $current_user['id']);
+$history_stmt->execute();
+$result = $history_stmt->get_result();
+while($row = $result->fetch_assoc()) {
+    $deposit_history[] = $row;
+}
+$history_stmt->close();
+
+function get_deposit_status_badge($status) {
+    $status = strtolower($status);
+    $badge_class = 'bg-secondary';
+    if (in_array($status, ['completed', 'approved'])) {
+        $badge_class = 'bg-success';
+    } elseif (in_array($status, ['failed', 'rejected', 'cancelled'])) {
+        $badge_class = 'bg-danger';
+    } elseif ($status === 'pending') {
+        $badge_class = 'bg-warning';
+    }
+    return '<span class="badge ' . $badge_class . '">' . htmlspecialchars(ucfirst($status)) . '</span>';
+}
+
 include 'includes/header.php';
 ?>
 <link rel="stylesheet" href="css/add-funds.css">
 
-<div class="card" data-currency-symbol="<?php echo get_currency_symbol(); ?>">
+<div class="card mb-4" data-currency-symbol="<?php echo get_currency_symbol(); ?>">
     <div class="card-header">
         <h3 class="card-title">Fund Your Wallet</h3>
     </div>
@@ -248,5 +272,39 @@ include 'includes/header.php';
 </div>
 
 <script src="js/add-funds.js"></script>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Your Deposit History</h3>
+    </div>
+    <div class="card-body table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Gateway</th>
+                    <th>Reference</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (empty($deposit_history)): ?>
+                    <tr><td colspan="5" class="text-center">You have no deposit history.</td></tr>
+                <?php else: ?>
+                    <?php foreach ($deposit_history as $deposit): ?>
+                    <tr>
+                        <td><?php echo date('Y-m-d H:i', strtotime($deposit['created_at'])); ?></td>
+                        <td><?php echo get_currency_symbol(); ?><?php echo number_format($deposit['total_amount'], 2); ?></td>
+                        <td><?php echo htmlspecialchars(ucfirst($deposit['gateway'])); ?></td>
+                        <td><?php echo htmlspecialchars($deposit['reference']); ?></td>
+                        <td><?php echo get_deposit_status_badge($deposit['status']); ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <?php include 'includes/footer.php'; ?>

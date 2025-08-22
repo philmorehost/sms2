@@ -67,32 +67,49 @@ $settings = get_settings();
                         <li class="nav-item"><a href="dashboard.php" class="nav-link <?php echo is_active('dashboard.php'); ?>"><i class="nav-icon fas fa-tachometer-alt"></i> <span class="nav-link-text">Dashboard</span></a></li>
                         <li class="nav-item"><a href="add-funds.php" class="nav-link <?php echo is_active('add-funds.php'); ?>"><i class="nav-icon fas fa-dollar-sign"></i> <span class="nav-link-text">Add Fund</span></a></li>
                         <li class="nav-item"><a href="pricing.php" class="nav-link <?php echo is_active('pricing.php'); ?>"><i class="nav-icon fas fa-tags"></i> <span class="nav-link-text">Pricing</span></a></li>
-                        <li class="nav-item"><a href="send-sms.php" class="nav-link <?php echo is_active('send-sms.php'); ?>"><i class="nav-icon fas fa-paper-plane"></i> <span class="nav-link-text">Send SMS</span></a></li>
-                        <li class="nav-item"><a href="send-voice-sms.php" class="nav-link <?php echo is_active('send-voice-sms.php'); ?>"><i class="nav-icon fas fa-voicemail"></i> <span class="nav-link-text">Voice SMS (TTS)</span></a></li>
-                        <li class="nav-item"><a href="send-voice-audio.php" class="nav-link <?php echo is_active('send-voice-audio.php'); ?>"><i class="nav-icon fas fa-file-audio"></i> <span class="nav-link-text">Voice From File</span></a></li>
-                        <li class="nav-item"><a href="send-whatsapp.php" class="nav-link <?php echo is_active('send-whatsapp.php'); ?>"><i class="nav-icon fab fa-whatsapp"></i> <span class="nav-link-text">WhatsApp</span></a></li>
-                        <li class="nav-item"><a href="otp-templates.php" class="nav-link <?php echo is_active('otp-templates.php'); ?>"><i class="nav-icon fas fa-shield-alt"></i> <span class="nav-link-text">OTP Templates</span></a></li>
-                        <li class="nav-item"><a href="phonebook.php" class="nav-link <?php echo is_active('phonebook.php'); ?>"><i class="nav-icon fas fa-book"></i> <span class="nav-link-text">Phone Book</span></a></li>
-                        <li class="nav-item"><a href="reports.php" class="nav-link <?php echo is_active('reports.php'); ?>"><i class="nav-icon fas fa-chart-bar"></i> <span class="nav-link-text">Reports</span></a></li>
-                        <li class="nav-item"><a href="live-reports.php" class="nav-link <?php echo is_active('live-reports.php'); ?>"><i class="nav-icon fas fa-broadcast-tower"></i> <span class="nav-link-text">Live Reports</span></a></li>
-                        <li class="nav-item"><a href="schedules.php" class="nav-link <?php echo is_active('schedules.php'); ?>"><i class="nav-icon fas fa-clock"></i> <span class="nav-link-text">Schedules</span></a></li>
-                        <li class="nav-item"><a href="scheduled-reports.php" class="nav-link <?php echo is_active('scheduled-reports.php'); ?>"><i class="nav-icon fas fa-history"></i> <span class="nav-link-text">Scheduled Reports</span></a></li>
-                        <li class="nav-item"><a href="referrals.php" class="nav-link <?php echo is_active('referrals.php'); ?>"><i class="nav-icon fas fa-users"></i> <span class="nav-link-text">Referrals</span></a></li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="nav-icon fas fa-tools"></i> <span class="nav-link-text">Tools</span>
-                            </a>
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="nav-icon fas fa-comment-dots"></i> <span class="nav-link-text">Message</span></a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="sender-id.php">Sender ID</a></li>
-                                <li><a class="dropdown-item" href="caller-id.php">Caller ID</a></li>
-                                <li><a class="dropdown-item" href="number-extractor.php">Number Extractor</a></li>
-                                <li><a class="dropdown-item" href="number-filter.php">Number Filter</a></li>
+                                <li><a class="dropdown-item" href="send-sms.php">Send SMS</a></li>
+                                <li><a class="dropdown-item" href="send-voice-sms.php">Voice SMS (TTS)</a></li>
+                                <li><a class="dropdown-item" href="send-voice-audio.php">Voice From File</a></li>
+                                <li><a class="dropdown-item" href="send-whatsapp.php">WhatsApp</a></li>
+                                <li><a class="dropdown-item" href="otp-templates.php">OTP Templates</a></li>
                                 <li><a class="dropdown-item" href="birthday-scheduler.php">Birthday Scheduler</a></li>
                             </ul>
                         </li>
 
-                        <li class="nav-item"><a href="support.php" class="nav-link <?php echo is_active('support.php'); ?>"><i class="nav-icon fas fa-life-ring"></i> <span class="nav-link-text">Support</span></a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="nav-icon fas fa-id-card"></i> <span class="nav-link-text">Register IDs</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="sender-id.php">Sender ID</a></li>
+                                <li><a class="dropdown-item" href="caller-id.php">Caller ID</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item"><a href="phonebook.php" class="nav-link <?php echo is_active('phonebook.php'); ?>"><i class="nav-icon fas fa-book"></i> <span class="nav-link-text">Phone Book</span></a></li>
+                        <li class="nav-item"><a href="schedules.php" class="nav-link <?php echo is_active('schedules.php'); ?>"><i class="nav-icon fas fa-clock"></i> <span class="nav-link-text">Schedules</span></a></li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="nav-icon fas fa-chart-line"></i> <span class="nav-link-text">Message Reports</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="reports.php">Reports</a></li>
+                                <li><a class="dropdown-item" href="live-reports.php">Live Reports</a></li>
+                                <li><a class="dropdown-item" href="scheduled-reports.php">Schedule Reports</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item"><a href="referrals.php" class="nav-link <?php echo is_active('referrals.php'); ?>"><i class="nav-icon fas fa-users"></i> <span class="nav-link-text">Referrals</span></a></li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="nav-icon fas fa-tools"></i> <span class="nav-link-text">Tools</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="number-extractor.php">Number Extractor</a></li>
+                                <li><a class="dropdown-item" href="number-filter.php">Number Filter</a></li>
+                            </ul>
+                        </li>
+
                         <li class="nav-item"><a href="api-docs.php" class="nav-link <?php echo is_active('api-docs.php'); ?>"><i class="nav-icon fas fa-code"></i> <span class="nav-link-text">Dev API</span></a></li>
                         <li class="nav-item"><a href="account.php" class="nav-link <?php echo is_active('account.php'); ?>"><i class="nav-icon fas fa-user-cog"></i> <span class="nav-link-text">Account</span></a></li>
                         <li class="nav-item"><a href="logout.php" class="nav-link"><i class="nav-icon fas fa-sign-out-alt"></i> <span class="nav-link-text">Logout</span></a></li>
@@ -153,35 +170,52 @@ $settings = get_settings();
                            <li class="nav-item"><a href="dashboard.php" class="nav-link <?php echo is_active('dashboard.php'); ?>"><i class="nav-icon fas fa-tachometer-alt"></i> Dashboard</a></li>
                            <li class="nav-item"><a href="add-funds.php" class="nav-link <?php echo is_active('add-funds.php'); ?>"><i class="nav-icon fas fa-dollar-sign"></i> Add Fund</a></li>
                            <li class="nav-item"><a href="pricing.php" class="nav-link <?php echo is_active('pricing.php'); ?>"><i class="nav-icon fas fa-tags"></i> Pricing</a></li>
-                           <li class="nav-item"><a href="send-sms.php" class="nav-link <?php echo is_active('send-sms.php'); ?>"><i class="nav-icon fas fa-paper-plane"></i> Send SMS</a></li>
-                           <li class="nav-item"><a href="send-voice-sms.php" class="nav-link <?php echo is_active('send-voice-sms.php'); ?>"><i class="nav-icon fas fa-voicemail"></i> Voice SMS (TTS)</a></li>
-                           <li class="nav-item"><a href="send-voice-audio.php" class="nav-link <?php echo is_active('send-voice-audio.php'); ?>"><i class="nav-icon fas fa-file-audio"></i> Voice From File</a></li>
-                           <li class="nav-item"><a href="send-whatsapp.php" class="nav-link <?php echo is_active('send-whatsapp.php'); ?>"><i class="nav-icon fab fa-whatsapp"></i> WhatsApp</a></li>
-                           <li class="nav-item"><a href="otp-templates.php" class="nav-link <?php echo is_active('otp-templates.php'); ?>"><i class="nav-icon fas fa-shield-alt"></i> OTP Templates</a></li>
+
+                           <li class="nav-item dropdown">
+                               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="nav-icon fas fa-comment-dots"></i> Message</a>
+                               <ul class="dropdown-menu">
+                                   <li><a class="dropdown-item" href="send-sms.php">Send SMS</a></li>
+                                   <li><a class="dropdown-item" href="send-voice-sms.php">Voice SMS (TTS)</a></li>
+                                   <li><a class="dropdown-item" href="send-voice-audio.php">Voice From File</a></li>
+                                   <li><a class="dropdown-item" href="send-whatsapp.php">WhatsApp</a></li>
+                                   <li><a class="dropdown-item" href="otp-templates.php">OTP Templates</a></li>
+                                   <li><a class="dropdown-item" href="birthday-scheduler.php">Birthday Scheduler</a></li>
+                               </ul>
+                           </li>
+
+                           <li class="nav-item dropdown">
+                               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="nav-icon fas fa-id-card"></i> Register IDs</a>
+                               <ul class="dropdown-menu">
+                                   <li><a class="dropdown-item" href="sender-id.php">Sender ID</a></li>
+                                   <li><a class="dropdown-item" href="caller-id.php">Caller ID</a></li>
+                               </ul>
+                           </li>
+
                            <li class="nav-item"><a href="phonebook.php" class="nav-link <?php echo is_active('phonebook.php'); ?>"><i class="nav-icon fas fa-book"></i> Phone Book</a></li>
-                           <li class="nav-item"><a href="reports.php" class="nav-link <?php echo is_active('reports.php'); ?>"><i class="nav-icon fas fa-chart-bar"></i> Reports</a></li>
-                           <li class="nav-item"><a href="live-reports.php" class="nav-link <?php echo is_active('live-reports.php'); ?>"><i class="nav-icon fas fa-broadcast-tower"></i> Live Reports</a></li>
                            <li class="nav-item"><a href="schedules.php" class="nav-link <?php echo is_active('schedules.php'); ?>"><i class="nav-icon fas fa-clock"></i> Schedules</a></li>
-                           <li class="nav-item"><a href="scheduled-reports.php" class="nav-link <?php echo is_active('scheduled-reports.php'); ?>"><i class="nav-icon fas fa-history"></i> Scheduled Reports</a></li>
+
+                           <li class="nav-item dropdown">
+                               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="nav-icon fas fa-chart-line"></i> Message Reports</a>
+                               <ul class="dropdown-menu">
+                                   <li><a class="dropdown-item" href="reports.php">Reports</a></li>
+                                   <li><a class="dropdown-item" href="live-reports.php">Live Reports</a></li>
+                                   <li><a class="dropdown-item" href="scheduled-reports.php">Schedule Reports</a></li>
+                               </ul>
+                           </li>
+
                            <li class="nav-item"><a href="referrals.php" class="nav-link <?php echo is_active('referrals.php'); ?>"><i class="nav-icon fas fa-users"></i> Referrals</a></li>
 
                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="nav-icon fas fa-tools"></i> Tools
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="sender-id.php">Sender ID</a></li>
-                                    <li><a class="dropdown-item" href="caller-id.php">Caller ID</a></li>
-                                    <li><a class="dropdown-item" href="number-extractor.php">Number Extractor</a></li>
-                                    <li><a class="dropdown-item" href="number-filter.php">Number Filter</a></li>
-                                    <li><a class="dropdown-item" href="birthday-scheduler.php">Birthday Scheduler</a></li>
-                                </ul>
-                            </li>
+                               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="nav-icon fas fa-tools"></i> Tools</a>
+                               <ul class="dropdown-menu">
+                                   <li><a class="dropdown-item" href="number-extractor.php">Number Extractor</a></li>
+                                   <li><a class="dropdown-item" href="number-filter.php">Number Filter</a></li>
+                               </ul>
+                           </li>
 
-                            <li class="nav-item"><a href="support.php" class="nav-link <?php echo is_active('support.php'); ?>"><i class="nav-icon fas fa-life-ring"></i> Support</a></li>
-                            <li class="nav-item"><a href="api-docs.php" class="nav-link <?php echo is_active('api-docs.php'); ?>"><i class="nav-icon fas fa-code"></i> Dev API</a></li>
-                            <li class="nav-item"><a href="account.php" class="nav-link <?php echo is_active('account.php'); ?>"><i class="nav-icon fas fa-user-cog"></i> Account</a></li>
-                            <li class="nav-item"><a href="logout.php" class="nav-link"><i class="nav-icon fas fa-sign-out-alt"></i> Logout</a></li>
+                           <li class="nav-item"><a href="api-docs.php" class="nav-link <?php echo is_active('api-docs.php'); ?>"><i class="nav-icon fas fa-code"></i> Dev API</a></li>
+                           <li class="nav-item"><a href="account.php" class="nav-link <?php echo is_active('account.php'); ?>"><i class="nav-icon fas fa-user-cog"></i> Account</a></li>
+                           <li class="nav-item"><a href="logout.php" class="nav-link"><i class="nav-icon fas fa-sign-out-alt"></i> Logout</a></li>
                         </ul>
                     </nav>
                 </div>

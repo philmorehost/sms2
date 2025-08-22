@@ -111,7 +111,13 @@ foreach ($due_tasks as $task) {
         curl_close($ch);
 
         $api_result = json_decode($response, true);
-        $is_api_success = ($http_code == 200 && isset($api_result['status']) && $api_result['status'] == 'success');
+
+        $is_api_success = false;
+        if($task['task_type'] === 'sms'){
+            $is_api_success = ($http_code == 200 && (($payload['route'] === 'promotional' && isset($api_result['error_code']) && $api_result['error_code'] == '000') || ($payload['route'] === 'corporate' && isset($api_result['status']) && $api_result['status'] == 'success')));
+        } else { // For voice_tts and others
+            $is_api_success = ($http_code == 200 && isset($api_result['status']) && $api_result['status'] == 'success');
+        }
 
         // Get the original message_id from the payload
         $message_id = $payload['message_id'] ?? null;

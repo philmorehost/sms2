@@ -329,6 +329,71 @@ function send_bulk_sms($user, $sender_id, $recipients, $message, $route, $conn) 
     }
 }
 
+function debit_and_schedule_voice_tts($user, $caller_id, $recipients, $message, $scheduled_for_utc, $conn) {
+    $errors = [];
+    if (empty($caller_id)) $errors[] = "Caller ID is required.";
+    if (empty($recipients)) $errors[] = "Recipients are required.";
+    if (empty($message)) $errors[] = "Message is required.";
+    if (contains_banned_word($message)) $errors[] = "Your message contains a banned word and cannot be sent.";
+    if (!empty($errors)) return ['success' => false, 'message' => implode(' ', $errors)];
+
+    $settings = get_settings();
+    $price_per_call = (float)($settings['price_voice_tts'] ?? 30.0);
+    $recipient_numbers = preg_split('/[\s,;\n]+/', $recipients, -1, PREG_SPLIT_NO_EMPTY);
+    $total_cost = count($recipient_numbers) * $price_per_call;
+
+    if ($user['balance'] < $total_cost) {
+        return ['success' => false, 'message' => "Insufficient balance. Required: " . get_currency_symbol() . number_format($total_cost, 2) . ", Available: " . get_currency_symbol() . number_format($user['balance'], 2)];
+    }
+
+    $conn->begin_transaction();
+    try {
+        // 1. Debit the user's balance
+        $stmt_balance = $conn->prepare("UPDATE users SET balance = balance - ? WHERE id = ?");
+        $stmt_balance->bind_param("di", $total_cost, $user['id']);
+        $stmt_balance->execute();
+        $stmt_balance->close();
+
+        // 2. Log the message with a 'scheduled' status
+        $status = 'scheduled';
+        $stmt_log = $conn->prepare("INSERT INTO messages (user_id, sender_id, recipients, message, cost, status, type) VALUES (?, ?, ?, ?, ?, ?, 'voice_tts')");
+        $stmt_log->bind_param("isssds", $user['id'], $caller_id, $recipients, $message, $total_cost, $status);
+        $stmt_log->execute();
+        $message_id = $conn->insert_id;
+        $stmt_log->close();
+
+        // 3. Create the scheduled task
+        $payload = json_encode(['caller_id' => $caller_id, 'recipients' => $recipients, 'message' => $message, 'message_id' => $message_id]);
+        $created_at_utc = gmdate('Y-m-d H:i:s');
+        $stmt_schedule = $conn->prepare("INSERT INTO scheduled_tasks (user_id, task_type, payload, scheduled_for, status, created_at) VALUES (?, 'voice_tts', ?, ?, 'pending', ?)");
+        $stmt_schedule->bind_param("isss", $user['id'], $payload, $scheduled_for_utc, $created_at_utc);
+        $stmt_schedule->execute();
+        $stmt_schedule->close();
+
+        // 4. Log recipients
+        if ($message_id > 0 && !empty($recipient_numbers)) {
+            $stmt_recipient = $conn->prepare("INSERT INTO message_recipients (message_id, recipient_number, status) VALUES (?, ?, 'Scheduled')");
+            foreach ($recipient_numbers as $number) {
+                $clean_number = trim($number);
+                if (!empty($clean_number)) {
+                    $stmt_recipient->bind_param("is", $message_id, $clean_number);
+                    $stmt_recipient->execute();
+                }
+            }
+            $stmt_recipient->close();
+        }
+
+        $conn->commit();
+        return ['success' => true, 'message' => "Voice message scheduled successfully! Cost: " . get_currency_symbol() . number_format($total_cost, 2)];
+
+    } catch (Exception $e) {
+        $conn->rollback();
+        error_log("Voice/TTS scheduling transaction failed for user {$user['id']}: " . $e->getMessage());
+        return ['success' => false, 'message' => "A server error occurred while scheduling your message."];
+    }
+}
+
+
 function send_voice_tts($user, $caller_id, $recipients, $message, $conn) {
     $errors = [];
     if (empty($caller_id)) $errors[] = "Caller ID is required.";

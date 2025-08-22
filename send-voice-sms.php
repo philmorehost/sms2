@@ -63,26 +63,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['send_voice_sms'])) {
     $schedule_time = $_POST['schedule_time'] ?? '';
 
     if (!empty($schedule_time)) {
-        // --- Scheduling Logic ---
-        $payload = json_encode(['caller_id' => $caller_id, 'recipients' => $recipients, 'message' => $message]);
         try {
-            $user_timezone = new DateTimeZone(date_default_timezone_get());
-            $utc_timezone = new DateTimeZone('UTC');
-            $scheduled_dt = new DateTime($schedule_time, $user_timezone);
-            $scheduled_dt->setTimezone($utc_timezone);
-            $scheduled_for_utc = $scheduled_dt->format('Y-m-d H:i:s');
+            // Get the site's configured timezone, default to UTC if not set
+            $site_tz_str = get_settings()['site_timezone'] ?? 'UTC';
+            $site_tz = new DateTimeZone($site_tz_str);
+            $local_dt = new DateTime($schedule_time, $site_tz);
+            $local_dt->setTimezone(new DateTimeZone('UTC'));
+            $scheduled_for_utc = $local_dt->format('Y-m-d H:i:s');
 
-            $stmt = $conn->prepare("INSERT INTO scheduled_tasks (user_id, task_type, payload, scheduled_for, status, created_at) VALUES (?, 'voice_tts', ?, ?, 'pending', ?)");
-            $created_at_utc = gmdate('Y-m-d H:i:s');
-            $stmt->bind_param("isss", $current_user['id'], $payload, $scheduled_for_utc, $created_at_utc);
+            // Call the new function to handle debiting and scheduling
+            $result = debit_and_schedule_voice_tts($current_user, $caller_id, $recipients, $message, $scheduled_for_utc, $conn);
 
-            if ($stmt->execute()) {
-                $success = "Your voice message has been successfully scheduled for " . date('F j, Y, g:i a', strtotime($schedule_time));
+            if ($result['success']) {
+                $success = $result['message'];
+                // Re-fetch user data to update balance display
+                $user_stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+                $user_stmt->bind_param("i", $current_user['id']);
+                $user_stmt->execute();
+                $current_user = $user_stmt->get_result()->fetch_assoc();
+                $user_stmt->close();
             } else {
-                $errors[] = "Failed to schedule your message.";
+                $errors[] = $result['message'];
             }
         } catch (Exception $e) {
-            $errors[] = "Invalid date format for scheduling.";
+            $errors[] = "Invalid date format for scheduling. " . $e->getMessage();
         }
     } else {
         // --- Immediate Send Logic ---

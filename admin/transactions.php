@@ -115,6 +115,19 @@ if ($result) {
     $errors[] = "Error fetching transactions: " . $conn->error;
 }
 
+function get_transaction_status_badge($status) {
+    $status = strtolower($status);
+    $badge_class = 'bg-secondary'; // Default for other statuses
+    if (in_array($status, ['completed', 'success', 'approved'])) {
+        $badge_class = 'bg-success';
+    } elseif (in_array($status, ['failed', 'cancelled', 'rejected'])) {
+        $badge_class = 'bg-danger';
+    } elseif ($status === 'pending') {
+        $badge_class = 'bg-warning';
+    }
+    return '<span class="badge ' . $badge_class . '">' . htmlspecialchars(ucfirst($status)) . '</span>';
+}
+
 include 'includes/header.php';
 ?>
 
@@ -162,14 +175,7 @@ include 'includes/header.php';
                         <td><?php echo ucfirst(str_replace('_', ' ', $trans['gateway'])); ?></td>
                         <td><?php echo htmlspecialchars($trans['reference']); ?></td>
                         <td>
-                            <?php
-                                $status = htmlspecialchars($trans['status']);
-                                $badge_class = 'badge-secondary';
-                                if ($status == 'completed') $badge_class = 'badge-success';
-                                if ($status == 'failed' || $status == 'cancelled') $badge_class = 'badge-danger';
-                                if ($status == 'pending') $badge_class = 'badge-warning';
-                                echo "<span class='badge " . $badge_class . "'>" . ucfirst($status) . "</span>";
-                            ?>
+                            <?php echo get_transaction_status_badge($trans['status']); ?>
                         </td>
                         <td>
                             <?php if ($trans['type'] == 'manual_deposit' && $trans['status'] == 'pending'): ?>

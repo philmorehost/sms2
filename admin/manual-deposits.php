@@ -84,6 +84,34 @@ if($result){
         $pending_deposits[] = $row;
     }
 }
+
+// Fetch all processed manual deposits (approved or rejected)
+$processed_deposits = [];
+$sql_processed = "SELECT md.*, u.username
+                  FROM manual_deposits md
+                  JOIN users u ON md.user_id = u.id
+                  WHERE md.status != 'pending'
+                  ORDER BY md.created_at DESC
+                  LIMIT 50"; // Limit to last 50 for performance
+$result_processed = $conn->query($sql_processed);
+if($result_processed){
+    while ($row = $result_processed->fetch_assoc()) {
+        $processed_deposits[] = $row;
+    }
+}
+
+function get_deposit_status_badge($status) {
+    $status = strtolower($status);
+    $badge_class = 'bg-secondary';
+    if ($status === 'approved') {
+        $badge_class = 'bg-success';
+    } elseif ($status === 'rejected') {
+        $badge_class = 'bg-danger';
+    } elseif ($status === 'pending') {
+        $badge_class = 'bg-warning';
+    }
+    return '<span class="badge ' . $badge_class . '">' . htmlspecialchars(ucfirst($status)) . '</span>';
+}
 ?>
 
 <?php if (!empty($errors)): ?>
@@ -97,7 +125,7 @@ if($result){
     </div>
 <?php endif; ?>
 
-<div class="card">
+<div class="card mb-4">
     <div class="card-header">
         <h3 class="card-title">Pending Manual Deposit Submissions</h3>
     </div>
@@ -136,6 +164,42 @@ if($result){
                                 <button type="submit" name="update_deposit" class="btn btn-danger btn-sm">Reject</button>
                             </form>
                         </td>
+                    </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Processed Deposit History</h3>
+    </div>
+    <div class="card-body table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>Username</th>
+                    <th>Amount (<?php echo get_currency_symbol(); ?>)</th>
+                    <th>User Reference</th>
+                    <th>Payment Date</th>
+                    <th>Submitted At</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (empty($processed_deposits)): ?>
+                    <tr><td colspan="6" class="text-center">No processed deposits found.</td></tr>
+                <?php else: ?>
+                    <?php foreach ($processed_deposits as $deposit): ?>
+                    <tr>
+                        <td><a href="users.php?search=<?php echo htmlspecialchars($deposit['username']); ?>"><?php echo htmlspecialchars($deposit['username']); ?></a></td>
+                        <td><?php echo get_currency_symbol(); ?><?php echo number_format($deposit['amount'], 2); ?></td>
+                        <td><?php echo htmlspecialchars($deposit['reference_id']); ?></td>
+                        <td><?php echo date('Y-m-d', strtotime($deposit['payment_date'])); ?></td>
+                        <td><?php echo date('Y-m-d H:i', strtotime($deposit['created_at'])); ?></td>
+                        <td><?php echo get_deposit_status_badge($deposit['status']); ?></td>
                     </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>

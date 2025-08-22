@@ -94,7 +94,7 @@ include 'includes/header.php';
 
 <div class="card">
     <div class="card-body">
-        <form action="edit-email-template.php<?php if($template_id) echo "?id=$template_id"; ?>" method="POST">
+        <form id="template-form" action="edit-email-template.php<?php if($template_id) echo "?id=$template_id"; ?>" method="POST">
             <input type="hidden" name="id" value="<?php echo $template['id']; ?>">
             <div class="mb-3">
                 <label for="name" class="form-label">Template Name</label>
@@ -116,6 +116,7 @@ include 'includes/header.php';
 
 
 <script>
+    let editor;
     CKEDITOR.ClassicEditor.create(document.querySelector('#template_body'), {
         toolbar: {
             items: [
@@ -128,8 +129,17 @@ include 'includes/header.php';
             ]
         },
         language: 'en',
+    }).then(newEditor => {
+        editor = newEditor;
     }).catch(error => {
         console.error(error);
+    });
+
+    document.getElementById('template-form').addEventListener('submit', function(event) {
+        if (editor) {
+            const editorData = editor.getData();
+            document.querySelector('#template_body').value = editorData;
+        }
     });
 </script>
 <?php include 'includes/footer.php'; ?>

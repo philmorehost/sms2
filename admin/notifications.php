@@ -86,7 +86,7 @@ if ($result) {
             </div>
             <div class="card-body">
                 <?php echo $message; ?>
-                <form method="POST">
+                <form id="notification-form" method="POST">
                     <input type="hidden" name="id" value="<?php echo $edit_notification['id'] ?? ''; ?>">
                     <div class="mb-3">
                         <label for="message" class="form-label">Message</label>
@@ -178,6 +178,7 @@ if ($result) {
 </div>
 
 <script>
+    let editor;
     CKEDITOR.ClassicEditor.create(document.querySelector('#message'), {
         toolbar: {
             items: [
@@ -190,8 +191,17 @@ if ($result) {
             ]
         },
         language: 'en',
+    }).then(newEditor => {
+        editor = newEditor;
     }).catch(error => {
         console.error(error);
+    });
+
+    document.getElementById('notification-form').addEventListener('submit', function(event) {
+        if (editor) {
+            const editorData = editor.getData();
+            document.querySelector('#message').value = editorData;
+        }
     });
 </script>
 

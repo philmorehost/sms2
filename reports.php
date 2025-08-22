@@ -42,6 +42,36 @@ if (!empty($message_ids)) {
     $stmt_recipients->close();
 }
 
+function get_status_badge($status) {
+    $status = strtolower($status);
+    $badge_class = 'bg-warning'; // Default
+    if (in_array($status, ['delivered', 'success', 'sent'])) {
+        $badge_class = 'bg-success';
+    } elseif (in_array($status, ['failed', 'error'])) {
+        $badge_class = 'bg-danger';
+    } elseif (in_array($status, ['queued', 'pending', 'scheduled'])) {
+        $badge_class = 'bg-info';
+    }
+    return '<span class="badge ' . $badge_class . '">' . htmlspecialchars(ucfirst($status)) . '</span>';
+}
+
+function format_api_response($response_json) {
+    if (empty($response_json)) {
+        return 'N/A';
+    }
+    $response = json_decode($response_json, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return htmlspecialchars($response_json); // Not a valid JSON, show raw
+    }
+    if (isset($response['msg'])) {
+        return htmlspecialchars($response['msg']);
+    }
+    if (isset($response['error_code']) && isset($response['error_description'])) {
+        return "Code: " . htmlspecialchars($response['error_code']) . " - " . htmlspecialchars($response['error_description']);
+    }
+    return 'N/A';
+}
+
 include 'includes/header.php';
 ?>
 
@@ -63,6 +93,7 @@ include 'includes/header.php';
                     <h5 class="mb-0">
                         Batch ID: <?php echo $msg['id']; ?>
                         <span class="badge bg-primary ms-2"><?php echo strtoupper(str_replace('_', ' ', $msg['type'])); ?></span>
+                        <?php echo get_status_badge($msg['status']); ?>
                     </h5>
                     <span class="text-muted"><?php echo date('F j, Y, g:i a', strtotime($msg['created_at'])); ?></span>
                 </div>
@@ -87,7 +118,7 @@ include 'includes/header.php';
                         <thead>
                             <tr>
                                 <th>Number</th>
-                                <th>Status</th>
+                                <th>DLR Status</th>
                                 <th>Reason</th>
                             </tr>
                         </thead>
@@ -97,17 +128,17 @@ include 'includes/header.php';
                                     <tr>
                                         <td><?php echo htmlspecialchars($recipient['recipient_number']); ?></td>
                                         <td>
+                                            <?php echo get_status_badge($recipient['status']); ?>
+                                        </td>
+                                        <td>
                                             <?php
-                                                $status = strtolower($recipient['status']);
-                                                $badge_class = 'bg-secondary';
-                                                if (in_array($status, ['delivered', 'completed', 'success'])) $badge_class = 'bg-success';
-                                                if (in_array($status, ['failed', 'undelivered'])) $badge_class = 'bg-danger';
-                                                if ($status == 'sent') $badge_class = 'bg-info';
-                                                if ($status == 'queued') $badge_class = 'bg-warning text-dark';
-                                                echo "<span class='badge " . $badge_class . "'>" . ucfirst($recipient['status']) . "</span>";
+                                            if (strtolower($msg['status']) === 'failed') {
+                                                echo format_api_response($msg['api_response']);
+                                            } else {
+                                                echo htmlspecialchars($recipient['failure_reason']);
+                                            }
                                             ?>
                                         </td>
-                                        <td><?php echo htmlspecialchars($recipient['failure_reason']); ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>

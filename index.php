@@ -6,6 +6,9 @@ $admin_stmt = $conn->prepare("SELECT email, phone_number, address FROM users WHE
 $admin_stmt->execute();
 $admin_contact = $admin_stmt->get_result()->fetch_assoc();
 $admin_stmt->close();
+
+// Fetch landing page banner setting
+$banner_image_path = get_settings()['landing_page_banner'] ?? null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +19,31 @@ $admin_stmt->close();
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/landing.css">
+    <style>
+        .hero.has-bg-image {
+            background-image: url('<?php echo SITE_URL . '/' . htmlspecialchars($banner_image_path); ?>');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }
+        .hero.has-bg-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+            z-index: 1;
+        }
+        .hero.has-bg-image .container {
+            position: relative;
+            z-index: 2;
+        }
+    </style>
 </head>
 <body>
 
@@ -41,7 +69,7 @@ $admin_stmt->close();
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero <?php if ($banner_image_path) echo 'has-bg-image'; ?>">
         <div class="container">
             <h1>Powerful, Reliable & Fast Messaging</h1>
             <p>Connect with your customers instantly through our robust Bulk SMS, Voice, OTP, and WhatsApp services.</p>

@@ -129,6 +129,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_site_images'])) {
             $errors[] = 'Invalid file type for favicon. Please use ICO or PNG.';
         }
     }
+
+    // Handle Landing Page Banner Upload
+    if (isset($_FILES['landing_page_banner']) && $_FILES['landing_page_banner']['error'] == 0) {
+        if (in_array($_FILES['landing_page_banner']['type'], $allowed_logo_types)) { // Reuse logo types
+            $banner_ext = pathinfo($_FILES['landing_page_banner']['name'], PATHINFO_EXTENSION);
+            $banner_filename = 'banner_' . time() . '.' . $banner_ext;
+            $banner_path = 'uploads/' . $banner_filename;
+            if (move_uploaded_file($_FILES['landing_page_banner']['tmp_name'], $upload_dir . $banner_filename)) {
+                $key = 'landing_page_banner';
+                $stmt->bind_param("ss", $key, $banner_path);
+                $stmt->execute();
+                $success = ($success ? $success . ' ' : '') . 'Landing page banner uploaded successfully.';
+            } else {
+                $errors[] = 'Failed to move uploaded banner.';
+            }
+        } else {
+            $errors[] = 'Invalid file type for banner. Please use JPG, PNG, or GIF.';
+        }
+    }
     $stmt->close();
     // Re-fetch settings to show new images
     $settings_result = $conn->query("SELECT * FROM settings");
@@ -377,6 +396,17 @@ include 'includes/header.php';
                                 </div>
                             <?php endif; ?>
                         </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="landing_page_banner" class="form-label">Landing Page Banner</label>
+                        <input type="file" class="form-control" id="landing_page_banner" name="landing_page_banner" accept="image/png, image/jpeg, image/gif">
+                        <div class="form-text">Recommended size: 1920x1080 pixels. Allowed types: PNG, JPG, GIF.</div>
+                        <?php if (!empty($settings['landing_page_banner'])): ?>
+                            <div class="mt-2">
+                                <strong>Current Banner:</strong><br>
+                                <img src="<?php echo SITE_URL . '/' . htmlspecialchars($settings['landing_page_banner']); ?>" alt="Current Banner" style="max-height: 100px;">
+                            </div>
+                        <?php endif; ?>
                     </div>
                     <button type="submit" name="save_site_images" class="btn btn-info">Upload Images</button>
                     <hr>

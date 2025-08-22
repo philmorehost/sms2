@@ -2,7 +2,7 @@
 require_once 'app/bootstrap.php';
 
 // Fetch admin contact details
-$admin_stmt = $conn->prepare("SELECT email, phone_number FROM users WHERE id = 1");
+$admin_stmt = $conn->prepare("SELECT email, phone_number, address FROM users WHERE id = 1");
 $admin_stmt->execute();
 $admin_contact = $admin_stmt->get_result()->fetch_assoc();
 $admin_stmt->close();
@@ -131,7 +131,7 @@ $admin_stmt->close();
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt"></i>
-                    <p>123 Messaging Lane, Tech City</p>
+                    <p><?php echo htmlspecialchars($admin_contact['address'] ?? '123 Messaging Lane, Tech City'); ?></p>
                 </div>
             </div>
         </div>
@@ -140,7 +140,7 @@ $admin_stmt->close();
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; <?php echo date('Y'); ?> <?php echo SITE_NAME; ?>. All Rights Reserved.</p>
+            <p>&copy; <?php echo date('Y'); ?> <?php echo SITE_NAME; ?>. All Rights Reserved. | <a href="terms-of-service.php">Terms of Service</a> | <a href="privacy-policy.php">Privacy Policy</a></p>
         </div>
     </footer>
 

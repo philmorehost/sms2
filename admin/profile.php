@@ -9,6 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
     $phone_number = trim($_POST['phone_number']);
+    $address = trim($_POST['address']);
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
     $user_id = $current_user['id'];
@@ -46,12 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
         if (!empty($new_password)) {
             // Update with new password
             $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-            $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, phone_number = ?, password = ? WHERE id = ?");
-            $stmt->bind_param("ssssi", $username, $email, $phone_number, $hashed_password, $user_id);
+            $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, phone_number = ?, address = ?, password = ? WHERE id = ?");
+            $stmt->bind_param("sssssi", $username, $email, $phone_number, $address, $hashed_password, $user_id);
         } else {
             // Update without changing password
-            $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, phone_number = ? WHERE id = ?");
-            $stmt->bind_param("sssi", $username, $email, $phone_number, $user_id);
+            $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, phone_number = ?, address = ? WHERE id = ?");
+            $stmt->bind_param("ssssi", $username, $email, $phone_number, $address, $user_id);
         }
 
         if ($stmt->execute()) {
@@ -100,8 +101,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
             </div>
             <div class="mb-3">
                 <label for="phone_number" class="form-label">Phone Number</label>
-                <input type="tel" class="form-control" id="phone_number" name="phone_number" value="<?php echo htmlspecialchars($current_user['phone_number']); ?>">
+                <input type="tel" class="form-control" id="phone_number" name="phone_number" value="<?php echo htmlspecialchars($current_user['phone_number'] ?? ''); ?>">
                 <div class="form-text">This phone number may be displayed publicly on the landing page.</div>
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <textarea class="form-control" id="address" name="address" rows="3"><?php echo htmlspecialchars($current_user['address'] ?? ''); ?></textarea>
+                <div class="form-text">This address may be displayed publicly on the landing page.</div>
             </div>
             <hr>
             <h5 class="card-title mt-4">Change Password</h5>

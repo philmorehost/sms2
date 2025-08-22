@@ -1,0 +1,32 @@
+.payment-method-tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-bottom: 2px solid #dee2e6;
+    margin-bottom: 20px;
+}
+
+.payment-method-tabs::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for a cleaner look */
+}
+
+.payment-method-tab {
+    flex: 0 0 auto;
+    padding: 15px 25px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+}
+.payment-method-tab.active {
+    color: #007bff;
+    border-color: #007bff;
+}
+.payment-method-content {
+    display: none;
+}
+.payment-method-content.active {
+    display: block;
+}

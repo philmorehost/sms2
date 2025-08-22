@@ -178,7 +178,6 @@ if ($result) {
 </div>
 
 <script>
-    let editor;
     CKEDITOR.ClassicEditor.create(document.querySelector('#message'), {
         toolbar: {
             items: [
@@ -191,17 +190,14 @@ if ($result) {
             ]
         },
         language: 'en',
-    }).then(newEditor => {
-        editor = newEditor;
-    }).catch(error => {
-        console.error(error);
-    });
-
-    document.getElementById('notification-form').addEventListener('submit', function(event) {
-        if (editor) {
+    }).then(editor => {
+        const form = document.getElementById('notification-form');
+        form.addEventListener('submit', event => {
             const editorData = editor.getData();
             document.querySelector('#message').value = editorData;
-        }
+        });
+    }).catch(error => {
+        console.error(error);
     });
 </script>
 

@@ -116,7 +116,6 @@ include 'includes/header.php';
 
 
 <script>
-    let editor;
     CKEDITOR.ClassicEditor.create(document.querySelector('#template_body'), {
         toolbar: {
             items: [
@@ -129,17 +128,14 @@ include 'includes/header.php';
             ]
         },
         language: 'en',
-    }).then(newEditor => {
-        editor = newEditor;
-    }).catch(error => {
-        console.error(error);
-    });
-
-    document.getElementById('template-form').addEventListener('submit', function(event) {
-        if (editor) {
+    }).then(editor => {
+        const form = document.getElementById('template-form');
+        form.addEventListener('submit', event => {
             const editorData = editor.getData();
             document.querySelector('#template_body').value = editorData;
-        }
+        });
+    }).catch(error => {
+        console.error(error);
     });
 </script>
 <?php include 'includes/footer.php'; ?>

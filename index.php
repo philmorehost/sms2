@@ -1,4 +1,12 @@
-<?php require_once 'app/bootstrap.php'; ?>
+<?php
+require_once 'app/bootstrap.php';
+
+// Fetch admin contact details
+$admin_stmt = $conn->prepare("SELECT email, phone_number FROM users WHERE id = 1");
+$admin_stmt->execute();
+$admin_contact = $admin_stmt->get_result()->fetch_assoc();
+$admin_stmt->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -115,11 +123,11 @@
             <div class="contact-info">
                 <div class="contact-item">
                     <i class="fas fa-envelope"></i>
-                    <p>pmhunlimited@gmail.com</p>
+                    <p><?php echo htmlspecialchars($admin_contact['email'] ?? 'admin@example.com'); ?></p>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-phone"></i>
-                    <p>+1 234 567 890</p>
+                    <p><?php echo htmlspecialchars($admin_contact['phone_number'] ?? '+1234567890'); ?></p>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt"></i>

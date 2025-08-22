@@ -401,6 +401,54 @@ curl --location --request POST '<?php echo SITE_URL; ?>/api/voice_audio.php' \
         </div>
         <!-- End Check Sender ID Endpoint -->
 
+        <!-- Submit Caller ID Endpoint -->
+        <div id="submit-callerid" class="api-endpoint">
+            <h5>Submit Caller ID</h5>
+            <p>
+                <span class="method text-success">POST</span>
+                <span class="url"><?php echo SITE_URL; ?>/api/callerID.php</span>
+            </p>
+            <p>This endpoint allows you to programmatically submit a new Caller ID for approval.</p>
+
+            <h6>Parameters</h6>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                     <thead>
+                        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>token</code></td><td>string</td><td><strong>Required.</strong> Your API Key.</td></tr>
+                        <tr><td><code>callerID</code></td><td>string</td><td><strong>Required.</strong> The phone number you want to register as a Caller ID.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- End Submit Caller ID Endpoint -->
+
+        <!-- Check Caller ID Endpoint -->
+        <div id="check-callerid" class="api-endpoint">
+            <h5>Check Caller ID Status</h5>
+            <p>
+                <span class="method text-success">POST</span>
+                <span class="url"><?php echo SITE_URL; ?>/api/check_callerID.php</span>
+            </p>
+            <p>This endpoint checks the approval status of a Caller ID you have submitted.</p>
+
+            <h6>Parameters</h6>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                     <thead>
+                        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>token</code></td><td>string</td><td><strong>Required.</strong> Your API Key.</td></tr>
+                        <tr><td><code>callerID</code></td><td>string</td><td><strong>Required.</strong> The Caller ID you want to check.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- End Check Caller ID Endpoint -->
+
     </div>
 </div>
 

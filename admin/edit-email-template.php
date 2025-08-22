@@ -66,8 +66,13 @@ if(isset($_GET['success'])) {
 
 include 'includes/header.php';
 ?>
-<!-- CKEditor 5 CDN -->
-<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+<!-- CKEditor 5 Superbuild CDN -->
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
+<style>
+    .ck-editor__editable_inline {
+        min-height: 400px;
+    }
+</style>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="h2 m-0"><?php echo $template_id ? 'Edit Template' : 'Create New Template'; ?></h1>
@@ -111,10 +116,20 @@ include 'includes/header.php';
 
 
 <script>
-    ClassicEditor
-        .create( document.querySelector( '#template_body' ) )
-        .catch( error => {
-            console.error( error );
-        } );
+    CKEDITOR.ClassicEditor.create(document.querySelector('#template_body'), {
+        toolbar: {
+            items: [
+                'sourceEditing', '|',
+                'heading', '|',
+                'bold', 'italic', 'underline', 'link', '|',
+                'bulletedList', 'numberedList', 'outdent', 'indent', '|',
+                'blockQuote', 'insertTable', 'mediaEmbed', '|',
+                'undo', 'redo'
+            ]
+        },
+        language: 'en',
+    }).catch(error => {
+        console.error(error);
+    });
 </script>
 <?php include 'includes/footer.php'; ?>

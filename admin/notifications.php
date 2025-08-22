@@ -70,8 +70,13 @@ if ($result) {
 
 ?>
 
-<!-- CKEditor 5 CDN -->
-<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+<!-- CKEditor 5 Superbuild CDN -->
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
+<style>
+    .ck-editor__editable_inline {
+        min-height: 250px;
+    }
+</style>
 
 <div class="row">
     <div class="col-12">
@@ -173,11 +178,21 @@ if ($result) {
 </div>
 
 <script>
-    ClassicEditor
-        .create( document.querySelector( '#message' ) )
-        .catch( error => {
-            console.error( error );
-        } );
+    CKEDITOR.ClassicEditor.create(document.querySelector('#message'), {
+        toolbar: {
+            items: [
+                'sourceEditing', '|',
+                'heading', '|',
+                'bold', 'italic', 'underline', 'link', '|',
+                'bulletedList', 'numberedList', 'outdent', 'indent', '|',
+                'blockQuote', 'insertTable', 'mediaEmbed', '|',
+                'undo', 'redo'
+            ]
+        },
+        language: 'en',
+    }).catch(error => {
+        console.error(error);
+    });
 </script>
 
 <?php include_once 'includes/footer.php'; ?>

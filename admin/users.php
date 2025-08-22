@@ -99,10 +99,21 @@ while ($row = $result->fetch_assoc()) {
     <div class="col">
         <h3 class="m-0">Registered Users</h3>
     </div>
-    <div class="col text-right">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
-            <i class="fas fa-plus"></i> Add New User
-        </button>
+    <div class="col text-end">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                <i class="fas fa-plus"></i> Add New User
+            </button>
+            <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="visually-hidden">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="export_users.php?format=emails"><i class="fas fa-envelope me-2"></i> Export Emails</a></li>
+                <li><a class="dropdown-item" href="export_users.php?format=phones"><i class="fas fa-phone me-2"></i> Export Phone Numbers</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="export_users.php?format=full"><i class="fas fa-file-csv me-2"></i> Export Full Details</a></li>
+            </ul>
+        </div>
     </div>
 </div>
 

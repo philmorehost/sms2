@@ -148,6 +148,85 @@ function send_email($to, $subject, $message, $attachment_content = null, $attach
     }
 }
 
+function debit_and_schedule_sms($user, $sender_id, $recipients, $message, $route, $scheduled_for_utc, $conn) {
+    $errors = [];
+    if (empty($sender_id)) $errors[] = "Sender ID is required.";
+    if (empty($recipients)) $errors[] = "Recipients are required.";
+    if (empty($message)) $errors[] = "Message is required.";
+    if (empty($route)) $errors[] = "A message route must be selected.";
+    if (contains_banned_word($message)) $errors[] = "Your message contains a banned word and cannot be sent.";
+    if (!empty($errors)) return ['success' => false, 'message' => implode(' ', $errors)];
+
+    $settings = get_settings();
+    $price_per_sms = ($route === 'corporate') ? (float)($settings['price_sms_corp'] ?? 20.0) : (float)($settings['price_sms_promo'] ?? 10.0);
+    $recipient_numbers = preg_split('/[\s,;\n]+/', $recipients, -1, PREG_SPLIT_NO_EMPTY);
+    $total_cost = count($recipient_numbers) * $price_per_sms;
+
+    if ($user['balance'] < $total_cost) {
+        return ['success' => false, 'message' => "Insufficient balance. Required: " . get_currency_symbol() . number_format($total_cost, 2) . ", Available: " . get_currency_symbol() . number_format($user['balance'], 2)];
+    }
+
+    $conn->begin_transaction();
+    try {
+        // 1. Debit the user's balance
+        $stmt_balance = $conn->prepare("UPDATE users SET balance = balance - ? WHERE id = ?");
+        $stmt_balance->bind_param("di", $total_cost, $user['id']);
+        $stmt_balance->execute();
+        if ($stmt_balance->affected_rows === 0) {
+            throw new Exception("Failed to update user balance. User may not exist or balance update failed.");
+        }
+        $stmt_balance->close();
+
+        // 2. Log the message with a 'scheduled' status
+        $status = 'scheduled';
+        $stmt_log = $conn->prepare("INSERT INTO messages (user_id, sender_id, recipients, message, cost, status, type) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt_log->bind_param("isssdss", $user['id'], $sender_id, $recipients, $message, $total_cost, $status, $route);
+        if (!$stmt_log->execute()) {
+            throw new mysqli_sql_exception("Failed to insert into messages table: " . $stmt_log->error);
+        }
+        $message_id = $conn->insert_id;
+        $stmt_log->close();
+
+        // 3. Create the scheduled task
+        $payload = json_encode([
+            'sender_id' => $sender_id,
+            'recipients' => $recipients,
+            'message' => $message,
+            'route' => $route,
+            'message_id' => $message_id // Link to the messages table
+        ]);
+        $created_at_utc = gmdate('Y-m-d H:i:s');
+        $stmt_schedule = $conn->prepare("INSERT INTO scheduled_tasks (user_id, task_type, payload, scheduled_for, status, created_at) VALUES (?, 'sms', ?, ?, 'pending', ?)");
+        $stmt_schedule->bind_param("isss", $user['id'], $payload, $scheduled_for_utc, $created_at_utc);
+        if (!$stmt_schedule->execute()) {
+            throw new mysqli_sql_exception("Failed to insert into scheduled_tasks table: " . $stmt_schedule->error);
+        }
+        $stmt_schedule->close();
+
+        // 4. Log recipients
+        if ($message_id > 0 && !empty($recipient_numbers)) {
+            $stmt_recipient = $conn->prepare("INSERT INTO message_recipients (message_id, recipient_number, status) VALUES (?, ?, 'Scheduled')");
+            foreach ($recipient_numbers as $number) {
+                $clean_number = trim($number);
+                if (!empty($clean_number)) {
+                    $stmt_recipient->bind_param("is", $message_id, $clean_number);
+                    $stmt_recipient->execute();
+                }
+            }
+            $stmt_recipient->close();
+        }
+
+        $conn->commit();
+        return ['success' => true, 'message' => "Message scheduled successfully! Cost: " . get_currency_symbol() . number_format($total_cost, 2)];
+
+    } catch (Exception $e) {
+        $conn->rollback();
+        error_log("SMS scheduling transaction failed for user {$user['id']}: " . $e->getMessage());
+        return ['success' => false, 'message' => "A server error occurred while scheduling your message. The transaction has been rolled back."];
+    }
+}
+
+
 function send_bulk_sms($user, $sender_id, $recipients, $message, $route, $conn) {
     $errors = [];
     if (empty($sender_id)) $errors[] = "Sender ID is required.";
@@ -203,7 +282,8 @@ function send_bulk_sms($user, $sender_id, $recipients, $message, $route, $conn) 
             $log_api_response = is_string($response) ? $response : json_encode($response);
             $status = 'success';
             $stmt_log = $conn->prepare("INSERT INTO messages (user_id, sender_id, recipients, message, cost, status, api_response, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt_log->bind_param("isssdsss", $user['id'], $sender_id, $recipients, $message, $total_cost, $status, $log_api_response, $route);
+            $stmt_log->bind_param("isssdsss", $user['id'], $sender_id, $recipients, $message,.
+            $total_cost, $status, $log_api_response, $route);
             if (!$stmt_log->execute()) {
                 throw new mysqli_sql_exception("Failed to insert into messages table: " . $stmt_log->error);
             }

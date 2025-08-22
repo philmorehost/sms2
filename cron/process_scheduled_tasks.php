@@ -111,10 +111,42 @@ foreach ($due_tasks as $task) {
         curl_close($ch);
 
         $api_result = json_decode($response, true);
-        if ($http_code == 200 && isset($api_result['status']) && $api_result['status'] == 'success') {
+        $is_api_success = ($http_code == 200 && isset($api_result['status']) && $api_result['status'] == 'success');
+
+        // Get the original message_id from the payload
+        $message_id = $payload['message_id'] ?? null;
+
+        if ($is_api_success) {
             $final_status = 'completed';
+            // If we have a message_id, update its status to success
+            if ($message_id) {
+                $conn->query("UPDATE messages SET status = 'success', api_response = '" . $conn->real_escape_string($response) . "' WHERE id = $message_id");
+            }
         } else {
             $final_status = 'failed';
+            // If the send failed, we need to refund the user
+            if ($message_id) {
+                $conn->begin_transaction();
+                try {
+                    // 1. Get the original cost from the messages table
+                    $msg_res = $conn->query("SELECT cost, user_id FROM messages WHERE id = $message_id");
+                    if ($msg_row = $msg_res->fetch_assoc()) {
+                        $cost_to_refund = $msg_row['cost'];
+                        $user_to_refund = $msg_row['user_id'];
+
+                        // 2. Refund the user
+                        $conn->query("UPDATE users SET balance = balance + $cost_to_refund WHERE id = $user_to_refund");
+
+                        // 3. Update the message status to 'failed'
+                        $conn->query("UPDATE messages SET status = 'failed', api_response = '" . $conn->real_escape_string($response) . "' WHERE id = $message_id");
+                    }
+                    $conn->commit();
+                    echo "Refunded $cost_to_refund to user $user_to_refund for failed message $message_id.\n";
+                } catch (Exception $e) {
+                    $conn->rollback();
+                    echo "Error during refund transaction for message ID $message_id: " . $e->getMessage() . "\n";
+                }
+            }
         }
         $final_message = $response;
     }

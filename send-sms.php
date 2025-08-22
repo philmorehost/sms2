@@ -111,51 +111,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['send_sms'])) {
     $editing_task_id = $_POST['editing_task_id'] ?? null;
 
     if (!empty($schedule_time)) {
-        // This is a scheduled message (new or update)
-        $payload = json_encode([
-            'sender_id' => $sender_id,
-            'recipients' => $recipients,
-            'message' => $message,
-            'route' => $route
-        ]);
-        try {
-            // Get the site's configured timezone, default to UTC if not set
-            $site_tz_str = get_settings()['site_timezone'] ?? 'UTC';
-            $site_tz = new DateTimeZone($site_tz_str);
+        // This is a scheduled message.
+        // NOTE: Editing a scheduled message is not yet supported with the new debit-on-schedule flow.
+        // The old logic for editing is removed for now to prevent creating a task without debiting.
+        if ($editing_task_id) {
+            $errors[] = "Editing a scheduled message is not supported. Please cancel the old one and create a new one.";
+        } else {
+            try {
+                // Get the site's configured timezone, default to UTC if not set
+                $site_tz_str = get_settings()['site_timezone'] ?? 'UTC';
+                $site_tz = new DateTimeZone($site_tz_str);
+                $local_dt = new DateTime($schedule_time, $site_tz);
+                $local_dt->setTimezone(new DateTimeZone('UTC'));
+                $scheduled_for_utc = $local_dt->format('Y-m-d H:i:s');
 
-            // Create a DateTime object from the user's input, interpreted in the site's timezone
-            $local_dt = new DateTime($schedule_time, $site_tz);
+                // Call the new function to handle debiting and scheduling
+                $result = debit_and_schedule_sms($current_user, $sender_id, $recipients, $message, $route, $scheduled_for_utc, $conn);
 
-            // Convert this time to UTC for storage
-            $local_dt->setTimezone(new DateTimeZone('UTC'));
-            $scheduled_for_utc = $local_dt->format('Y-m-d H:i:s');
-
-            if ($editing_task_id) {
-                // Update existing task
-                $stmt = $conn->prepare("UPDATE scheduled_tasks SET payload = ?, scheduled_for = ? WHERE id = ? AND user_id = ?");
-                $stmt->bind_param("ssii", $payload, $scheduled_for_utc, $editing_task_id, $current_user['id']);
-                if ($stmt->execute()) {
-                    $success = "Your scheduled message has been successfully updated for " . date('F j, Y, g:i a', strtotime($schedule_time));
+                if ($result['success']) {
+                    $success = $result['message'];
+                    // Re-fetch user data to update balance display
+                    $user_stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+                    $user_stmt->bind_param("i", $current_user['id']);
+                    $user_stmt->execute();
+                    $current_user = $user_stmt->get_result()->fetch_assoc();
+                    $user_stmt->close();
                 } else {
-                    $errors[] = "Failed to update your scheduled message.";
+                    $errors[] = $result['message'];
                 }
-            } else {
-                // Insert new task
-                $stmt = $conn->prepare("INSERT INTO scheduled_tasks (user_id, task_type, payload, scheduled_for, status, created_at) VALUES (?, 'sms', ?, ?, 'pending', ?)");
-                $created_at_utc = gmdate('Y-m-d H:i:s');
-                $stmt->bind_param("isss", $current_user['id'], $payload, $scheduled_for_utc, $created_at_utc);
-                if ($stmt->execute()) {
-                    $success = "Your message has been successfully scheduled for " . date('F j, Y, g:i a', strtotime($schedule_time));
-                } else {
-                    $errors[] = "Failed to schedule your message.";
-                }
+            } catch (Exception $e) {
+                $errors[] = "Invalid date format for scheduling. " . $e->getMessage();
             }
-            $stmt->close();
-        } catch (Exception $e) {
-            $errors[] = "Invalid date format for scheduling. " . $e->getMessage();
         }
     } else {
-        // Pass the route to the send_bulk_sms function
+        // This is an immediate message
         $result = send_bulk_sms($current_user, $sender_id, $recipients, $message, $route, $conn);
         if ($result['success']) {
             $success = $result['message'];

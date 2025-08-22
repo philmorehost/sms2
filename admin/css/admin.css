@@ -1,0 +1,29 @@
+/* Admin-specific styles can go here */
+.brand-text {
+    font-weight: bold !important;
+}
+
+/* Responsive, scrollable tabs for mobile */
+.nav-tabs-responsive {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.nav-tabs-responsive::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for a cleaner look */
+}
+.nav-tabs-responsive .nav-item {
+    flex: 0 0 auto;
+}
+
+/* Fix for badge text color on light backgrounds */
+.badge.bg-warning,
+.badge.bg-info,
+.badge.bg-light,
+.badge.bg-secondary,
+.badge-warning,
+.badge-info,
+.badge-secondary {
+    color: #212529 !important;
+}

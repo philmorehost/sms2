@@ -17,7 +17,7 @@ $total_pages = ceil($total_records / $limit);
 $total_records_stmt->close();
 
 // Fetch records for the current page
-$stmt = $conn->prepare("SELECT mr.recipient_number, mr.status, mr.failure_reason, mr.updated_at, m.message, m.sender_id
+$stmt = $conn->prepare("SELECT mr.recipient_number, mr.status, mr.failure_reason, mr.updated_at, m.message, m.sender_id, m.status as message_status, m.api_response
                         FROM message_recipients mr
                         JOIN messages m ON mr.message_id = m.id
                         WHERE m.user_id = ?
@@ -29,18 +29,33 @@ $reports = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
 
 function get_status_badge($status) {
-    switch (strtolower($status)) {
-        case 'delivered':
-            return '<span class="badge bg-success">Delivered</span>';
-        case 'sent':
-            return '<span class="badge bg-info">Sent</span>';
-        case 'failed':
-            return '<span class="badge bg-danger">Failed</span>';
-        case 'queued':
-            return '<span class="badge bg-secondary">Queued</span>';
-        default:
-            return '<span class="badge bg-warning">' . htmlspecialchars($status) . '</span>';
+    $status = strtolower($status);
+    $badge_class = 'bg-warning'; // Default
+    if (in_array($status, ['delivered', 'success', 'sent'])) {
+        $badge_class = 'bg-success';
+    } elseif (in_array($status, ['failed', 'error'])) {
+        $badge_class = 'bg-danger';
+    } elseif (in_array($status, ['queued', 'pending', 'scheduled'])) {
+        $badge_class = 'bg-info';
     }
+    return '<span class="badge ' . $badge_class . '">' . htmlspecialchars(ucfirst($status)) . '</span>';
+}
+
+function format_api_response($response_json) {
+    if (empty($response_json)) {
+        return 'N/A';
+    }
+    $response = json_decode($response_json, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return htmlspecialchars($response_json); // Not a valid JSON, show raw
+    }
+    if (isset($response['msg'])) {
+        return htmlspecialchars($response['msg']);
+    }
+    if (isset($response['error_code']) && isset($response['error_description'])) {
+        return "Code: " . htmlspecialchars($response['error_code']) . " - " . htmlspecialchars($response['error_description']);
+    }
+    return 'N/A';
 }
 ?>
 
@@ -59,7 +74,7 @@ function get_status_badge($status) {
                         <th>Recipient</th>
                         <th>Message</th>
                         <th>Status</th>
-                        <th>Reason</th>
+                        <th>API Response / Reason</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,8 +91,17 @@ function get_status_badge($status) {
                                 <td style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="<?php echo htmlspecialchars($report['message']); ?>">
                                     <?php echo htmlspecialchars($report['message']); ?>
                                 </td>
-                                <td><?php echo get_status_badge($report['status']); ?></td>
-                                <td><?php echo htmlspecialchars($report['failure_reason']); ?></td>
+                                <td><?php echo get_status_badge($report['message_status']); ?></td>
+                                <td>
+                                    <?php
+                                    // If the message failed and has a specific failure reason, show that. Otherwise, show the API response.
+                                    if (!empty($report['failure_reason'])) {
+                                        echo htmlspecialchars($report['failure_reason']);
+                                    } else {
+                                        echo format_api_response($report['api_response']);
+                                    }
+                                    ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>

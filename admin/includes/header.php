@@ -68,7 +68,16 @@ function is_active($page_name) {
                         <li class="nav-item"><a href="scheduled-reports.php" class="nav-link <?php echo is_active('scheduled-reports.php'); ?>"><i class="nav-icon fas fa-history"></i> Scheduled Reports</a></li>
                         <li class="nav-item"><a href="banning.php" class="nav-link <?php echo is_active('banning.php'); ?>"><i class="nav-icon fas fa-ban"></i> Banning</a></li>
                         <li class="nav-item"><a href="notifications.php" class="nav-link <?php echo is_active('notifications.php'); ?>"><i class="nav-icon fas fa-bullhorn"></i> Notifications</a></li>
-                        <li class="nav-item"><a href="settings.php" class="nav-link <?php echo is_active('settings.php'); ?>"><i class="nav-icon fas fa-cogs"></i> Settings</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="nav-icon fas fa-cogs"></i> Settings</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="settings.php?tab=general">General Settings</a></li>
+                                <li><a class="dropdown-item" href="settings.php?tab=api">Messaging APIs</a></li>
+                                <li><a class="dropdown-item" href="settings.php?tab=vtu_apis">VTU APIs</a></li>
+                                <li><a class="dropdown-item" href="vtu_services.php">VTU Services</a></li>
+                                <li><a class="dropdown-item" href="vtu_products.php">VTU Products</a></li>
+                            </ul>
+                        </li>
                         <li class="nav-item"><a href="profile.php" class="nav-link <?php echo is_active('profile.php'); ?>"><i class="nav-icon fas fa-user-circle"></i> My Profile</a></li>
                         <li class="nav-item"><a href="logout.php" class="nav-link"><i class="nav-icon fas fa-sign-out-alt"></i> Logout</a></li>
                     </ul>

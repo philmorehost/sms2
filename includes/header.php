@@ -93,6 +93,19 @@ if ($admin_stmt) {
                         </li>
 
                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="nav-icon fas fa-bolt"></i> <span class="nav-link-text">VTU Services</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="vtu_airtime.php">Airtime</a></li>
+                                <li><a class="dropdown-item" href="vtu_data.php">Data Bundles</a></li>
+                                <li><a class="dropdown-item" href="vtu_cable.php">Cable TV</a></li>
+                                <li><a class="dropdown-item" href="vtu_electricity.php">Electricity Bill</a></li>
+                                <li><a class="dropdown-item" href="vtu_betting.php">Betting Wallet</a></li>
+                                <li><a class="dropdown-item" href="vtu_exam_pin.php">Exam PINs</a></li>
+                                <li><a class="dropdown-item" href="vtu_recharge_card.php">Recharge Card Printing</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="nav-icon fas fa-id-card"></i> <span class="nav-link-text">Register IDs</span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="sender-id.php">Sender ID</a></li>
@@ -192,6 +205,19 @@ if ($admin_stmt) {
                                    <li><a class="dropdown-item" href="send-whatsapp.php">WhatsApp</a></li>
                                    <li><a class="dropdown-item" href="otp-templates.php">OTP Templates</a></li>
                                    <li><a class="dropdown-item" href="birthday-scheduler.php">Birthday Scheduler</a></li>
+                               </ul>
+                           </li>
+
+                           <li class="nav-item dropdown">
+                               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="nav-icon fas fa-bolt"></i> VTU Services</a>
+                               <ul class="dropdown-menu">
+                                   <li><a class="dropdown-item" href="vtu_airtime.php">Airtime</a></li>
+                                   <li><a class="dropdown-item" href="vtu_data.php">Data Bundles</a></li>
+                                   <li><a class="dropdown-item" href="vtu_cable.php">Cable TV</a></li>
+                                   <li><a class="dropdown-item" href="vtu_electricity.php">Electricity Bill</a></li>
+                                   <li><a class="dropdown-item" href="vtu_betting.php">Betting Wallet</a></li>
+                                   <li><a class="dropdown-item" href="vtu_exam_pin.php">Exam PINs</a></li>
+                                   <li><a class="dropdown-item" href="vtu_recharge_card.php">Recharge Card Printing</a></li>
                                </ul>
                            </li>
 

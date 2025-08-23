@@ -92,6 +92,48 @@ $trans_stmt->close();
     </div>
 </div>
 
+<div class="quick-links-container mb-4">
+    <h5 class="mb-3">VTU Services</h5>
+    <div class="row">
+        <div class="col-md-4 col-lg-2 mb-3">
+            <a href="vtu_airtime.php" class="quick-link-btn">
+                <i class="fas fa-mobile-alt"></i>
+                <span>Buy Airtime</span>
+            </a>
+        </div>
+        <div class="col-md-4 col-lg-2 mb-3">
+            <a href="vtu_data.php" class="quick-link-btn">
+                <i class="fas fa-wifi"></i>
+                <span>Buy Data</span>
+            </a>
+        </div>
+        <div class="col-md-4 col-lg-2 mb-3">
+            <a href="vtu_electricity.php" class="quick-link-btn">
+                <i class="fas fa-bolt"></i>
+                <span>Electricity Bill</span>
+            </a>
+        </div>
+        <div class="col-md-4 col-lg-2 mb-3">
+            <a href="vtu_cable.php" class="quick-link-btn">
+                <i class="fas fa-tv"></i>
+                <span>Cable TV</span>
+            </a>
+        </div>
+        <div class="col-md-4 col-lg-2 mb-3">
+            <a href="vtu_betting.php" class="quick-link-btn">
+                <i class="fas fa-gamepad"></i>
+                <span>Betting Wallet</span>
+            </a>
+        </div>
+        <div class="col-md-4 col-lg-2 mb-3">
+            <a href="vtu_exam_pin.php" class="quick-link-btn">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Exam PINs</span>
+            </a>
+        </div>
+    </div>
+</div>
+
 
 <div class="row">
     <div class="col-6 col-lg-3 col-md-6 mb-4">

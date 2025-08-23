@@ -8,7 +8,7 @@ $edit_notification = null;
 // Handle Create/Update Notification
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_notification'])) {
     $id = $_POST['id'] ?? null;
-    $message_text = $_POST['message']; // Do not trim HTML content
+    $message_text = trim($_POST['message']);
     $type = $_POST['type'];
     $placement = trim($_POST['placement']);
     $start_time = !empty($_POST['start_time']) ? $_POST['start_time'] : null;
@@ -70,8 +70,6 @@ if ($result) {
 
 ?>
 
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -84,7 +82,7 @@ if ($result) {
                     <input type="hidden" name="id" value="<?php echo $edit_notification['id'] ?? ''; ?>">
                     <div class="mb-3">
                         <label for="message" class="form-label">Message</label>
-                        <textarea class="form-control" id="message" name="message" rows="3" required><?php echo $edit_notification['message'] ?? ''; ?></textarea>
+                        <textarea class="form-control" id="message" name="message" rows="3" required><?php echo htmlspecialchars($edit_notification['message'] ?? ''); ?></textarea>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -170,13 +168,5 @@ if ($result) {
         </div>
     </div>
 </div>
-
-<script>
-  tinymce.init({
-    selector: 'textarea#message',
-    plugins: 'code table lists image link',
-    toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table | image link'
-  });
-</script>
 
 <?php include_once 'includes/footer.php'; ?>

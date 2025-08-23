@@ -29,11 +29,14 @@ function get_settings() {
     static $settings = null;
     if ($settings === null) {
         $settings = [];
-        $result = $conn->query("SELECT setting_key, setting_value FROM settings");
-        if ($result) {
+        $stmt = $conn->prepare("SELECT setting_key, setting_value FROM settings");
+        if ($stmt) {
+            $stmt->execute();
+            $result = $stmt->get_result();
             while ($row = $result->fetch_assoc()) {
                 $settings[$row['setting_key']] = $row['setting_value'];
             }
+            $stmt->close();
         }
         // Cache the result for subsequent calls within the same request.
         $GLOBALS['app_settings'] = $settings;
@@ -618,11 +621,14 @@ function contains_banned_word($string) {
     static $banned_words = null;
     if ($banned_words === null) {
         $banned_words = [];
-        $result = $conn->query("SELECT `value` FROM `banned` WHERE `type` = 'word'");
-        if ($result) {
+        $stmt = $conn->prepare("SELECT `value` FROM `banned` WHERE `type` = 'word'");
+        if ($stmt) {
+            $stmt->execute();
+            $result = $stmt->get_result();
             while ($row = $result->fetch_assoc()) {
                 $banned_words[] = preg_quote($row['value'], '/');
             }
+            $stmt->close();
         }
     }
     if (empty($banned_words)) return false;

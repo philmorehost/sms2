@@ -63,9 +63,12 @@ if (isset($_GET['edit'])) {
 
 // Fetch all notifications
 $notifications = [];
-$result = $conn->query("SELECT * FROM notifications ORDER BY created_at DESC");
-if ($result) {
+$stmt = $conn->prepare("SELECT * FROM notifications ORDER BY created_at DESC");
+if ($stmt) {
+    $stmt->execute();
+    $result = $stmt->get_result();
     $notifications = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
 }
 
 ?>

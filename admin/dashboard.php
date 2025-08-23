@@ -3,14 +3,26 @@ $page_title = 'Admin Dashboard';
 include 'includes/header.php';
 
 // Fetch stats for the dashboard
+function get_count($conn, $sql) {
+    $stmt = $conn->prepare($sql);
+    if ($stmt) {
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $count = $result->fetch_assoc()['count'];
+        $stmt->close();
+        return $count;
+    }
+    return 0;
+}
+
 // Total Users
-$total_users = $conn->query("SELECT COUNT(id) as count FROM users WHERE is_admin = 0")->fetch_assoc()['count'];
+$total_users = get_count($conn, "SELECT COUNT(id) as count FROM users WHERE is_admin = 0");
 // Total Messages Sent
-$total_messages = $conn->query("SELECT COUNT(id) as count FROM messages")->fetch_assoc()['count'];
+$total_messages = get_count($conn, "SELECT COUNT(id) as count FROM messages");
 // Total Groups
-$total_groups = $conn->query("SELECT COUNT(id) as count FROM phonebook_groups")->fetch_assoc()['count'];
+$total_groups = get_count($conn, "SELECT COUNT(id) as count FROM phonebook_groups");
 // Total Contacts
-$total_contacts = $conn->query("SELECT COUNT(id) as count FROM phonebook_contacts")->fetch_assoc()['count'];
+$total_contacts = get_count($conn, "SELECT COUNT(id) as count FROM phonebook_contacts");
 
 ?>
 
@@ -84,16 +96,23 @@ $total_contacts = $conn->query("SELECT COUNT(id) as count FROM phonebook_contact
                         </thead>
                         <tbody>
                             <?php
-                            $recent_users_stmt = $conn->query("SELECT username, email, phone_number, created_at FROM users WHERE is_admin = 0 ORDER BY created_at DESC LIMIT 5");
-                            while ($row = $recent_users_stmt->fetch_assoc()):
+                            $stmt = $conn->prepare("SELECT username, email, phone_number, created_at FROM users WHERE is_admin = 0 ORDER BY created_at DESC LIMIT 5");
+                            if ($stmt) {
+                                $stmt->execute();
+                                $recent_users_result = $stmt->get_result();
+                                while ($row = $recent_users_result->fetch_assoc()):
                             ?>
                             <tr>
                                 <td><?php echo htmlspecialchars($row['username']); ?></td>
-                            <td><?php echo htmlspecialchars($row['email']); ?></td>
-                            <td><?php echo htmlspecialchars($row['phone_number']); ?></td>
+                                <td><?php echo htmlspecialchars($row['email']); ?></td>
+                                <td><?php echo htmlspecialchars($row['phone_number']); ?></td>
                                 <td><?php echo $row['created_at']; ?></td>
                             </tr>
-                            <?php endwhile; ?>
+                            <?php
+                                endwhile;
+                                $stmt->close();
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>

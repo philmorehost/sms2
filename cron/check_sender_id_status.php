@@ -8,11 +8,14 @@ echo "Cron Job: Checking status of pending Sender IDs...\n";
 
 // 1. Fetch all pending sender IDs
 $pending_ids = [];
-$result = $conn->query("SELECT id, sender_id FROM sender_ids WHERE status = 'pending'");
-if ($result) {
+$stmt = $conn->prepare("SELECT id, sender_id FROM sender_ids WHERE status = 'pending'");
+if ($stmt) {
+    $stmt->execute();
+    $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {
         $pending_ids[] = $row;
     }
+    $stmt->close();
 }
 
 if (empty($pending_ids)) {

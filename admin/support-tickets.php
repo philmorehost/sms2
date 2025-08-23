@@ -3,7 +3,12 @@ $page_title = 'Support Tickets';
 require_once __DIR__ . '/../app/bootstrap.php';
 
 // Handle filtering
-$status_filter = $_GET['status'] ?? 'open'; // Default to open tickets
+$status_filter = $_GET['status'] ?? 'open';
+$allowed_filters = ['open', 'closed', 'all'];
+if (!in_array($status_filter, $allowed_filters)) {
+    $status_filter = 'open'; // Default to a safe value
+}
+
 $sql_where = "";
 if ($status_filter == 'open') {
     $sql_where = "WHERE t.status IN ('open', 'user_reply')";
@@ -19,9 +24,14 @@ $sql = "SELECT t.ticket_id, t.subject, t.status, t.updated_at, u.username
         JOIN users u ON t.user_id = u.id
         $sql_where
         ORDER BY t.updated_at DESC";
-$result = $conn->query($sql);
-while ($row = $result->fetch_assoc()) {
-    $tickets[] = $row;
+$stmt = $conn->prepare($sql);
+if ($stmt) {
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $tickets[] = $row;
+    }
+    $stmt->close();
 }
 
 include 'includes/header.php';

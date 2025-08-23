@@ -83,11 +83,14 @@ function run_installer_and_migrations($conn) {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
     $migrations_ran = [];
-    $result = $conn->query("SELECT migration FROM migrations");
-    if ($result) {
+    $stmt_migrations = $conn->prepare("SELECT migration FROM migrations");
+    if ($stmt_migrations) {
+        $stmt_migrations->execute();
+        $result = $stmt_migrations->get_result();
         while($row = $result->fetch_assoc()) {
             $migrations_ran[] = $row['migration'];
         }
+        $stmt_migrations->close();
     }
 
     $migration_files = glob(__DIR__ . '/../sql/migrations/*.sql');
@@ -139,11 +142,14 @@ run_installer_and_migrations($conn);
 
 // 4.5. Load Site Settings and Define Constants
 $all_settings = [];
-$settings_result = $conn->query("SELECT * FROM settings");
-if ($settings_result) {
+$settings_stmt = $conn->prepare("SELECT * FROM settings");
+if ($settings_stmt) {
+    $settings_stmt->execute();
+    $settings_result = $settings_stmt->get_result();
     while ($row = $settings_result->fetch_assoc()) {
         $all_settings[$row['setting_key']] = $row['setting_value'];
     }
+    $settings_stmt->close();
 }
 // Define SITE_NAME from the database, with a fallback
 if (!defined('SITE_NAME')) {
@@ -185,7 +191,14 @@ if ($ban_result->num_rows > 0) {
 $ban_stmt->close();
 
 
-// 6. Start Session
+// 6. Secure Session Start
+ini_set('session.cookie_httponly', 1);
+ini_set('session.use_only_cookies', 1);
+if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+    ini_set('session.cookie_secure', 1);
+}
+ini_set('session.cookie_samesite', 'Lax');
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }

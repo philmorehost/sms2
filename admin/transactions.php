@@ -105,11 +105,14 @@ $sql = "SELECT t.*, u.username, i.id as invoice_id
         JOIN users u ON t.user_id = u.id
         LEFT JOIN invoices i ON t.invoice_id = i.id
         ORDER BY t.created_at DESC";
-$result = $conn->query($sql);
-if ($result) {
+$stmt = $conn->prepare($sql);
+if ($stmt) {
+    $stmt->execute();
+    $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {
         $transactions[] = $row;
     }
+    $stmt->close();
 } else {
     // Handle potential SQL error
     $errors[] = "Error fetching transactions: " . $conn->error;

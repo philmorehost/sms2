@@ -78,7 +78,7 @@ include 'includes/header.php';
                                 <div class="mb-3 result-group">
                                     <label class="form-label"><strong>Group <?php echo $index + 1; ?></strong> (<?php echo count($group); ?> numbers)</label>
                                     <div class="input-group">
-                                        <textarea class="form-control" rows="5" readonly><?php echo implode("\n", $group); ?></textarea>
+                                        <textarea class="form-control" rows="5" readonly><?php echo htmlspecialchars(implode("\n", $group)); ?></textarea>
                                         <button class="btn btn-outline-secondary copy-btn" type="button">Copy</button>
                                     </div>
                                 </div>

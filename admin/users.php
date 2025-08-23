@@ -89,9 +89,14 @@ $sql = "SELECT u.id, u.username, u.email, u.phone_number, u.balance, u.created_a
         FROM users u
         LEFT JOIN users r ON u.referred_by = r.id
         ORDER BY u.created_at DESC";
-$result = $conn->query($sql);
-while ($row = $result->fetch_assoc()) {
-    $users[] = $row;
+$stmt = $conn->prepare($sql);
+if ($stmt) {
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $users[] = $row;
+    }
+    $stmt->close();
 }
 ?>
 

@@ -102,7 +102,7 @@ include 'includes/header.php';
             </div>
              <div class="mb-3">
                 <label for="template_body" class="form-label">Email Body</label>
-                <textarea class="form-control" id="template_body" name="body" rows="15"><?php echo $template['body']; ?></textarea>
+                <textarea class="form-control" id="template_body" name="body" rows="15"><?php echo htmlspecialchars($template['body']); ?></textarea>
             </div>
             <button type="submit" name="save_template" class="btn btn-primary">Save Template</button>
         </form>

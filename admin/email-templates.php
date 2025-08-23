@@ -22,9 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_template'])) {
 
 // Fetch all templates
 $templates = [];
-$result = $conn->query("SELECT * FROM email_templates ORDER BY name ASC");
-while ($row = $result->fetch_assoc()) {
-    $templates[] = $row;
+$stmt = $conn->prepare("SELECT * FROM email_templates ORDER BY name ASC");
+if ($stmt) {
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $templates[] = $row;
+    }
+    $stmt->close();
 }
 
 include 'includes/header.php';

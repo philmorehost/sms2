@@ -51,16 +51,27 @@ $sql = "SELECT s.id, s.sender_id, s.sample_message, s.status, s.created_at, u.us
         FROM sender_ids s
         JOIN users u ON s.user_id = u.id
         ORDER BY s.created_at DESC";
-$result = $conn->query($sql);
-while ($row = $result->fetch_assoc()) {
-    $submissions[] = $row;
+$stmt = $conn->prepare($sql);
+if ($stmt) {
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $submissions[] = $row;
+    }
+    $stmt->close();
 }
+
 
 // Fetch all users for the modal dropdown
 $all_users = [];
-$users_result = $conn->query("SELECT id, username, email FROM users ORDER BY username ASC");
-while($user = $users_result->fetch_assoc()) {
-    $all_users[] = $user;
+$users_stmt = $conn->prepare("SELECT id, username, email FROM users ORDER BY username ASC");
+if ($users_stmt) {
+    $users_stmt->execute();
+    $users_result = $users_stmt->get_result();
+    while($user = $users_result->fetch_assoc()) {
+        $all_users[] = $user;
+    }
+    $users_stmt->close();
 }
 
 ?>

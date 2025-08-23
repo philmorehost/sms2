@@ -19,10 +19,15 @@ $due_tasks = [];
 $conn->begin_transaction();
 try {
     // Find tasks that are due (in UTC) and lock the rows for update
-    $result = $conn->query("SELECT * FROM scheduled_tasks WHERE scheduled_for <= '$now_utc' AND status = 'pending' FOR UPDATE");
+    $stmt_select = $conn->prepare("SELECT * FROM scheduled_tasks WHERE scheduled_for <= ? AND status = 'pending' FOR UPDATE");
+    $stmt_select->bind_param("s", $now_utc);
+    $stmt_select->execute();
+    $result = $stmt_select->get_result();
     while ($row = $result->fetch_assoc()) {
         $due_tasks[] = $row;
     }
+    $stmt_select->close();
+
 
     if (!empty($due_tasks)) {
         $ids_to_process = array_column($due_tasks, 'id');
@@ -33,6 +38,7 @@ try {
         $types = str_repeat('i', count($ids_to_process));
         $update_stmt->bind_param($types, ...$ids_to_process);
         $update_stmt->execute();
+        $update_stmt->close();
     }
 
     // Commit the transaction
@@ -56,7 +62,6 @@ foreach ($due_tasks as $task) {
     $payload = json_decode($task['payload'], true);
     $user_id = $task['user_id'];
 
-    $settings = get_settings();
     $settings = get_settings();
     $final_status = 'pending';
     $final_message = '';
@@ -126,7 +131,10 @@ foreach ($due_tasks as $task) {
             $final_status = 'completed';
             // If we have a message_id, update its status to success
             if ($message_id) {
-                $conn->query("UPDATE messages SET status = 'success', api_response = '" . $conn->real_escape_string($response) . "' WHERE id = $message_id");
+                $update_msg_stmt = $conn->prepare("UPDATE messages SET status = 'success', api_response = ? WHERE id = ?");
+                $update_msg_stmt->bind_param("si", $response, $message_id);
+                $update_msg_stmt->execute();
+                $update_msg_stmt->close();
             }
         } else {
             $final_status = 'failed';
@@ -135,17 +143,28 @@ foreach ($due_tasks as $task) {
                 $conn->begin_transaction();
                 try {
                     // 1. Get the original cost from the messages table
-                    $msg_res = $conn->query("SELECT cost, user_id FROM messages WHERE id = $message_id");
+                    $msg_stmt = $conn->prepare("SELECT cost, user_id FROM messages WHERE id = ?");
+                    $msg_stmt->bind_param("i", $message_id);
+                    $msg_stmt->execute();
+                    $msg_res = $msg_stmt->get_result();
+
                     if ($msg_row = $msg_res->fetch_assoc()) {
                         $cost_to_refund = $msg_row['cost'];
                         $user_to_refund = $msg_row['user_id'];
 
                         // 2. Refund the user
-                        $conn->query("UPDATE users SET balance = balance + $cost_to_refund WHERE id = $user_to_refund");
+                        $refund_stmt = $conn->prepare("UPDATE users SET balance = balance + ? WHERE id = ?");
+                        $refund_stmt->bind_param("di", $cost_to_refund, $user_to_refund);
+                        $refund_stmt->execute();
+                        $refund_stmt->close();
 
                         // 3. Update the message status to 'failed'
-                        $conn->query("UPDATE messages SET status = 'failed', api_response = '" . $conn->real_escape_string($response) . "' WHERE id = $message_id");
+                        $update_fail_stmt = $conn->prepare("UPDATE messages SET status = 'failed', api_response = ? WHERE id = ?");
+                        $update_fail_stmt->bind_param("si", $response, $message_id);
+                        $update_fail_stmt->execute();
+                        $update_fail_stmt->close();
                     }
+                    $msg_stmt->close();
                     $conn->commit();
                     echo "Refunded $cost_to_refund to user $user_to_refund for failed message $message_id.\n";
                 } catch (Exception $e) {

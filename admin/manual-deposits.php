@@ -78,11 +78,14 @@ $sql = "SELECT md.*, u.username
         JOIN users u ON md.user_id = u.id
         WHERE md.status = 'pending'
         ORDER BY md.created_at ASC";
-$result = $conn->query($sql);
-if($result){
+$stmt = $conn->prepare($sql);
+if ($stmt) {
+    $stmt->execute();
+    $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {
         $pending_deposits[] = $row;
     }
+    $stmt->close();
 }
 
 // Fetch all processed manual deposits (approved or rejected)
@@ -93,11 +96,14 @@ $sql_processed = "SELECT md.*, u.username
                   WHERE md.status != 'pending'
                   ORDER BY md.created_at DESC
                   LIMIT 50"; // Limit to last 50 for performance
-$result_processed = $conn->query($sql_processed);
-if($result_processed){
+$stmt_processed = $conn->prepare($sql_processed);
+if ($stmt_processed) {
+    $stmt_processed->execute();
+    $result_processed = $stmt_processed->get_result();
     while ($row = $result_processed->fetch_assoc()) {
         $processed_deposits[] = $row;
     }
+    $stmt_processed->close();
 }
 
 function get_deposit_status_badge($status) {

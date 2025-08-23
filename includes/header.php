@@ -229,7 +229,7 @@ $settings = get_settings();
                 foreach ($notifications as $notification):
                 ?>
                     <div class="alert alert-<?php echo htmlspecialchars($notification['type']); ?> alert-dismissible fade show" role="alert">
-                        <?php echo $notification['message']; // Assuming message is safe HTML from admin ?>
+                        <?php echo htmlspecialchars($notification['message']); ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 <?php endforeach; ?>

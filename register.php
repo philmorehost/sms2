@@ -128,7 +128,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 // Email failed to send. This is a problem.
                 // We should delete the user we just created so they can try again.
-                $conn->query("DELETE FROM users WHERE id = " . $user_id);
+                $delete_stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
+                $delete_stmt->bind_param("i", $user_id);
+                $delete_stmt->execute();
+                $delete_stmt->close();
                 $errors[] = "Could not send verification email. Please try registering again. Error: " . $email_result['message'];
             }
 

@@ -28,7 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($user = $result->fetch_assoc()) {
             if (password_verify($password, $user['password']) && $user['is_admin'] == 1) {
-                // User is an admin, start a new session
+                // Admin is verified, regenerate session ID to prevent fixation
+                session_regenerate_id(true);
+
+                // Start the admin session
                 $_SESSION['admin_id'] = $user['id'];
                 $_SESSION['admin_username'] = $user['username'];
 

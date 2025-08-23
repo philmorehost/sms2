@@ -8,11 +8,13 @@ echo "Cron Job: Cleaning up unverified users...\n";
 
 $delete_query = "DELETE FROM users WHERE is_email_verified = 0 AND created_at < NOW() - INTERVAL 24 HOUR";
 
-$result = $conn->query($delete_query);
+$stmt = $conn->prepare($delete_query);
 
-if ($result) {
-    $deleted_count = $conn->affected_rows;
+if ($stmt) {
+    $stmt->execute();
+    $deleted_count = $stmt->affected_rows;
     echo "Successfully deleted " . $deleted_count . " unverified user(s).\n";
+    $stmt->close();
 } else {
     echo "An error occurred while trying to delete unverified users: " . $conn->error . "\n";
     error_log("Cron job failed: cleanup_unverified_users.php - " . $conn->error);

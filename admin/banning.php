@@ -40,9 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_ban'])) {
 
 // Fetch all banned items
 $banned_items = [];
-$result = $conn->query("SELECT * FROM banned ORDER BY created_at DESC");
-if ($result) {
+$stmt = $conn->prepare("SELECT * FROM banned ORDER BY created_at DESC");
+if ($stmt) {
+    $stmt->execute();
+    $result = $stmt->get_result();
     $banned_items = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
 }
 
 

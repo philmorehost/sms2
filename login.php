@@ -36,7 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (password_verify($password, $user['password'])) {
                 // Check if email is verified
                 if ($user['is_email_verified'] == 1) {
-                    // Password is correct and user is verified, update last_login and start session
+                    // Password is correct and user is verified, regenerate session ID to prevent fixation
+                    session_regenerate_id(true);
+
+                    // Update last_login and start session
                     $update_stmt = $conn->prepare("UPDATE users SET last_login = NOW() WHERE id = ?");
                     $update_stmt->bind_param("i", $user['id']);
                     $update_stmt->execute();

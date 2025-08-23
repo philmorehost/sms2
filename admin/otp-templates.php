@@ -32,9 +32,14 @@ $sql = "SELECT t.*, u.username
         FROM otp_templates t
         JOIN users u ON t.user_id = u.id
         ORDER BY t.status = 'pending' DESC, t.created_at DESC";
-$result = $conn->query($sql);
-while ($row = $result->fetch_assoc()) {
-    $submissions[] = $row;
+$stmt = $conn->prepare($sql);
+if ($stmt) {
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $submissions[] = $row;
+    }
+    $stmt->close();
 }
 
 include 'includes/header.php';

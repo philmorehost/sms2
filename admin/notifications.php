@@ -191,10 +191,9 @@ if ($result) {
         },
         language: 'en',
     }).then(editor => {
-        const form = document.getElementById('notification-form');
-        form.addEventListener('submit', event => {
-            const editorData = editor.getData();
-            document.querySelector('#message').value = editorData;
+        // This is the more robust way to keep the textarea updated.
+        editor.model.document.on('change:data', () => {
+            document.querySelector('#message').value = editor.getData();
         });
     }).catch(error => {
         console.error(error);

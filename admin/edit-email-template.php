@@ -129,10 +129,9 @@ include 'includes/header.php';
         },
         language: 'en',
     }).then(editor => {
-        const form = document.getElementById('template-form');
-        form.addEventListener('submit', event => {
-            const editorData = editor.getData();
-            document.querySelector('#template_body').value = editorData;
+        // This is the more robust way to keep the textarea updated.
+        editor.model.document.on('change:data', () => {
+            document.querySelector('#template_body').value = editor.getData();
         });
     }).catch(error => {
         console.error(error);

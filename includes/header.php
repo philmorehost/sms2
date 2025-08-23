@@ -23,6 +23,18 @@ function is_active($page_name) {
 
 // Fetch all settings for logo/favicon
 $settings = get_settings();
+
+// Fetch admin contact for WhatsApp icon
+$admin_stmt = $conn->prepare("SELECT phone_number FROM users WHERE id = 1");
+$admin_phone_number = '';
+if ($admin_stmt) {
+    $admin_stmt->execute();
+    $admin_result = $admin_stmt->get_result();
+    if($admin_contact = $admin_result->fetch_assoc()) {
+        $admin_phone_number = $admin_contact['phone_number'];
+    }
+    $admin_stmt->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

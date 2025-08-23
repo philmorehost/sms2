@@ -173,5 +173,11 @@ $banner_image_path = get_settings()['landing_page_banner'] ?? null;
     </footer>
 
     <script src="js/landing.js"></script>
+
+    <?php if (!empty($admin_contact['phone_number'])): ?>
+        <a href="https://wa.me/<?php echo htmlspecialchars($admin_contact['phone_number']); ?>" class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Chat with us on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    <?php endif; ?>
 </body>
 </html>

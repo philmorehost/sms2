@@ -1,7 +1,9 @@
 <?php
 $page_title = 'Push Notifications';
 include_once 'includes/header.php';
-
+?>
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<?php
 $message = '';
 $edit_notification = null;
 
@@ -69,9 +71,6 @@ if ($result) {
 }
 
 ?>
-
-<!-- CKEditor 5 CDN -->
-<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 
 <div class="row">
     <div class="col-12">
@@ -173,11 +172,11 @@ if ($result) {
 </div>
 
 <script>
-    ClassicEditor
-        .create( document.querySelector( '#message' ) )
-        .catch( error => {
-            console.error( error );
-        } );
+  tinymce.init({
+    selector: 'textarea#message',
+    plugins: 'code table lists image link',
+    toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table | image link'
+  });
 </script>
 
 <?php include_once 'includes/footer.php'; ?>

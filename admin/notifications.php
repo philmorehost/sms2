@@ -70,13 +70,8 @@ if ($result) {
 
 ?>
 
-<!-- CKEditor 5 Superbuild CDN -->
-<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
-<style>
-    .ck-editor__editable_inline {
-        min-height: 250px;
-    }
-</style>
+<!-- CKEditor 5 CDN -->
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 
 <div class="row">
     <div class="col-12">
@@ -86,7 +81,7 @@ if ($result) {
             </div>
             <div class="card-body">
                 <?php echo $message; ?>
-                <form id="notification-form" method="POST">
+                <form method="POST">
                     <input type="hidden" name="id" value="<?php echo $edit_notification['id'] ?? ''; ?>">
                     <div class="mb-3">
                         <label for="message" class="form-label">Message</label>
@@ -178,26 +173,11 @@ if ($result) {
 </div>
 
 <script>
-    CKEDITOR.ClassicEditor.create(document.querySelector('#message'), {
-        toolbar: {
-            items: [
-                'sourceEditing', '|',
-                'heading', '|',
-                'bold', 'italic', 'underline', 'link', '|',
-                'bulletedList', 'numberedList', 'outdent', 'indent', '|',
-                'blockQuote', 'insertTable', 'mediaEmbed', '|',
-                'undo', 'redo'
-            ]
-        },
-        language: 'en',
-    }).then(editor => {
-        // This is the more robust way to keep the textarea updated.
-        editor.model.document.on('change:data', () => {
-            document.querySelector('#message').value = editor.getData();
-        });
-    }).catch(error => {
-        console.error(error);
-    });
+    ClassicEditor
+        .create( document.querySelector( '#message' ) )
+        .catch( error => {
+            console.error( error );
+        } );
 </script>
 
 <?php include_once 'includes/footer.php'; ?>

@@ -176,31 +176,46 @@ include 'includes/header.php';
                     </div>
                 </div>
                 <div class="col-md-7">
-                    <h5>Step 2: Preview Template</h5>
-                    <hr>
-                    <div id="email-preview-container">
-                        <div class="mb-2"><strong>Subject:</strong> <span id="preview-subject"></span></div>
-                        <iframe id="preview-body" src="about:blank" style="width: 100%; height: 400px; border: 1px solid #ccc;"></iframe>
-                    </div>
+                    <h5>&nbsp;</h5>
                 </div>
             </div>
         </form>
     </div>
 </div>
 
-<script>
-  tinymce.init({
-    selector: 'textarea#custom_body',
-    plugins: 'code table lists image link',
-    toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table | image link'
-  });
-</script>
+<!-- CKEditor 5 Superbuild CDN -->
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
+<style>
+    .ck-editor__editable_inline {
+        min-height: 400px;
+    }
+</style>
 
 <script>
+    let editor;
+    CKEDITOR.ClassicEditor.create(document.querySelector('#custom_body'), {
+        toolbar: {
+            items: [
+                'sourceEditing', '|',
+                'heading', '|',
+                'bold', 'italic', 'underline', 'link', '|',
+                'bulletedList', 'numberedList', 'outdent', 'indent', '|',
+                'blockQuote', 'insertTable', 'mediaEmbed', '|',
+                'undo', 'redo'
+            ]
+        },
+        language: 'en',
+    }).then(newEditor => {
+        editor = newEditor;
+        // Keep the textarea updated in real-time
+        editor.model.document.on('change:data', () => {
+            document.querySelector('#custom_body').value = editor.getData();
+        });
+    }).catch(error => {
+        console.error(error);
+    });
+
 document.addEventListener('DOMContentLoaded', function() {
-    const templateSelect = document.getElementById('template_id');
-    const subjectPreview = document.getElementById('preview-subject');
-    const bodyPreview = document.getElementById('preview-body');
     const audienceSelect = document.getElementById('audience');
     const specificUsersContainer = document.getElementById('specific-users-container');
     const messageSourceInput = document.getElementById('message_source');
@@ -219,20 +234,6 @@ document.addEventListener('DOMContentLoaded', function() {
             specificUsersContainer.style.display = 'block';
         } else {
             specificUsersContainer.style.display = 'none';
-        }
-    });
-
-    templateSelect.addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex];
-        if (selectedOption.value) {
-            const subject = selectedOption.dataset.subject;
-            const body = selectedOption.dataset.body;
-
-            subjectPreview.textContent = subject;
-            bodyPreview.srcdoc = body; // Safely render HTML in iframe
-        } else {
-            subjectPreview.textContent = '';
-            bodyPreview.srcdoc = '';
         }
     });
 });

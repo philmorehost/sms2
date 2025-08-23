@@ -34,29 +34,12 @@ if (!$reset_request) {
     exit();
 }
 
-// Check expiry (10 minutes)
-try {
-    // Get the site's timezone to ensure correct comparison
-    $site_tz_str = get_settings()['site_timezone'] ?? 'UTC';
-    $site_tz = new DateTimeZone($site_tz_str);
+// Check expiry
+$expiry_time = strtotime($reset_request['expiry_time']);
+$current_time = time();
 
-    // Create a DateTime object for the OTP creation time, interpreted in the site's timezone
-    $created_time = new DateTime($reset_request['created_at'], $site_tz);
-
-    // Create a DateTime object for the current time in the same timezone
-    $current_time = new DateTime('now', $site_tz);
-
-    // Calculate the difference in seconds
-    $time_diff_seconds = $current_time->getTimestamp() - $created_time->getTimestamp();
-
-    if ($time_diff_seconds > (10 * 60)) {
-        echo json_encode(['success' => false, 'message' => 'Your OTP has expired. Please request a new one.']);
-        exit();
-    }
-} catch (Exception $e) {
-    // Log the error and fail gracefully
-    error_log("Timezone/DateTime error in password reset: " . $e->getMessage());
-    echo json_encode(['success' => false, 'message' => 'An unexpected error occurred while verifying your OTP.']);
+if ($current_time > $expiry_time) {
+    echo json_encode(['success' => false, 'message' => 'Your OTP has expired. Please request a new one.']);
     exit();
 }
 

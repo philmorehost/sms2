@@ -41,10 +41,9 @@ try {
     $stmt_delete->execute();
 
     // Store the new hashed OTP
-    // NOTE: The table schema was updated to include an expiry column. If not, this will fail.
-    // Let's assume the table is just email, otp_code, created_at for now.
-    $stmt_insert = $conn->prepare("INSERT INTO password_resets (email, otp_code) VALUES (?, ?)");
-    $stmt_insert->bind_param("ss", $email, $otp_hashed);
+    // The 'password_resets' table should have an 'expiry_time' column (DATETIME).
+    $stmt_insert = $conn->prepare("INSERT INTO password_resets (email, otp_code, expiry_time) VALUES (?, ?, ?)");
+    $stmt_insert->bind_param("sss", $email, $otp_hashed, $expiry_time);
     $stmt_insert->execute();
 
     // Send the email to the user

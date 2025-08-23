@@ -1,9 +1,7 @@
 <?php
 $page_title = 'Push Notifications';
 include_once 'includes/header.php';
-?>
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-<?php
+
 $message = '';
 $edit_notification = null;
 
@@ -71,6 +69,8 @@ if ($result) {
 }
 
 ?>
+
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
 <div class="row">
     <div class="col-12">

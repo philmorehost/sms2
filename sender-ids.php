@@ -117,10 +117,10 @@ $stmt->close();
                                 <td>
                                     <?php
                                     $status = htmlspecialchars($id_data['status']);
-                                    $badge_class = 'badge-secondary';
-                                    if ($status == 'approved') $badge_class = 'badge-success';
-                                    if ($status == 'rejected') $badge_class = 'badge-danger';
-                                    if ($status == 'pending') $badge_class = 'badge-warning';
+                                    $badge_class = 'bg-secondary'; // Default
+                                    if ($status == 'approved') $badge_class = 'bg-success';
+                                    if ($status == 'rejected') $badge_class = 'bg-danger';
+                                    if ($status == 'pending') $badge_class = 'bg-warning text-dark';
                                     echo "<span class='badge " . $badge_class . "'>" . ucfirst($status) . "</span>";
                                     ?>
                                 </td>

@@ -95,9 +95,13 @@ include 'includes/header.php';
                                     <?php
                                         $status = htmlspecialchars($id_data['status']);
                                         $badge_class = 'bg-secondary';
-                                        if ($status == 'approved') $badge_class = 'bg-success';
-                                        if ($status == 'rejected') $badge_class = 'bg-danger';
-                                        if ($status == 'pending') $badge_class = 'bg-warning text-dark';
+                                        if ($status == 'approved') {
+                                            $badge_class = 'bg-success';
+                                        } elseif ($status == 'rejected') {
+                                            $badge_class = 'bg-danger';
+                                        } elseif ($status == 'pending') {
+                                            $badge_class = 'bg-warning text-dark';
+                                        }
                                         echo "<span class='badge " . $badge_class . "'>" . ucfirst($status) . "</span>";
                                     ?>
                                 </td>

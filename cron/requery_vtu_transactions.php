@@ -36,13 +36,15 @@ foreach ($pending_transactions as $txn) {
     }
 
     $api_response = json_decode($txn['api_response'], true);
-    $request_id = $api_response['requestId'] ?? null;
+    $request_id = null;
+    if ($provider === 'VTPass') {
+        $request_id = $api_response['requestId'] ?? null;
+    } elseif ($provider === 'ClubKonnect') {
+        $request_id = $api_response['orderid'] ?? null;
+    }
 
     if (!$request_id) {
-        // Fallback for older transactions that might not have stored the requestId in the response
-        // This logic might need adjustment based on how request_id is stored.
-        // For now, we assume it's in the initial response.
-        echo "  - Error: Could not find requestId in the initial transaction data. Skipping.\n";
+        echo "  - Error: Could not find request/order ID in the initial transaction data for provider {$provider}. Skipping.\n";
         continue;
     }
 
@@ -52,6 +54,9 @@ foreach ($pending_transactions as $txn) {
         $requery_result = requery_vtpass($request_id, $api_details);
     }
     // Add else if for other providers like ClubKonnect here in the future
+    } else if ($provider === 'ClubKonnect') {
+        $requery_result = requery_clubkonnect($request_id, $api_details);
+    }
 
     if (!$requery_result) {
         echo "  - Error: Requery function for '{$provider}' failed or is not implemented. Skipping.\n";
@@ -143,6 +148,44 @@ function requery_vtpass($request_id, $api_details) {
         }
     }
     // Otherwise, assume it's still pending or an indeterminate state
+    return ['success' => false, 'is_failed' => false, 'data' => $api_result];
+}
+
+function requery_clubkonnect($order_id, $api_details) {
+    $api_url = "https://www.nellobytesystems.com/APIQueryV1.asp";
+
+    $params = [
+        'UserID' => $api_details['username'],
+        'APIKey' => $api_details['api_key'],
+        'OrderID' => $order_id,
+    ];
+
+    $url_with_params = $api_url . '?' . http_build_query($params);
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url_with_params);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    if ($response === false) {
+        return null;
+    }
+
+    $api_result = json_decode($response, true);
+
+    // Check for definitive success or failure
+    if (isset($api_result['status'])) {
+        $status = strtoupper($api_result['status']);
+        if ($status === 'ORDER_COMPLETED') {
+            return ['success' => true, 'is_failed' => false, 'data' => $api_result];
+        }
+        // ClubKonnect doesn't seem to have a definitive 'failed' status on requery,
+        // so we only look for completion. Anything else is treated as pending.
+        // A more robust system might check for specific error codes if available.
+    }
+
+    // Assume pending if not explicitly completed
     return ['success' => false, 'is_failed' => false, 'data' => $api_result];
 }
 

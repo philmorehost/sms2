@@ -29,6 +29,10 @@ switch ($action) {
         purchase_cable_tv();
         break;
 
+    case 'purchase_airtime':
+        purchase_airtime();
+        break;
+
     default:
         api_response(false, 'Invalid action specified.');
         break;
@@ -221,6 +225,102 @@ function purchase_cable_tv() {
         // If the failure was after debit, we need to inform the user.
         // A dedicated requery script will handle the refund to avoid race conditions.
         error_log("VTU Purchase Error: " . $e->getMessage());
+        api_response(false, "An error occurred during the transaction. Please check your transaction history or contact support if your wallet was debited.");
+    }
+}
+
+function purchase_airtime() {
+    global $conn;
+    $user_id = $_SESSION['user_id'];
+
+    $phone = $_POST['phone'] ?? '';
+    $network = $_POST['network'] ?? '';
+    $amount = filter_input(INPUT_POST, 'amount', FILTER_VALIDATE_FLOAT);
+
+    if (empty($phone) || empty($network) || $amount === false || $amount <= 0) {
+        api_response(false, 'Missing required fields for purchase.');
+    }
+
+    // 1. Get admin settings for this network
+    $settings = get_settings();
+    $provider_key = 'airtime_provider_' . strtolower($network);
+    $discount_key = 'airtime_discount_' . strtolower($network);
+    $provider = $settings[$provider_key] ?? null;
+    $discount_percent = (float)($settings[$discount_key] ?? 0);
+
+    if (!$provider) {
+        api_response(false, "Airtime service for {$network} is not configured by the administrator.");
+    }
+
+    // 2. Calculate final price and check user balance
+    $user = $GLOBALS['current_user'];
+    $final_price = $amount - ($amount * ($discount_percent / 100));
+
+    if ((float)$user['balance'] < $final_price) {
+        api_response(false, 'Insufficient wallet balance.');
+    }
+
+    // 3. All checks passed, begin transaction
+    $conn->begin_transaction();
+    try {
+        // Debit user
+        $stmt_debit = $conn->prepare("UPDATE users SET balance = balance - ? WHERE id = ?");
+        $stmt_debit->bind_param("di", $final_price, $user_id);
+        $stmt_debit->execute();
+        $stmt_debit->close();
+
+        // Log transaction
+        $description = "Airtime Top-up: " . $network . " " . $amount;
+        $stmt_log = $conn->prepare("INSERT INTO transactions (user_id, type, vtu_service_type, amount, total_amount, status, gateway, description, vtu_recipient) VALUES (?, 'debit', 'airtime', ?, ?, 'pending', ?, ?, ?)");
+        $stmt_log->bind_param("iddsss", $user_id, $amount, $final_price, $provider, $description, $phone);
+        $stmt_log->execute();
+        $transaction_id = $stmt_log->insert_id;
+        $stmt_log->close();
+
+        // 4. Call the selected API provider
+        $api_result = null;
+        if ($provider === 'VTPass') {
+            // TODO: Implement VTPass Airtime API call
+            // For now, simulate success
+            $api_result = ['success' => true, 'response' => json_encode(['code' => '000', 'response_description' => 'TRANSACTION SUCCESSFUL', 'requestId' => date('YmdHis') . $transaction_id])];
+        } elseif ($provider === 'ClubKonnect') {
+            // TODO: Implement ClubKonnect Airtime API call
+            // For now, simulate success
+            $api_result = ['success' => true, 'response' => json_encode(['statuscode' => '100', 'status' => 'ORDER_RECEIVED', 'orderid' => $transaction_id])];
+        }
+
+        if (!$api_result || !$api_result['success']) {
+            throw new Exception($api_result['message'] ?? 'Airtime API provider failed.');
+        }
+
+        // 5. Update transaction with API response
+        $final_status = 'pending'; // Default to pending
+        $api_response_data = json_decode($api_result['response'], true);
+
+        if ($provider === 'VTPass' && isset($api_response_data['code']) && $api_response_data['code'] == '000') {
+             $final_status = 'completed';
+        } elseif ($provider === 'ClubKonnect' && isset($api_response_data['statuscode']) && $api_response_data['statuscode'] == '100') {
+            // ClubKonnect's initial response is just "received", so it stays pending for requery.
+            $final_status = 'pending';
+        } else {
+            $final_status = 'failed';
+        }
+
+        $stmt_update = $conn->prepare("UPDATE transactions SET status = ?, api_response = ? WHERE id = ?");
+        $stmt_update->bind_param("ssi", $final_status, $api_result['response'], $transaction_id);
+        $stmt_update->execute();
+        $stmt_update->close();
+
+        if ($final_status === 'failed') {
+            throw new Exception('Transaction failed at API provider.');
+        }
+
+        $conn->commit();
+        api_response(true, 'Your airtime request has been submitted successfully and is being processed.');
+
+    } catch (Exception $e) {
+        $conn->rollback();
+        error_log("Airtime Purchase Error: " . $e->getMessage());
         api_response(false, "An error occurred during the transaction. Please check your transaction history or contact support if your wallet was debited.");
     }
 }

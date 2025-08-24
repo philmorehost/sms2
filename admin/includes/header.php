@@ -76,6 +76,7 @@ function is_active($page_name) {
                                 <li><a class="dropdown-item" href="settings.php?tab=vtu_apis">VTU APIs</a></li>
                                 <li><a class="dropdown-item" href="vtu_services.php">VTU Services</a></li>
                                 <li><a class="dropdown-item" href="vtu_products.php">VTU Products</a></li>
+                                <li><a class="dropdown-item" href="vtu_airtime_settings.php">Airtime Settings</a></li>
                             </ul>
                         </li>
                         <li class="nav-item"><a href="profile.php" class="nav-link <?php echo is_active('profile.php'); ?>"><i class="nav-icon fas fa-user-circle"></i> My Profile</a></li>

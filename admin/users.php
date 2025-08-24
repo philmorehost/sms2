@@ -42,26 +42,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_user'])) {
     $phone_number = trim($_POST['phone_number']);
     $balance = (float)$_POST['balance'];
     $is_admin = isset($_POST['is_admin']) ? 1 : 0;
-
+    $status = $_POST['status'];
     $password = $_POST['password'];
 
-    if (!empty($password)) {
-        // If password is set, update it
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = $conn->prepare("UPDATE users SET username=?, email=?, phone_number=?, balance=?, is_admin=?, password=? WHERE id=?");
-        $stmt->bind_param("sssdiss", $username, $email, $phone_number, $balance, $is_admin, $hashed_password, $user_id_to_edit);
+    if (!in_array($status, ['active', 'suspended', 'banned'])) {
+        $errors[] = "Invalid status provided.";
     } else {
-        // Otherwise, don't update password
-        $stmt = $conn->prepare("UPDATE users SET username=?, email=?, phone_number=?, balance=?, is_admin=? WHERE id=?");
-        $stmt->bind_param("sssdis", $username, $email, $phone_number, $balance, $is_admin, $user_id_to_edit);
-    }
+        if (!empty($password)) {
+            // If password is set, update it
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $stmt = $conn->prepare("UPDATE users SET username=?, email=?, phone_number=?, balance=?, is_admin=?, status=?, password=? WHERE id=?");
+            $stmt->bind_param("sssdissi", $username, $email, $phone_number, $balance, $is_admin, $status, $hashed_password, $user_id_to_edit);
+        } else {
+            // Otherwise, don't update password
+            $stmt = $conn->prepare("UPDATE users SET username=?, email=?, phone_number=?, balance=?, is_admin=?, status=? WHERE id=?");
+            $stmt->bind_param("sssdiss", $username, $email, $phone_number, $balance, $is_admin, $status, $user_id_to_edit);
+        }
 
-    if ($stmt->execute()) {
-        $success = "User updated successfully.";
-    } else {
-        $errors[] = "Failed to update user.";
+        if ($stmt->execute()) {
+            $success = "User updated successfully.";
+        } else {
+            $errors[] = "Failed to update user.";
+        }
+        $stmt->close();
     }
-    $stmt->close();
 }
 
 // DELETE User
@@ -85,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_user'])) {
 
 // READ Users
 $users = [];
-$sql = "SELECT u.id, u.username, u.email, u.phone_number, u.balance, u.created_at, u.is_admin, u.is_email_verified, u.api_access_status, r.username as referrer_username
+$sql = "SELECT u.id, u.username, u.email, u.phone_number, u.balance, u.created_at, u.is_admin, u.is_email_verified, u.status, u.api_access_status, r.username as referrer_username
         FROM users u
         LEFT JOIN users r ON u.referred_by = r.id
         ORDER BY u.created_at DESC";
@@ -142,6 +146,7 @@ if ($stmt) {
             <th>Email</th>
             <th>Balance</th>
             <th>Is Admin?</th>
+            <th>Account Status</th>
             <th>Email Verified?</th>
             <th>API Access</th>
             <th>Referred By</th>
@@ -157,6 +162,15 @@ if ($stmt) {
                 <td><?php echo htmlspecialchars($user['email']); ?></td>
                 <td><?php echo get_currency_symbol(); ?><?php echo number_format($user['balance'], 2); ?></td>
                 <td><?php echo $user['is_admin'] ? '<span class="badge bg-success">Yes</span>' : '<span class="badge bg-secondary">No</span>'; ?></td>
+                <td>
+                    <?php
+                        $status_class = 'bg-secondary';
+                        if ($user['status'] == 'active') $status_class = 'bg-success';
+                        if ($user['status'] == 'suspended') $status_class = 'bg-warning text-dark';
+                        if ($user['status'] == 'banned') $status_class = 'bg-danger';
+                        echo '<span class="badge ' . $status_class . '">' . ucfirst($user['status']) . '</span>';
+                    ?>
+                </td>
                 <td class="verification-status-cell">
                     <?php echo $user['is_email_verified'] ? '<span class="badge bg-success">Yes</span>' : '<span class="badge bg-danger">No</span>'; ?>
                 </td>
@@ -275,6 +289,15 @@ if ($stmt) {
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" name="is_admin" value="1" id="is_admin_edit_<?php echo $user['id']; ?>" <?php if($user['is_admin']) echo 'checked'; ?>>
                         <label class="form-check-label" for="is_admin_edit_<?php echo $user['id']; ?>">Administrator</label>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label>Account Status</label>
+                        <select name="status" class="form-select">
+                            <option value="active" <?php if($user['status'] == 'active') echo 'selected'; ?>>Active</option>
+                            <option value="suspended" <?php if($user['status'] == 'suspended') echo 'selected'; ?>>Suspended</option>
+                            <option value="banned" <?php if($user['status'] == 'banned') echo 'selected'; ?>>Banned</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">

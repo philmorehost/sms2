@@ -150,6 +150,15 @@ function purchase_cable_tv() {
     global $conn;
     $user_id = $_SESSION['user_id'];
 
+    if ($GLOBALS['current_user']['status'] === 'suspended') {
+        api_response(false, 'Your account is currently suspended. Please contact support.');
+    }
+    if (check_transaction_limit($user_id, 'cable_tv')) {
+        handle_limit_exceeded($user_id);
+        api_response(false, 'You have exceeded the transaction limit for this service. Please try again later.');
+    }
+    $_SESSION['limit_exceeded_attempts'] = 0;
+
     $serviceID = $_POST['serviceID'] ?? '';
     $billersCode = $_POST['billersCode'] ?? '';
     $variation_code = $_POST['variation_code'] ?? '';
@@ -473,6 +482,15 @@ function purchase_exam_pin() {
     global $conn;
     $user_id = $_SESSION['user_id'];
 
+    if ($GLOBALS['current_user']['status'] === 'suspended') {
+        api_response(false, 'Your account is currently suspended. Please contact support.');
+    }
+    if (check_transaction_limit($user_id, 'exam_pin')) {
+        handle_limit_exceeded($user_id);
+        api_response(false, 'You have exceeded the transaction limit for this service. Please try again later.');
+    }
+    $_SESSION['limit_exceeded_attempts'] = 0;
+
     $product_id = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
     $quantity = filter_input(INPUT_POST, 'quantity', FILTER_VALIDATE_INT);
 
@@ -569,6 +587,15 @@ function purchase_exam_pin() {
 function purchase_betting_funding() {
     global $conn;
     $user_id = $_SESSION['user_id'];
+
+    if ($GLOBALS['current_user']['status'] === 'suspended') {
+        api_response(false, 'Your account is currently suspended. Please contact support.');
+    }
+    if (check_transaction_limit($user_id, 'betting')) {
+        handle_limit_exceeded($user_id);
+        api_response(false, 'You have exceeded the transaction limit for this service. Please try again later.');
+    }
+    $_SESSION['limit_exceeded_attempts'] = 0;
 
     $betting_company = $_POST['betting_company'] ?? '';
     $customer_id = $_POST['customer_id'] ?? '';
@@ -710,6 +737,15 @@ function purchase_electricity() {
     global $conn;
     $user_id = $_SESSION['user_id'];
 
+    if ($GLOBALS['current_user']['status'] === 'suspended') {
+        api_response(false, 'Your account is currently suspended. Please contact support.');
+    }
+    if (check_transaction_limit($user_id, 'electricity')) {
+        handle_limit_exceeded($user_id);
+        api_response(false, 'You have exceeded the transaction limit for this service. Please try again later.');
+    }
+    $_SESSION['limit_exceeded_attempts'] = 0;
+
     $serviceID = $_POST['serviceID'] ?? '';
     $billersCode = $_POST['billersCode'] ?? '';
     $variation_code = $_POST['variation_code'] ?? ''; // prepaid or postpaid
@@ -831,6 +867,15 @@ function purchase_data() {
     global $conn;
     $user_id = $_SESSION['user_id'];
 
+    if ($GLOBALS['current_user']['status'] === 'suspended') {
+        api_response(false, 'Your account is currently suspended. Please contact support.');
+    }
+    if (check_transaction_limit($user_id, 'data')) {
+        handle_limit_exceeded($user_id);
+        api_response(false, 'You have exceeded the transaction limit for this service. Please try again later.');
+    }
+    $_SESSION['limit_exceeded_attempts'] = 0;
+
     $phone = $_POST['phone'] ?? '';
     $network = $_POST['network'] ?? '';
     $dataplan_id = filter_input(INPUT_POST, 'dataplan_id', FILTER_VALIDATE_INT);
@@ -922,6 +967,18 @@ function purchase_data() {
 function purchase_airtime() {
     global $conn;
     $user_id = $_SESSION['user_id'];
+
+    // Check if user is suspended
+    if ($GLOBALS['current_user']['status'] === 'suspended') {
+        api_response(false, 'Your account is currently suspended. Please contact support.');
+    }
+
+    // Check transaction limit
+    if (check_transaction_limit($user_id, 'airtime')) {
+        handle_limit_exceeded($user_id);
+        api_response(false, 'You have exceeded the transaction limit for this service. Please try again later.');
+    }
+    $_SESSION['limit_exceeded_attempts'] = 0; // Reset on successful attempt
 
     $phone = $_POST['phone'] ?? '';
     $network = $_POST['network'] ?? '';

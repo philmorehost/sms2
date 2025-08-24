@@ -758,4 +758,78 @@ function format_date_for_display($utc_datetime_string) {
     }
 }
 
+/**
+ * Checks if a user has exceeded the transaction limit for a specific service.
+ *
+ * @param int $user_id The ID of the user to check.
+ * @param string $service_slug The slug of the service (e.g., 'airtime').
+ * @return bool True if the user is over the limit, false otherwise.
+ */
+function check_transaction_limit($user_id, $service_slug) {
+    global $conn;
+
+    // 1. Get the limit settings for this service
+    $stmt_service = $conn->prepare("SELECT transaction_limit_count, transaction_limit_period_hours FROM vtu_services WHERE service_slug = ?");
+    if(!$stmt_service) return false; // Fail open if query fails
+
+    $stmt_service->bind_param("s", $service_slug);
+    $stmt_service->execute();
+    $service_settings = $stmt_service->get_result()->fetch_assoc();
+    $stmt_service->close();
+
+    if (!$service_settings || $service_settings['transaction_limit_count'] <= 0) {
+        return false; // No limit set for this service, so it's not exceeded.
+    }
+
+    $limit_count = (int)$service_settings['transaction_limit_count'];
+    $limit_period_hours = (int)$service_settings['transaction_limit_period_hours'];
+
+    // 2. Count the user's transactions for this service within the time period
+    $stmt_count = $conn->prepare("SELECT COUNT(id) as transaction_count FROM transactions WHERE user_id = ? AND vtu_service_type = ? AND created_at >= NOW() - INTERVAL ? HOUR AND status != 'failed'");
+    if(!$stmt_count) return false; // Fail open if query fails
+
+    $stmt_count->bind_param("isi", $user_id, $service_slug, $limit_period_hours);
+    $stmt_count->execute();
+    $result = $stmt_count->get_result()->fetch_assoc();
+    $stmt_count->close();
+
+    $transaction_count = (int)($result['transaction_count'] ?? 0);
+
+    // 3. Compare and return result
+    return $transaction_count >= $limit_count;
+}
+
+/**
+ * Handles the logic when a user exceeds a transaction limit.
+ * Increments a session counter and suspends the user after 3 attempts.
+ *
+ * @param int $user_id The ID of the user.
+ */
+function handle_limit_exceeded($user_id) {
+    global $conn;
+    if (!isset($_SESSION['limit_exceeded_attempts'])) {
+        $_SESSION['limit_exceeded_attempts'] = 1;
+    } else {
+        $_SESSION['limit_exceeded_attempts']++;
+    }
+
+    if ($_SESSION['limit_exceeded_attempts'] >= 3) {
+        // Suspend the user
+        $stmt = $conn->prepare("UPDATE users SET status = 'suspended' WHERE id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $stmt->close();
+
+        // Reset the counter after suspension
+        unset($_SESSION['limit_exceeded_attempts']);
+
+        // Optionally, send an email to the admin
+        $user_email = $GLOBALS['current_user']['email'];
+        $admin_email = get_admin_email();
+        $subject = "User Account Suspended Due to Transaction Limit";
+        $message = "<p>The user account associated with email {$user_email} (ID: {$user_id}) has been automatically suspended after repeatedly exceeding transaction limits.</p><p>You can review and reactivate their account in the admin panel.</p>";
+        send_email($admin_email, $subject, $message);
+    }
+}
+
 ?>

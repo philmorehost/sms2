@@ -41,6 +41,9 @@ foreach ($pending_transactions as $txn) {
         $request_id = $api_response['requestId'] ?? null;
     } elseif ($provider === 'ClubKonnect') {
         $request_id = $api_response['orderid'] ?? null;
+    } elseif ($provider === 'HDKDATA') {
+        // Assuming our own transaction ID is the reference for HDKDATA
+        $request_id = $txn['id'];
     }
 
     if (!$request_id) {
@@ -56,6 +59,8 @@ foreach ($pending_transactions as $txn) {
     // Add else if for other providers like ClubKonnect here in the future
     } else if ($provider === 'ClubKonnect') {
         $requery_result = requery_clubkonnect($request_id, $api_details);
+    } else if ($provider === 'HDKDATA') {
+        $requery_result = requery_hdkdata($request_id, $api_details);
     }
 
     if (!$requery_result) {
@@ -186,6 +191,50 @@ function requery_clubkonnect($order_id, $api_details) {
     }
 
     // Assume pending if not explicitly completed
+    return ['success' => false, 'is_failed' => false, 'data' => $api_result];
+}
+
+function requery_hdkdata($transaction_id, $api_details) {
+    // TODO: Confirm the actual HDKDATA requery endpoint and parameters.
+    // This is a placeholder implementation.
+    $api_url = "https://hdkdata.com/api/requery";
+
+    $post_data = [
+        'transaction_id' => $transaction_id, // Assuming our DB transaction ID is the reference
+    ];
+
+    $headers = [
+        'Authorization: Bearer ' . $api_details['api_key'],
+        'Content-Type: application/json'
+    ];
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $api_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post_data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    if ($response === false) {
+        return null;
+    }
+
+    $api_result = json_decode($response, true);
+
+    // TODO: Adjust this logic based on the actual API response structure.
+    if (isset($api_result['status'])) {
+        $status = strtolower($api_result['status']);
+        if ($status === 'delivered' || $status === 'success' || $status === 'completed') {
+            return ['success' => true, 'is_failed' => false, 'data' => $api_result];
+        }
+        if ($status === 'failed' || $status === 'reversed') {
+            return ['success' => false, 'is_failed' => true, 'data' => $api_result];
+        }
+    }
+
+    // Assume pending if not explicitly successful or failed
     return ['success' => false, 'is_failed' => false, 'data' => $api_result];
 }
 

@@ -276,8 +276,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_service_pricing']
 
 // Handle VTU API Settings
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_vtu_apis'])) {
-    $providers = ['VTPass', 'ClubKonnect', 'NaijaResultPins'];
-    $providers = ['VTPass', 'ClubKonnect', 'NaijaResultPins'];
+    $providers = ['VTPass', 'ClubKonnect', 'NaijaResultPins', 'HDKDATA'];
     $stmt = $conn->prepare("INSERT INTO vtu_apis (provider_name, api_key, secret_key, username, is_sandbox) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE api_key = VALUES(api_key), secret_key = VALUES(secret_key), username = VALUES(username), is_sandbox = VALUES(is_sandbox)");
 
     foreach ($providers as $provider) {
@@ -746,6 +745,14 @@ include 'includes/header.php';
                     <div class="mb-3">
                         <label for="naijaresultpins_api_key" class="form-label">Bearer Token</label>
                         <input type="password" class="form-control" id="naijaresultpins_api_key" name="naijaresultpins_api_key" value="<?php echo htmlspecialchars($vtu_apis['NaijaResultPins']['api_key'] ?? ''); ?>">
+                    </div>
+
+                    <hr>
+
+                    <h5 class="mt-4">HDKDATA API</h5>
+                     <div class="mb-3">
+                        <label for="hdkdata_api_key" class="form-label">API Key / Bearer Token</label>
+                        <input type="password" class="form-control" id="hdkdata_api_key" name="hdkdata_api_key" value="<?php echo htmlspecialchars($vtu_apis['HDKDATA']['api_key'] ?? ''); ?>">
                     </div>
 
                     <button type="submit" name="save_vtu_apis" class="btn btn-primary">Save VTU API Settings</button>

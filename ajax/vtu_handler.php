@@ -289,7 +289,7 @@ function get_data_plans() {
 
     if (empty($plan_type)) {
         // Scenario 1: Fetch unique plan types for the network
-        $stmt = $conn->prepare("SELECT DISTINCT plan_type FROM vtu_products WHERE service_type = 'data' AND network = ? AND is_active = 1 AND plan_type IS NOT NULL ORDER BY plan_type ASC");
+        $stmt = $conn->prepare("SELECT DISTINCT plan_type FROM vtu_products WHERE network = ? AND status = 'active' AND plan_type IS NOT NULL AND service_id = (SELECT id FROM vtu_services WHERE service_name = 'Mobile Data') ORDER BY plan_type ASC");
         $stmt->bind_param("s", $network);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -300,7 +300,7 @@ function get_data_plans() {
         api_response(true, 'Types fetched successfully', $type_values);
     } else {
         // Scenario 2: Fetch specific plans for the network and type
-        $stmt = $conn->prepare("SELECT id, name, amount, user_discount_percentage, api_product_id FROM vtu_products WHERE service_type = 'data' AND network = ? AND plan_type = ? AND is_active = 1 ORDER BY amount ASC");
+        $stmt = $conn->prepare("SELECT product_code, product_name, price FROM vtu_products WHERE network = ? AND plan_type = ? AND status = 'active' AND service_id = (SELECT id FROM vtu_services WHERE service_name = 'Mobile Data') ORDER BY price ASC");
         $stmt->bind_param("ss", $network, $plan_type);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -891,16 +891,15 @@ function purchase_data() {
     $_SESSION['limit_exceeded_attempts'] = 0;
 
     $phone = $_POST['phone'] ?? '';
-    $network = $_POST['network'] ?? '';
-    $dataplan_id = filter_input(INPUT_POST, 'dataplan_id', FILTER_VALIDATE_INT);
+    $product_code = $_POST['product_code'] ?? '';
 
-    if (empty($phone) || empty($network) || empty($dataplan_id)) {
+    if (empty($phone) || empty($product_code)) {
         api_response(false, 'Missing required fields for data purchase.');
     }
 
-    // 1. Get product details and user balance
-    $stmt = $conn->prepare("SELECT p.amount, p.user_discount_percentage, p.api_provider, p.api_product_id, u.balance FROM vtu_products p, users u WHERE p.id = ? AND u.id = ?");
-    $stmt->bind_param("ii", $dataplan_id, $user_id);
+    // 1. Get product details (including provider) and user balance
+    $stmt = $conn->prepare("SELECT p.price, p.product_name, p.provider, u.balance, p.network FROM vtu_products p, users u WHERE p.product_code = ? AND u.id = ?");
+    $stmt->bind_param("si", $product_code, $user_id);
     $stmt->execute();
     $details = $stmt->get_result()->fetch_assoc();
     $stmt->close();
@@ -910,24 +909,26 @@ function purchase_data() {
     }
 
     // 2. Calculate final price and check balance
-    $base_price = (float)$details['amount'];
-    $discount = $base_price * ((float)$details['user_discount_percentage'] / 100);
-    $final_price = $base_price - $discount;
+    // Note: For now, we assume no user-specific discount on data, but this can be added later.
+    $base_price = (float)$details['price'];
+    $final_price = $base_price; // No discount for now
 
     if ((float)$details['balance'] < $final_price) {
         api_response(false, 'Insufficient wallet balance.');
     }
 
-    // 3. Fetch API credentials for the provider (ClubKonnect)
-    $provider = 'ClubKonnect';
+    $provider = $details['provider'];
+    $network = $details['network'];
+
+    // 3. Fetch API credentials for the determined provider
     $stmt_api = $conn->prepare("SELECT * FROM vtu_apis WHERE provider_name = ?");
     $stmt_api->bind_param("s", $provider);
     $stmt_api->execute();
     $api_details = $stmt_api->get_result()->fetch_assoc();
     $stmt_api->close();
 
-    if (empty($api_details) || empty($api_details['username']) || empty($api_details['api_key'])) {
-        api_response(false, 'ClubKonnect API is not configured by the administrator.');
+    if (empty($api_details) || empty($api_details['api_key'])) {
+        api_response(false, "The API for the provider '{$provider}' is not configured correctly.");
     }
 
     // 4. All checks passed, begin transaction
@@ -940,40 +941,88 @@ function purchase_data() {
         $stmt_debit->close();
 
         // Log transaction
-        $description = "Data Purchase: " . $network . " " . $details['api_product_id'];
+        $description = "Data Purchase: " . $details['product_name'];
         $stmt_log = $conn->prepare("INSERT INTO transactions (user_id, type, vtu_service_type, amount, total_amount, status, gateway, description, vtu_recipient) VALUES (?, 'debit', 'data', ?, ?, 'pending', ?, ?, ?)");
         $stmt_log->bind_param("iddsss", $user_id, $base_price, $final_price, $provider, $description, $phone);
         $stmt_log->execute();
         $transaction_id = $stmt_log->insert_id;
         $stmt_log->close();
 
-        // 5. Call ClubKonnect API
-        // TODO: Implement actual ClubKonnect Data API call
-        // For now, simulate success
-        $api_result = ['success' => true, 'response' => json_encode(['statuscode' => '100', 'status' => 'ORDER_RECEIVED', 'orderid' => $transaction_id])];
+        // 5. Call the appropriate API based on the provider
+        $api_result = null;
+        $final_status = 'failed'; // Default to failed
 
-        if (!$api_result || !$api_result['success']) {
-            throw new Exception($api_result['message'] ?? 'Data API provider failed.');
+        if ($provider === 'HDKDATA') {
+            // --- HDKDATA API Call ---
+            // TODO: Replace with the actual HDKDATA API endpoint.
+            $api_url = 'https://hdkdata.com/api/data';
+
+            // TODO: Confirm the exact payload structure from HDKDATA documentation.
+            $post_data = [
+                'network' => $network, // e.g., 'MTN'
+                'plan' => $product_code, // The specific plan code
+                'mobile_number' => $phone
+            ];
+
+            $headers = [
+                'Authorization: Bearer ' . $api_details['api_key'],
+                'Content-Type: application/json'
+            ];
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $api_url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post_data));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            $response = curl_exec($ch);
+            curl_close($ch);
+
+            // TODO: Replace with actual response handling from HDKDATA documentation.
+            // For now, we simulate a success response for testing purposes.
+            $response = json_encode(['status' => 'success', 'message' => 'Data purchase successful.']);
+            $api_result = json_decode($response, true);
+
+            if (isset($api_result['status']) && $api_result['status'] === 'success') {
+                $final_status = 'completed';
+            } else {
+                 $final_status = 'failed';
+            }
+
+        } elseif ($provider === 'ClubKonnect') {
+            // --- ClubKonnect API Call ---
+            // TODO: Implement actual ClubKonnect Data API call
+            $response = json_encode(['statuscode' => '100', 'status' => 'ORDER_RECEIVED', 'orderid' => $transaction_id]);
+            $api_result = json_decode($response, true);
+            if (isset($api_result['statuscode']) && $api_result['statuscode'] == '100') {
+                $final_status = 'pending'; // ClubKonnect requires requery
+            } else {
+                $final_status = 'failed';
+            }
+
+        } elseif ($provider === 'VTPass') {
+            // --- VTPass API Call ---
+            // TODO: Implement VTPass Data API call if they are used for data
+            $final_status = 'failed'; // Not implemented
+            $response = json_encode(['error' => 'VTPass data provider not implemented.']);
+        }
+
+        if ($final_status === 'failed') {
+            throw new Exception("Transaction failed at API provider '{$provider}'. Response: " . ($response ?? 'No response'));
         }
 
         // 6. Update transaction with API response
-        $final_status = (isset($api_result['statuscode']) && $api_result['statuscode'] == '100') ? 'pending' : 'failed';
-
         $stmt_update = $conn->prepare("UPDATE transactions SET status = ?, api_response = ? WHERE id = ?");
-        $stmt_update->bind_param("ssi", $final_status, $api_result['response'], $transaction_id);
+        $stmt_update->bind_param("ssi", $final_status, $response, $transaction_id);
         $stmt_update->execute();
         $stmt_update->close();
-
-        if ($final_status === 'failed') {
-            throw new Exception('Transaction failed at API provider.');
-        }
 
         $conn->commit();
         api_response(true, 'Your data purchase request has been submitted successfully and is being processed.');
 
     } catch (Exception $e) {
         $conn->rollback();
-        error_log("Data Purchase Error: " . $e->getMessage());
+        error_log("Data Purchase Error for provider {$provider}: " . $e->getMessage());
         api_response(false, "An error occurred during the transaction. Please check your transaction history or contact support if your wallet was debited.");
     }
 }

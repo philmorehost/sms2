@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_product'])) {
     $service_type = trim($_POST['service_type']);
     $api_provider = trim($_POST['api_provider']);
     $network = trim($_POST['network']);
+    $plan_type = trim($_POST['plan_type']);
     $name = trim($_POST['name']);
     $api_product_id = trim($_POST['api_product_id']);
     $amount = filter_input(INPUT_POST, 'amount', FILTER_VALIDATE_FLOAT);
@@ -24,11 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_product'])) {
         $errors[] = "Please fill all required fields correctly.";
     } else {
         if ($product_id) { // Update
-            $stmt = $conn->prepare("UPDATE vtu_products SET service_type=?, api_provider=?, network=?, name=?, api_product_id=?, amount=?, user_discount_percentage=?, is_active=? WHERE id=?");
-            $stmt->bind_param("sssssddii", $service_type, $api_provider, $network, $name, $api_product_id, $amount, $user_discount_percentage, $is_active, $product_id);
+            $stmt = $conn->prepare("UPDATE vtu_products SET service_type=?, api_provider=?, network=?, plan_type=?, name=?, api_product_id=?, amount=?, user_discount_percentage=?, is_active=? WHERE id=?");
+            $stmt->bind_param("ssssssddii", $service_type, $api_provider, $network, $plan_type, $name, $api_product_id, $amount, $user_discount_percentage, $is_active, $product_id);
         } else { // Create
-            $stmt = $conn->prepare("INSERT INTO vtu_products (service_type, api_provider, network, name, api_product_id, amount, user_discount_percentage, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssssddi", $service_type, $api_provider, $network, $name, $api_product_id, $amount, $user_discount_percentage, $is_active);
+            $stmt = $conn->prepare("INSERT INTO vtu_products (service_type, api_provider, network, plan_type, name, api_product_id, amount, user_discount_percentage, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssssssddi", $service_type, $api_provider, $network, $plan_type, $name, $api_product_id, $amount, $user_discount_percentage, $is_active);
         }
 
         if ($stmt->execute()) {
@@ -100,6 +101,7 @@ $vtu_apis = $conn->query("SELECT provider_name FROM vtu_apis WHERE is_active = 1
                         <th>Service</th>
                         <th>Product Name</th>
                         <th>Network</th>
+                        <th>Plan Type</th>
                         <th>Provider</th>
                         <th>Price</th>
                         <th>Discount (%)</th>
@@ -116,6 +118,7 @@ $vtu_apis = $conn->query("SELECT provider_name FROM vtu_apis WHERE is_active = 1
                             <td><?php echo htmlspecialchars(ucfirst(str_replace('_', ' ', $product['service_type']))); ?></td>
                             <td><strong><?php echo htmlspecialchars($product['name']); ?></strong></td>
                             <td><?php echo htmlspecialchars($product['network'] ?? 'N/A'); ?></td>
+                            <td><?php echo htmlspecialchars($product['plan_type'] ?? 'N/A'); ?></td>
                             <td><?php echo htmlspecialchars($product['api_provider']); ?></td>
                             <td><?php echo get_currency_symbol(); ?><?php echo number_format($product['amount'], 2); ?></td>
                             <td><?php echo htmlspecialchars($product['user_discount_percentage']); ?>%</td>
@@ -132,6 +135,7 @@ $vtu_apis = $conn->query("SELECT provider_name FROM vtu_apis WHERE is_active = 1
                                     data-service_type="<?php echo $product['service_type']; ?>"
                                     data-api_provider="<?php echo $product['api_provider']; ?>"
                                     data-network="<?php echo $product['network']; ?>"
+                                    data-plan_type="<?php echo htmlspecialchars($product['plan_type']); ?>"
                                     data-name="<?php echo htmlspecialchars($product['name']); ?>"
                                     data-api_product_id="<?php echo htmlspecialchars($product['api_product_id']); ?>"
                                     data-amount="<?php echo $product['amount']; ?>"
@@ -186,12 +190,19 @@ $vtu_apis = $conn->query("SELECT provider_name FROM vtu_apis WHERE is_active = 1
                         <label for="name" class="form-label">Product Name</label>
                         <input type="text" class="form-control" id="name" name="name" required placeholder="e.g., MTN 1.5GB Data (30 Days)">
                     </div>
-                     <div class="mb-3">
-                        <label for="network" class="form-label">Network / Biller</label>
-                        <input type="text" class="form-control" id="network" name="network" placeholder="e.g., MTN, DSTV, Ikeja-Electric">
-                        <div class="form-text">Required for network-specific services like Airtime, Data, Cable.</div>
+                     <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="network" class="form-label">Network / Biller</label>
+                            <input type="text" class="form-control" id="network" name="network" placeholder="e.g., MTN, DSTV, Ikeja-Electric">
+                            <div class="form-text">e.g., MTN, DSTV...</div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="plan_type" class="form-label">Plan Type</label>
+                            <input type="text" class="form-control" id="plan_type" name="plan_type" placeholder="e.g., SME, Gifting">
+                            <div class="form-text">e.g., SME, Gifting...</div>
+                        </div>
                     </div>
-                    <div class="mb-3">
+                     <div class="mb-3">
                         <label for="api_product_id" class="form-label">API Product/Variation ID</label>
                         <input type="text" class="form-control" id="api_product_id" name="api_product_id" required>
                         <div class="form-text">The specific ID or code used by the API provider (e.g., 'dstv-padi', 'mtn-1000').</div>
@@ -236,6 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const serviceTypeInput = productModal.querySelector('#service_type');
         const apiProviderInput = productModal.querySelector('#api_provider');
         const networkInput = productModal.querySelector('#network');
+        const planTypeInput = productModal.querySelector('#plan_type');
         const nameInput = productModal.querySelector('#name');
         const apiProductIdInput = productModal.querySelector('#api_product_id');
         const amountInput = productModal.querySelector('#amount');
@@ -248,6 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
             serviceTypeInput.value = button.getAttribute('data-service_type');
             apiProviderInput.value = button.getAttribute('data-api_provider');
             networkInput.value = button.getAttribute('data-network');
+            planTypeInput.value = button.getAttribute('data-plan_type');
             nameInput.value = button.getAttribute('data-name');
             apiProductIdInput.value = button.getAttribute('data-api_product_id');
             amountInput.value = button.getAttribute('data-amount');
@@ -260,6 +273,7 @@ document.addEventListener('DOMContentLoaded', function() {
             serviceTypeInput.value = serviceTypeInput.options[0].value;
             apiProviderInput.value = apiProviderInput.options[0].value;
             networkInput.value = '';
+            planTypeInput.value = '';
             nameInput.value = '';
             apiProductIdInput.value = '';
             amountInput.value = '';

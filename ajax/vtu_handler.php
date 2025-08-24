@@ -281,19 +281,33 @@ function purchase_cable_tv() {
 function get_data_plans() {
     global $conn;
     $network = $_POST['network'] ?? '';
+    $plan_type = $_POST['plan_type'] ?? '';
 
     if (empty($network)) {
         api_response(false, 'Network not specified.');
     }
 
-    $stmt = $conn->prepare("SELECT id, name, amount, user_discount_percentage FROM vtu_products WHERE service_type = 'data' AND network = ? AND is_active = 1 ORDER BY amount ASC");
-    $stmt->bind_param("s", $network);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $plans = $result->fetch_all(MYSQLI_ASSOC);
-    $stmt->close();
-
-    api_response(true, 'Plans fetched successfully', $plans);
+    if (empty($plan_type)) {
+        // Scenario 1: Fetch unique plan types for the network
+        $stmt = $conn->prepare("SELECT DISTINCT plan_type FROM vtu_products WHERE service_type = 'data' AND network = ? AND is_active = 1 AND plan_type IS NOT NULL ORDER BY plan_type ASC");
+        $stmt->bind_param("s", $network);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $types = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        // Extract just the values
+        $type_values = array_column($types, 'plan_type');
+        api_response(true, 'Types fetched successfully', $type_values);
+    } else {
+        // Scenario 2: Fetch specific plans for the network and type
+        $stmt = $conn->prepare("SELECT id, name, amount, user_discount_percentage, api_product_id FROM vtu_products WHERE service_type = 'data' AND network = ? AND plan_type = ? AND is_active = 1 ORDER BY amount ASC");
+        $stmt->bind_param("ss", $network, $plan_type);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $plans = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        api_response(true, 'Plans fetched successfully', $plans);
+    }
 }
 
 function purchase_recharge_card() {

@@ -38,11 +38,19 @@ $network_prefixes = [
 
             <!-- Plan Selection (Initially Hidden) -->
             <div id="plan-selection-area" style="display: none;">
-                <div class="mb-3">
-                    <label for="data_plan" class="form-label">Select Data Plan</label>
-                    <select class="form-select" id="data_plan" name="dataplan_id" required>
-                        <!-- Options will be populated by JavaScript -->
-                    </select>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="plan_type" class="form-label">Plan Type</label>
+                        <select class="form-select" id="plan_type" name="plan_type" required>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="data_plan" class="form-label">Select Data Plan</label>
+                        <select class="form-select" id="data_plan" name="dataplan_id" required>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
                 </div>
                 <div class="text-center">
                     <p>You Will Be Charged: <strong id="final-price"></strong></p>
@@ -58,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const phoneInput = document.getElementById('phone_number');
     const networkInput = document.getElementById('network');
     const planSelectionArea = document.getElementById('plan-selection-area');
+    const planTypeSelect = document.getElementById('plan_type');
     const planSelect = document.getElementById('data_plan');
     const finalPriceDisplay = document.getElementById('final-price');
     const form = document.getElementById('data-form');
@@ -73,23 +82,47 @@ document.addEventListener('DOMContentLoaded', function() {
         alertContainer.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
     }
 
-    function fetchPlans(network) {
+    function fetchPlanTypes(network) {
         planSelectionArea.style.display = 'none';
-        planSelect.innerHTML = '<option>Loading plans...</option>';
+        planTypeSelect.innerHTML = '<option>Loading plan types...</option>';
+        planSelect.innerHTML = '';
 
         const formData = new FormData();
         formData.append('action', 'get_data_plans');
         formData.append('network', network);
 
-        fetch('ajax/vtu_handler.php', {
-            method: 'POST',
-            body: formData
-        })
+        fetch('ajax/vtu_handler.php', { method: 'POST', body: formData })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.data.length > 0) {
+                planTypeSelect.innerHTML = '<option value="">-- Select Plan Type --</option>';
+                data.data.forEach(type => {
+                    const option = document.createElement('option');
+                    option.value = type;
+                    option.textContent = type;
+                    planTypeSelect.appendChild(option);
+                });
+                planSelectionArea.style.display = 'block';
+            } else {
+                planSelectionArea.style.display = 'none';
+            }
+        });
+    }
+
+    function fetchPlans(network, planType) {
+        planSelect.innerHTML = '<option>Loading plans...</option>';
+
+        const formData = new FormData();
+        formData.append('action', 'get_data_plans');
+        formData.append('network', network);
+        formData.append('plan_type', planType);
+
+        fetch('ajax/vtu_handler.php', { method: 'POST', body: formData })
         .then(response => response.json())
         .then(data => {
             if (data.success && data.data.length > 0) {
                 currentPlans = data.data;
-                planSelect.innerHTML = '<option value="">-- Select a Data Plan --</option>';
+                planSelect.innerHTML = '<option value="">-- Select Data Plan --</option>';
                 currentPlans.forEach(plan => {
                     const option = document.createElement('option');
                     option.value = plan.id;
@@ -98,14 +131,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     option.textContent = `${plan.name} - ${currencySymbol}${finalPrice.toFixed(2)}`;
                     planSelect.appendChild(option);
                 });
-                planSelectionArea.style.display = 'block';
             } else {
-                planSelect.innerHTML = '<option>No data plans available for this network.</option>';
+                planSelect.innerHTML = '<option>No plans available.</option>';
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            planSelect.innerHTML = '<option>Could not load plans.</option>';
         });
     }
 
@@ -126,12 +154,21 @@ document.addEventListener('DOMContentLoaded', function() {
         networkInput.value = detectedNetwork;
 
         if (detectedNetwork && detectedNetwork !== previousNetwork) {
-            fetchPlans(detectedNetwork);
+            fetchPlanTypes(detectedNetwork);
         } else if (!detectedNetwork) {
             planSelectionArea.style.display = 'none';
-            planSelect.innerHTML = '';
         }
     }
+
+    planTypeSelect.addEventListener('change', function() {
+        const network = networkInput.value;
+        const planType = this.value;
+        planSelect.innerHTML = '';
+        finalPriceDisplay.innerHTML = '';
+        if (network && planType) {
+            fetchPlans(network, planType);
+        }
+    });
 
     planSelect.addEventListener('change', function() {
         const selectedPlanId = this.value;
@@ -139,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (selectedPlan) {
             const discount = parseFloat(selectedPlan.amount) * (parseFloat(selectedPlan.user_discount_percentage) / 100);
             const finalPrice = parseFloat(selectedPlan.amount) - discount;
-            finalPriceDisplay.innerHTML = `${currencySymbol}${finalPrice.toFixed(2)}`;
+            finalPriceDisplay.innerHTML = `<strong>${currencySymbol}${finalPrice.toFixed(2)}</strong>`;
         } else {
             finalPriceDisplay.innerHTML = '';
         }

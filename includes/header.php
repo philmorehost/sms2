@@ -135,7 +135,13 @@ if ($admin_stmt) {
                             </ul>
                         </li>
 
-                        <li class="nav-item"><a href="api-docs.php" class="nav-link <?php echo is_active('api-docs.php'); ?>"><i class="nav-icon fas fa-code"></i> <span class="nav-link-text">Dev API</span></a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle <?php echo (is_active('api-docs.php') || is_active('vtu_api_docs.php')) ? 'active' : ''; ?>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="nav-icon fas fa-code"></i> <span class="nav-link-text">Dev API</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="api-docs.php">Messaging API</a></li>
+                                <li><a class="dropdown-item" href="vtu_api_docs.php">VTU API</a></li>
+                            </ul>
+                        </li>
                         <li class="nav-item"><a href="account.php" class="nav-link <?php echo is_active('account.php'); ?>"><i class="nav-icon fas fa-user-cog"></i> <span class="nav-link-text">Account</span></a></li>
                         <li class="nav-item"><a href="logout.php" class="nav-link"><i class="nav-icon fas fa-sign-out-alt"></i> <span class="nav-link-text">Logout</span></a></li>
                     </ul>
@@ -251,7 +257,13 @@ if ($admin_stmt) {
                                </ul>
                            </li>
 
-                           <li class="nav-item"><a href="api-docs.php" class="nav-link <?php echo is_active('api-docs.php'); ?>"><i class="nav-icon fas fa-code"></i> Dev API</a></li>
+                           <li class="nav-item dropdown">
+                               <a class="nav-link dropdown-toggle <?php echo (is_active('api-docs.php') || is_active('vtu_api_docs.php')) ? 'active' : ''; ?>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="nav-icon fas fa-code"></i> Dev API</a>
+                               <ul class="dropdown-menu">
+                                   <li><a class="dropdown-item" href="api-docs.php">Messaging API</a></li>
+                                   <li><a class="dropdown-item" href="vtu_api_docs.php">VTU API</a></li>
+                               </ul>
+                           </li>
                            <li class="nav-item"><a href="account.php" class="nav-link <?php echo is_active('account.php'); ?>"><i class="nav-icon fas fa-user-cog"></i> Account</a></li>
                            <li class="nav-item"><a href="logout.php" class="nav-link"><i class="nav-icon fas fa-sign-out-alt"></i> Logout</a></li>
                         </ul>

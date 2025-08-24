@@ -898,7 +898,7 @@ function purchase_data() {
     }
 
     // 1. Get product details (including provider) and user balance
-    $stmt = $conn->prepare("SELECT p.amount, p.name, p.provider, p.user_discount_percentage, u.balance, p.network FROM vtu_products p, users u WHERE p.api_product_id = ? AND u.id = ?");
+    $stmt = $conn->prepare("SELECT p.amount, p.name, p.api_provider, p.user_discount_percentage, u.balance, p.network FROM vtu_products p, users u WHERE p.api_product_id = ? AND u.id = ?");
     $stmt->bind_param("si", $api_product_id, $user_id);
     $stmt->execute();
     $details = $stmt->get_result()->fetch_assoc();
@@ -917,7 +917,7 @@ function purchase_data() {
         api_response(false, 'Insufficient wallet balance.');
     }
 
-    $provider = $details['provider'];
+    $provider = $details['api_provider'];
     $network = $details['network'];
 
     // 3. Fetch API credentials for the determined provider

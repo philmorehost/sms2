@@ -3,7 +3,7 @@
 -- NOTE: The 'api_product_id' and 'amount' values are placeholders and must be updated
 -- once the official HDKDATA API documentation is available.
 
-INSERT INTO `vtu_products` (`service_type`, `provider`, `network`, `plan_type`, `name`, `api_product_id`, `amount`, `is_active`) VALUES
+INSERT INTO `vtu_products` (`service_type`, `api_provider`, `network`, `plan_type`, `name`, `api_product_id`, `amount`, `is_active`) VALUES
 ('data', 'HDKDATA', 'MTN', 'SME', 'MTN 500MB (SME)', 'hdk_mtn_sme_500mb', 150.00, 1),
 ('data', 'HDKDATA', 'MTN', 'SME', 'MTN 1GB (SME)', 'hdk_mtn_sme_1gb', 250.00, 1),
 ('data', 'HDKDATA', 'MTN', 'SME', 'MTN 2GB (SME)', 'hdk_mtn_sme_2gb', 500.00, 1),

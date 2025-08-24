@@ -105,6 +105,21 @@ $banner_image_path = get_settings()['landing_page_banner'] ?? null;
                     <h3>WhatsApp Messaging</h3>
                     <p>Engage with your customers on the world's most popular messaging app. Send notifications, alerts, and more.</p>
                 </div>
+                <div class="service-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Airtime & Data</h3>
+                    <p>Instantly top up any mobile number with airtime or data bundles from all major network providers.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <h3>Bill Payments</h3>
+                    <p>Pay for essential services like electricity bills and renew your Cable TV subscriptions with ease.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-ticket-alt"></i>
+                    <h3>E-PIN Services</h3>
+                    <p>Generate and print exam result checking PINs (WAEC, NECO) and recharge card vouchers.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -136,6 +151,16 @@ $banner_image_path = get_settings()['landing_page_banner'] ?? null;
                     <i class="fas fa-chart-line"></i>
                     <h4>Detailed Reports</h4>
                     <p>Track the performance of your campaigns with real-time delivery reports and analytics.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Secure Transactions</h4>
+                    <p>Your account and transactions are protected with features like transaction limits and account suspension for suspicious activity.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-receipt"></i>
+                    <h4>PDF Receipts</h4>
+                    <p>Download professional PDF receipts for any of your transactions, for easy record-keeping and accounting.</p>
                 </div>
             </div>
         </div>

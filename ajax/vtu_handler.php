@@ -26,6 +26,14 @@ switch ($action) {
         verify_vtu_service();
         break;
 
+    case 'verify_betting_customer':
+        verify_betting_customer();
+        break;
+
+    case 'purchase_betting_funding':
+        purchase_betting_funding();
+        break;
+
     case 'purchase_cable_tv':
         purchase_cable_tv();
         break;
@@ -263,6 +271,146 @@ function get_data_plans() {
     $stmt->close();
 
     api_response(true, 'Plans fetched successfully', $plans);
+}
+
+function purchase_betting_funding() {
+    global $conn;
+    $user_id = $_SESSION['user_id'];
+
+    $betting_company = $_POST['betting_company'] ?? '';
+    $customer_id = $_POST['customer_id'] ?? '';
+    $amount = filter_input(INPUT_POST, 'amount', FILTER_VALIDATE_FLOAT);
+
+    if (empty($betting_company) || empty($customer_id) || $amount === false || $amount <= 0) {
+        api_response(false, 'Missing required fields for purchase.');
+    }
+
+    // 1. Get product details and user balance
+    $stmt = $conn->prepare("SELECT p.user_discount_percentage, u.balance FROM vtu_products p, users u WHERE p.api_product_id = ? AND p.service_type = 'betting' AND u.id = ?");
+    $stmt->bind_param("si", $betting_company, $user_id);
+    $stmt->execute();
+    $details = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    if (!$details) {
+        api_response(false, 'Invalid betting company selected.');
+    }
+
+    // 2. Calculate final price and check balance
+    $discount_percent = (float)($details['user_discount_percentage'] ?? 0);
+    $final_price = $amount - ($amount * ($discount_percent / 100));
+
+    if ((float)$details['balance'] < $final_price) {
+        api_response(false, 'Insufficient wallet balance.');
+    }
+
+    // 3. Fetch ClubKonnect API credentials
+    $provider = 'ClubKonnect';
+    $stmt_api = $conn->prepare("SELECT * FROM vtu_apis WHERE provider_name = ?");
+    $stmt_api->bind_param("s", $provider);
+    $stmt_api->execute();
+    $api_details = $stmt_api->get_result()->fetch_assoc();
+    $stmt_api->close();
+
+    if (empty($api_details) || empty($api_details['username']) || empty($api_details['api_key'])) {
+        api_response(false, 'ClubKonnect API is not configured by the administrator.');
+    }
+
+    // 4. All checks passed, begin transaction
+    $conn->begin_transaction();
+    try {
+        // Debit user
+        $stmt_debit = $conn->prepare("UPDATE users SET balance = balance - ? WHERE id = ?");
+        $stmt_debit->bind_param("di", $final_price, $user_id);
+        $stmt_debit->execute();
+        $stmt_debit->close();
+
+        // Log transaction
+        $description = "Betting Wallet Funding: " . ucfirst($betting_company);
+        $stmt_log = $conn->prepare("INSERT INTO transactions (user_id, type, vtu_service_type, amount, total_amount, status, gateway, description, vtu_recipient) VALUES (?, 'debit', 'betting', ?, ?, 'pending', ?, ?, ?)");
+        $stmt_log->bind_param("iddsss", $user_id, $amount, $final_price, $provider, $description, $customer_id);
+        $stmt_log->execute();
+        $transaction_id = $stmt_log->insert_id;
+        $stmt_log->close();
+
+        // 5. Call ClubKonnect API
+        // TODO: Implement actual ClubKonnect Betting API call
+        $api_result = ['success' => true, 'response' => json_encode(['statuscode' => '100', 'status' => 'ORDER_RECEIVED', 'orderid' => $transaction_id])];
+
+        if (!$api_result || !$api_result['success']) {
+            throw new Exception($api_result['message'] ?? 'Betting API provider failed.');
+        }
+
+        // 6. Update transaction with API response
+        $final_status = (isset($api_result['statuscode']) && $api_result['statuscode'] == '100') ? 'pending' : 'failed';
+
+        $stmt_update = $conn->prepare("UPDATE transactions SET status = ?, api_response = ? WHERE id = ?");
+        $stmt_update->bind_param("ssi", $final_status, $api_result['response'], $transaction_id);
+        $stmt_update->execute();
+        $stmt_update->close();
+
+        if ($final_status === 'failed') {
+            throw new Exception('Transaction failed at API provider.');
+        }
+
+        $conn->commit();
+        api_response(true, 'Your betting wallet funding request has been submitted successfully.');
+
+    } catch (Exception $e) {
+        $conn->rollback();
+        error_log("Betting Funding Error: " . $e->getMessage());
+        api_response(false, "An error occurred during the transaction. Please check your transaction history or contact support if your wallet was debited.");
+    }
+}
+
+function verify_betting_customer() {
+    global $conn;
+    $betting_company = $_POST['betting_company'] ?? '';
+    $customer_id = $_POST['customer_id'] ?? '';
+
+    if (empty($betting_company) || empty($customer_id)) {
+        api_response(false, 'Betting company and customer ID are required.');
+    }
+
+    // Fetch ClubKonnect API credentials
+    $provider = 'ClubKonnect';
+    $stmt_api = $conn->prepare("SELECT * FROM vtu_apis WHERE provider_name = ?");
+    $stmt_api->bind_param("s", $provider);
+    $stmt_api->execute();
+    $api_details = $stmt_api->get_result()->fetch_assoc();
+    $stmt_api->close();
+
+    if (empty($api_details) || empty($api_details['username']) || empty($api_details['api_key'])) {
+        api_response(false, 'ClubKonnect API is not configured by the administrator.');
+    }
+
+    // Call ClubKonnect API
+    $api_url = "https://www.nellobytesystems.com/APIVerifyBettingV1.asp";
+    $params = [
+        'UserID' => $api_details['username'],
+        'APIKey' => $api_details['api_key'],
+        'BettingCompany' => $betting_company,
+        'CustomerID' => $customer_id
+    ];
+    $url_with_params = $api_url . '?' . http_build_query($params);
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url_with_params);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    if ($response === false) {
+        api_response(false, 'API call failed.');
+    }
+
+    $api_result = json_decode($response, true);
+
+    if (isset($api_result['customer_name']) && !str_contains(strtolower($api_result['customer_name']), 'error')) {
+        api_response(true, 'Verification successful', $api_result);
+    } else {
+        api_response(false, $api_result['customer_name'] ?? 'Invalid Customer ID.');
+    }
 }
 
 function purchase_electricity() {

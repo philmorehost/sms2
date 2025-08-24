@@ -22,11 +22,16 @@ $action = $_POST['action'] ?? '';
 
 switch ($action) {
     case 'verify_smartcard':
-        verify_smartcard();
+    case 'verify_meter':
+        verify_vtu_service();
         break;
 
     case 'purchase_cable_tv':
         purchase_cable_tv();
+        break;
+
+    case 'purchase_electricity':
+        purchase_electricity();
         break;
 
     case 'purchase_airtime':
@@ -46,14 +51,15 @@ switch ($action) {
         break;
 }
 
-function verify_smartcard() {
+function verify_vtu_service() {
     global $conn;
 
     $serviceID = $_POST['serviceID'] ?? '';
     $billersCode = $_POST['billersCode'] ?? '';
+    $type = $_POST['type'] ?? null; // For electricity meter type
 
     if (empty($serviceID) || empty($billersCode)) {
-        api_response(false, 'Service provider and smartcard number are required.');
+        api_response(false, 'Service provider and account/meter number are required.');
     }
 
     // Fetch VTPass API details
@@ -88,6 +94,10 @@ function verify_smartcard() {
         'serviceID' => $serviceID,
         'billersCode' => $billersCode,
     ];
+
+    if ($type) {
+        $post_data['type'] = $type;
+    }
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $api_url);
@@ -253,6 +263,127 @@ function get_data_plans() {
     $stmt->close();
 
     api_response(true, 'Plans fetched successfully', $plans);
+}
+
+function purchase_electricity() {
+    global $conn;
+    $user_id = $_SESSION['user_id'];
+
+    $serviceID = $_POST['serviceID'] ?? '';
+    $billersCode = $_POST['billersCode'] ?? '';
+    $variation_code = $_POST['variation_code'] ?? ''; // prepaid or postpaid
+    $amount = filter_input(INPUT_POST, 'amount', FILTER_VALIDATE_FLOAT);
+
+    if (empty($serviceID) || empty($billersCode) || empty($variation_code) || $amount === false || $amount <= 0) {
+        api_response(false, 'Missing required fields for purchase.');
+    }
+
+    // 1. Get product details and user balance
+    $stmt = $conn->prepare("SELECT p.user_discount_percentage, u.balance FROM vtu_products p, users u WHERE p.api_product_id = ? AND u.id = ?");
+    $stmt->bind_param("si", $serviceID, $user_id);
+    $stmt->execute();
+    $details = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    if (!$details) {
+        api_response(false, 'Invalid electricity provider selected.');
+    }
+
+    // 2. Calculate final price and check balance
+    $discount_percent = (float)($details['user_discount_percentage'] ?? 0);
+    $final_price = $amount - ($amount * ($discount_percent / 100));
+
+    if ((float)$details['balance'] < $final_price) {
+        api_response(false, 'Insufficient wallet balance.');
+    }
+
+    // 3. Fetch VTPass API credentials
+    $provider = 'VTPass';
+    $stmt_api = $conn->prepare("SELECT * FROM vtu_apis WHERE provider_name = ?");
+    $stmt_api->bind_param("s", $provider);
+    $stmt_api->execute();
+    $api_details = $stmt_api->get_result()->fetch_assoc();
+    $stmt_api->close();
+
+    if (empty($api_details)) {
+        api_response(false, 'VTPass API is not configured.');
+    }
+
+    // 4. All checks passed, begin transaction
+    $conn->begin_transaction();
+    try {
+        // Debit user
+        $stmt_debit = $conn->prepare("UPDATE users SET balance = balance - ? WHERE id = ?");
+        $stmt_debit->bind_param("di", $final_price, $user_id);
+        $stmt_debit->execute();
+        $stmt_debit->close();
+
+        // Log transaction
+        $description = "Electricity Bill: " . ucfirst($serviceID) . " (" . $variation_code . ")";
+        $stmt_log = $conn->prepare("INSERT INTO transactions (user_id, type, vtu_service_type, amount, total_amount, status, gateway, description, vtu_recipient) VALUES (?, 'debit', 'electricity', ?, ?, 'pending', ?, ?, ?)");
+        $stmt_log->bind_param("iddsss", $user_id, $amount, $final_price, $provider, $description, $billersCode);
+        $stmt_log->execute();
+        $transaction_id = $stmt_log->insert_id;
+        $stmt_log->close();
+
+        // 5. Call VTPass API
+        $api_url = $api_details['is_sandbox'] ? 'https://sandbox.vtpass.com/api/pay' : 'https://vtpass.com/api/pay';
+        $request_id = date('YmdHis') . $transaction_id;
+        $user_phone = $GLOBALS['current_user']['phone_number'];
+
+        $post_data = [
+            'request_id' => $request_id,
+            'serviceID' => $serviceID,
+            'billersCode' => $billersCode,
+            'variation_code' => $variation_code,
+            'amount' => $amount,
+            'phone' => $user_phone,
+        ];
+
+        $headers = [];
+        if ($api_details['is_sandbox']) {
+            $headers[] = 'Authorization: Basic ' . base64_encode($api_details['username'] . ':' . $api_details['secret_key']);
+        } else {
+            $headers[] = 'api-key: ' . $api_details['api_key'];
+            $headers[] = 'secret-key: ' . $api_details['secret_key'];
+        }
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $api_url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $api_result = json_decode($response, true);
+
+        // 6. Update transaction with API response
+        $final_status = 'pending';
+        if(isset($api_result['code']) && $api_result['code'] == '000') {
+            $final_status = 'completed';
+        } elseif (isset($api_result['code']) && $api_result['code'] != '099') {
+            $final_status = 'failed';
+        }
+
+        $stmt_update = $conn->prepare("UPDATE transactions SET status = ?, api_response = ? WHERE id = ?");
+        $stmt_update->bind_param("ssi", $final_status, $response, $transaction_id);
+        $stmt_update->execute();
+        $stmt_update->close();
+
+        if ($final_status === 'failed') {
+            throw new Exception('Transaction failed at API provider.');
+        }
+
+        $conn->commit();
+        api_response(true, 'Your electricity bill payment has been submitted successfully.');
+
+    } catch (Exception $e) {
+        $conn->rollback();
+        error_log("Electricity Purchase Error: " . $e->getMessage());
+        api_response(false, "An error occurred during the transaction. Please check your transaction history or contact support if your wallet was debited.");
+    }
 }
 
 function purchase_data() {

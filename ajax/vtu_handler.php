@@ -289,7 +289,7 @@ function get_data_plans() {
 
     if (empty($plan_type)) {
         // Scenario 1: Fetch unique plan types for the network
-        $stmt = $conn->prepare("SELECT DISTINCT plan_type FROM vtu_products WHERE network = ? AND status = 'active' AND plan_type IS NOT NULL AND service_id = (SELECT id FROM vtu_services WHERE service_name = 'Mobile Data') ORDER BY plan_type ASC");
+        $stmt = $conn->prepare("SELECT DISTINCT plan_type FROM vtu_products WHERE service_type = 'data' AND network = ? AND is_active = 1 AND plan_type IS NOT NULL ORDER BY plan_type ASC");
         $stmt->bind_param("s", $network);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -300,7 +300,7 @@ function get_data_plans() {
         api_response(true, 'Types fetched successfully', $type_values);
     } else {
         // Scenario 2: Fetch specific plans for the network and type
-        $stmt = $conn->prepare("SELECT product_code, product_name, price FROM vtu_products WHERE network = ? AND plan_type = ? AND status = 'active' AND service_id = (SELECT id FROM vtu_services WHERE service_name = 'Mobile Data') ORDER BY price ASC");
+        $stmt = $conn->prepare("SELECT api_product_id, name, amount, user_discount_percentage FROM vtu_products WHERE service_type = 'data' AND network = ? AND plan_type = ? AND is_active = 1 ORDER BY amount ASC");
         $stmt->bind_param("ss", $network, $plan_type);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -891,15 +891,15 @@ function purchase_data() {
     $_SESSION['limit_exceeded_attempts'] = 0;
 
     $phone = $_POST['phone'] ?? '';
-    $product_code = $_POST['product_code'] ?? '';
+    $api_product_id = $_POST['api_product_id'] ?? '';
 
-    if (empty($phone) || empty($product_code)) {
+    if (empty($phone) || empty($api_product_id)) {
         api_response(false, 'Missing required fields for data purchase.');
     }
 
     // 1. Get product details (including provider) and user balance
-    $stmt = $conn->prepare("SELECT p.price, p.product_name, p.provider, u.balance, p.network FROM vtu_products p, users u WHERE p.product_code = ? AND u.id = ?");
-    $stmt->bind_param("si", $product_code, $user_id);
+    $stmt = $conn->prepare("SELECT p.amount, p.name, p.provider, p.user_discount_percentage, u.balance, p.network FROM vtu_products p, users u WHERE p.api_product_id = ? AND u.id = ?");
+    $stmt->bind_param("si", $api_product_id, $user_id);
     $stmt->execute();
     $details = $stmt->get_result()->fetch_assoc();
     $stmt->close();
@@ -909,9 +909,9 @@ function purchase_data() {
     }
 
     // 2. Calculate final price and check balance
-    // Note: For now, we assume no user-specific discount on data, but this can be added later.
-    $base_price = (float)$details['price'];
-    $final_price = $base_price; // No discount for now
+    $base_price = (float)$details['amount'];
+    $discount = $base_price * ((float)($details['user_discount_percentage'] ?? 0) / 100);
+    $final_price = $base_price - $discount;
 
     if ((float)$details['balance'] < $final_price) {
         api_response(false, 'Insufficient wallet balance.');
@@ -941,7 +941,7 @@ function purchase_data() {
         $stmt_debit->close();
 
         // Log transaction
-        $description = "Data Purchase: " . $details['product_name'];
+        $description = "Data Purchase: " . $details['name'];
         $stmt_log = $conn->prepare("INSERT INTO transactions (user_id, type, vtu_service_type, amount, total_amount, status, gateway, description, vtu_recipient) VALUES (?, 'debit', 'data', ?, ?, 'pending', ?, ?, ?)");
         $stmt_log->bind_param("iddsss", $user_id, $base_price, $final_price, $provider, $description, $phone);
         $stmt_log->execute();
@@ -951,6 +951,7 @@ function purchase_data() {
         // 5. Call the appropriate API based on the provider
         $api_result = null;
         $final_status = 'failed'; // Default to failed
+        $response = '';
 
         if ($provider === 'HDKDATA') {
             // --- HDKDATA API Call ---
@@ -960,7 +961,7 @@ function purchase_data() {
             // TODO: Confirm the exact payload structure from HDKDATA documentation.
             $post_data = [
                 'network' => $network, // e.g., 'MTN'
-                'plan' => $product_code, // The specific plan code
+                'plan' => $api_product_id, // The specific plan code
                 'mobile_number' => $phone
             ];
 

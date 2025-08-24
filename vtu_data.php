@@ -47,7 +47,7 @@ $network_prefixes = [
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="data_plan" class="form-label">Select Data Plan</label>
-                        <select class="form-select" id="data_plan" name="product_code" required>
+                        <select class="form-select" id="data_plan" name="api_product_id" required>
                             <!-- Options will be populated by JavaScript -->
                         </select>
                     </div>
@@ -125,9 +125,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 planSelect.innerHTML = '<option value="">-- Select Data Plan --</option>';
                 currentPlans.forEach(plan => {
                     const option = document.createElement('option');
-                    option.value = plan.product_code; // Use product_code
-                    const finalPrice = parseFloat(plan.price); // API now returns final price
-                    option.textContent = `${plan.product_name} - ${currencySymbol}${finalPrice.toFixed(2)}`;
+                    option.value = plan.api_product_id;
+                    const discount = parseFloat(plan.amount) * (parseFloat(plan.user_discount_percentage || 0) / 100);
+                    const finalPrice = parseFloat(plan.amount) - discount;
+                    option.textContent = `${plan.name} - ${currencySymbol}${finalPrice.toFixed(2)}`;
                     planSelect.appendChild(option);
                 });
             } else {
@@ -170,10 +171,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     planSelect.addEventListener('change', function() {
-        const selectedProductCode = this.value;
-        const selectedPlan = currentPlans.find(p => p.product_code == selectedProductCode);
+        const selectedProductId = this.value;
+        const selectedPlan = currentPlans.find(p => p.api_product_id == selectedProductId);
         if (selectedPlan) {
-            const finalPrice = parseFloat(selectedPlan.price);
+            const discount = parseFloat(selectedPlan.amount) * (parseFloat(selectedPlan.user_discount_percentage || 0) / 100);
+            const finalPrice = parseFloat(selectedPlan.amount) - discount;
             finalPriceDisplay.innerHTML = `<strong>${currencySymbol}${finalPrice.toFixed(2)}</strong>`;
         } else {
             finalPriceDisplay.innerHTML = '';

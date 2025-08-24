@@ -1,14 +1,11 @@
 <?php
 $page_title = 'Terms of Service';
 require_once 'app/bootstrap.php';
-include 'includes/header.php';
+include 'includes/public_header.php';
 ?>
 
 <div class="container my-5">
     <div class="card">
-        <div class="card-header">
-            <h1>Terms of Service</h1>
-        </div>
         <div class="card-body">
             <p>Welcome to <?php echo SITE_NAME; ?>!</p>
 
@@ -38,4 +35,4 @@ include 'includes/header.php';
     </div>
 </div>
 
-<?php include 'includes/footer.php'; ?>
+<?php include 'includes/public_footer.php'; ?>

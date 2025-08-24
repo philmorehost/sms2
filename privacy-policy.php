@@ -1,14 +1,11 @@
 <?php
 $page_title = 'Privacy Policy';
 require_once 'app/bootstrap.php';
-include 'includes/header.php';
+include 'includes/public_header.php';
 ?>
 
 <div class="container my-5">
     <div class="card">
-        <div class="card-header">
-            <h1>Privacy Policy</h1>
-        </div>
         <div class="card-body">
             <p>Your privacy is important to us. It is <?php echo SITE_NAME; ?>'s policy to respect your privacy regarding any information we may collect from you across our website.</p>
 
@@ -55,4 +52,4 @@ include 'includes/header.php';
     </div>
 </div>
 
-<?php include 'includes/footer.php'; ?>
+<?php include 'includes/public_footer.php'; ?>

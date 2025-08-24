@@ -4,7 +4,7 @@ require_once __DIR__ . '/../app/bootstrap.php';
 
 // Determine the active tab
 // -- MODIFIED: Removed old rate tabs and added a new 'service_pricing' tab
-$tabs = ['general', 'pricing', 'service_pricing', 'payment_gateways', 'email', 'api', 'vtu_apis', 'cron'];
+$tabs = ['general', 'pricing', 'service_pricing', 'payment_gateways', 'email', 'api', 'cron'];
 $active_tab = $_GET['tab'] ?? 'general';
 if (!in_array($active_tab, $tabs)) {
     $active_tab = 'general';
@@ -274,37 +274,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_service_pricing']
 }
 
 
-// Handle VTU API Settings
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_vtu_apis'])) {
-    $providers = ['VTPass', 'ClubKonnect', 'NaijaResultPins', 'HDKDATA'];
-    $stmt = $conn->prepare("INSERT INTO vtu_apis (provider_name, api_key, secret_key, username, is_sandbox) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE api_key = VALUES(api_key), secret_key = VALUES(secret_key), username = VALUES(username), is_sandbox = VALUES(is_sandbox)");
-
-    foreach ($providers as $provider) {
-        $api_key = $_POST[strtolower($provider) . '_api_key'] ?? '';
-        $secret_key = $_POST[strtolower($provider) . '_secret_key'] ?? null;
-        $username = $_POST[strtolower($provider) . '_username'] ?? null;
-        $is_sandbox = isset($_POST[strtolower($provider) . '_is_sandbox']) ? 1 : 0;
-
-        // We only bind 5 params, but the table has more. This is fine for this operation.
-        $stmt->bind_param("ssssi", $provider, $api_key, $secret_key, $username, $is_sandbox);
-        $stmt->execute();
-    }
-    $stmt->close();
-    $success = "VTU API settings have been updated successfully.";
-}
-
 // Fetch all settings from the database AFTER all potential updates.
 $settings_result = $conn->query("SELECT * FROM settings");
 $settings = [];
 while ($row = $settings_result->fetch_assoc()) {
     $settings[$row['setting_key']] = $row['setting_value'];
-}
-
-// Fetch all VTU API settings
-$vtu_apis = [];
-$vtu_apis_result = $conn->query("SELECT * FROM vtu_apis");
-while ($row = $vtu_apis_result->fetch_assoc()) {
-    $vtu_apis[$row['provider_name']] = $row;
 }
 
 
@@ -334,10 +308,7 @@ include 'includes/header.php';
                 <a class="nav-link <?php if($active_tab == 'email') echo 'active'; ?>" href="?tab=email">Email</a>
             </li>
              <li class="nav-item">
-                <a class="nav-link <?php if($active_tab == 'api') echo 'active'; ?>" href="?tab=api">Messaging APIs</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link <?php if($active_tab == 'vtu_apis') echo 'active'; ?>" href="?tab=vtu_apis">VTU APIs</a>
+                <a class="nav-link <?php if($active_tab == 'api') echo 'active'; ?>" href="?tab=api">Service APIs</a>
             </li>
              <li class="nav-item">
                 <a class="nav-link <?php if($active_tab == 'cron') echo 'active'; ?>" href="?tab=cron">Cron Jobs</a>
@@ -697,65 +668,6 @@ include 'includes/header.php';
                         <div class="form-text">Your callback URL should point to: <strong><?php echo SITE_URL . '/api/webhook-dlr.php'; ?></strong></div>
                     </div>
                     <button type="submit" name="save_callback_url" class="btn btn-primary">Set Callback URL</button>
-                </form>
-            </div>
-
-            <!-- VTU APIs Tab -->
-            <div class="tab-pane fade <?php if($active_tab == 'vtu_apis') echo 'show active'; ?>" id="vtu_apis">
-                <h4>VTU Service API Settings</h4>
-                <p>Manage API keys for VTU services like Airtime, Data, Bills, etc.</p>
-                <hr>
-                <?php if ($success && $active_tab == 'vtu_apis'): ?>
-                    <div class="alert alert-success"><?php echo $success; ?></div>
-                <?php endif; ?>
-                <form action="settings.php?tab=vtu_apis" method="POST">
-                    <h5 class="mt-4">VTPass API</h5>
-                    <div class="form-check form-switch mb-2">
-                        <input class="form-check-input" type="checkbox" role="switch" id="vtpass_is_sandbox" name="vtpass_is_sandbox" value="1" <?php if(!empty($vtu_apis['VTPass']['is_sandbox'])) echo 'checked'; ?>>
-                        <label class="form-check-label" for="vtpass_is_sandbox">Enable Sandbox Mode</label>
-                    </div>
-                    <div class="mb-3">
-                        <label for="vtpass_username" class="form-label">API Username/Email (for Sandbox)</label>
-                        <input type="text" class="form-control" id="vtpass_username" name="vtpass_username" value="<?php echo htmlspecialchars($vtu_apis['VTPass']['username'] ?? ''); ?>">
-                    </div>
-                    <div class="mb-3">
-                        <label for="vtpass_api_key" class="form-label">API Key (for Live)</label>
-                        <input type="password" class="form-control" id="vtpass_api_key" name="vtpass_api_key" value="<?php echo htmlspecialchars($vtu_apis['VTPass']['api_key'] ?? ''); ?>">
-                    </div>
-                     <div class="mb-3">
-                        <label for="vtpass_secret_key" class="form-label">Secret Key (for Live)</label>
-                        <input type="password" class="form-control" id="vtpass_secret_key" name="vtpass_secret_key" value="<?php echo htmlspecialchars($vtu_apis['VTPass']['secret_key'] ?? ''); ?>">
-                    </div>
-
-                    <hr>
-
-                    <h5 class="mt-4">ClubKonnect API</h5>
-                     <div class="mb-3">
-                        <label for="clubkonnect_username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="clubkonnect_username" name="clubkonnect_username" value="<?php echo htmlspecialchars($vtu_apis['ClubKonnect']['username'] ?? ''); ?>">
-                    </div>
-                    <div class="mb-3">
-                        <label for="clubkonnect_api_key" class="form-label">API Key</label>
-                        <input type="password" class="form-control" id="clubkonnect_api_key" name="clubkonnect_api_key" value="<?php echo htmlspecialchars($vtu_apis['ClubKonnect']['api_key'] ?? ''); ?>">
-                    </div>
-
-                    <hr>
-
-                    <h5 class="mt-4">NaijaResultPins API</h5>
-                    <div class="mb-3">
-                        <label for="naijaresultpins_api_key" class="form-label">Bearer Token</label>
-                        <input type="password" class="form-control" id="naijaresultpins_api_key" name="naijaresultpins_api_key" value="<?php echo htmlspecialchars($vtu_apis['NaijaResultPins']['api_key'] ?? ''); ?>">
-                    </div>
-
-                    <hr>
-
-                    <h5 class="mt-4">HDKDATA API</h5>
-                     <div class="mb-3">
-                        <label for="hdkdata_api_key" class="form-label">API Key / Bearer Token</label>
-                        <input type="password" class="form-control" id="hdkdata_api_key" name="hdkdata_api_key" value="<?php echo htmlspecialchars($vtu_apis['HDKDATA']['api_key'] ?? ''); ?>">
-                    </div>
-
-                    <button type="submit" name="save_vtu_apis" class="btn btn-primary">Save VTU API Settings</button>
                 </form>
             </div>
 

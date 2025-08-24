@@ -33,6 +33,14 @@ switch ($action) {
         purchase_airtime();
         break;
 
+    case 'get_data_plans':
+        get_data_plans();
+        break;
+
+    case 'purchase_data':
+        purchase_data();
+        break;
+
     default:
         api_response(false, 'Invalid action specified.');
         break;
@@ -225,6 +233,116 @@ function purchase_cable_tv() {
         // If the failure was after debit, we need to inform the user.
         // A dedicated requery script will handle the refund to avoid race conditions.
         error_log("VTU Purchase Error: " . $e->getMessage());
+        api_response(false, "An error occurred during the transaction. Please check your transaction history or contact support if your wallet was debited.");
+    }
+}
+
+function get_data_plans() {
+    global $conn;
+    $network = $_POST['network'] ?? '';
+
+    if (empty($network)) {
+        api_response(false, 'Network not specified.');
+    }
+
+    $stmt = $conn->prepare("SELECT id, name, amount, user_discount_percentage FROM vtu_products WHERE service_type = 'data' AND network = ? AND is_active = 1 ORDER BY amount ASC");
+    $stmt->bind_param("s", $network);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $plans = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+
+    api_response(true, 'Plans fetched successfully', $plans);
+}
+
+function purchase_data() {
+    global $conn;
+    $user_id = $_SESSION['user_id'];
+
+    $phone = $_POST['phone'] ?? '';
+    $network = $_POST['network'] ?? '';
+    $dataplan_id = filter_input(INPUT_POST, 'dataplan_id', FILTER_VALIDATE_INT);
+
+    if (empty($phone) || empty($network) || empty($dataplan_id)) {
+        api_response(false, 'Missing required fields for data purchase.');
+    }
+
+    // 1. Get product details and user balance
+    $stmt = $conn->prepare("SELECT p.amount, p.user_discount_percentage, p.api_provider, p.api_product_id, u.balance FROM vtu_products p, users u WHERE p.id = ? AND u.id = ?");
+    $stmt->bind_param("ii", $dataplan_id, $user_id);
+    $stmt->execute();
+    $details = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    if (!$details) {
+        api_response(false, 'Invalid data plan selected.');
+    }
+
+    // 2. Calculate final price and check balance
+    $base_price = (float)$details['amount'];
+    $discount = $base_price * ((float)$details['user_discount_percentage'] / 100);
+    $final_price = $base_price - $discount;
+
+    if ((float)$details['balance'] < $final_price) {
+        api_response(false, 'Insufficient wallet balance.');
+    }
+
+    // 3. Fetch API credentials for the provider (ClubKonnect)
+    $provider = 'ClubKonnect';
+    $stmt_api = $conn->prepare("SELECT * FROM vtu_apis WHERE provider_name = ?");
+    $stmt_api->bind_param("s", $provider);
+    $stmt_api->execute();
+    $api_details = $stmt_api->get_result()->fetch_assoc();
+    $stmt_api->close();
+
+    if (empty($api_details) || empty($api_details['username']) || empty($api_details['api_key'])) {
+        api_response(false, 'ClubKonnect API is not configured by the administrator.');
+    }
+
+    // 4. All checks passed, begin transaction
+    $conn->begin_transaction();
+    try {
+        // Debit user
+        $stmt_debit = $conn->prepare("UPDATE users SET balance = balance - ? WHERE id = ?");
+        $stmt_debit->bind_param("di", $final_price, $user_id);
+        $stmt_debit->execute();
+        $stmt_debit->close();
+
+        // Log transaction
+        $description = "Data Purchase: " . $network . " " . $details['api_product_id'];
+        $stmt_log = $conn->prepare("INSERT INTO transactions (user_id, type, vtu_service_type, amount, total_amount, status, gateway, description, vtu_recipient) VALUES (?, 'debit', 'data', ?, ?, 'pending', ?, ?, ?)");
+        $stmt_log->bind_param("iddsss", $user_id, $base_price, $final_price, $provider, $description, $phone);
+        $stmt_log->execute();
+        $transaction_id = $stmt_log->insert_id;
+        $stmt_log->close();
+
+        // 5. Call ClubKonnect API
+        // TODO: Implement actual ClubKonnect Data API call
+        // For now, simulate success
+        $api_result = ['success' => true, 'response' => json_encode(['statuscode' => '100', 'status' => 'ORDER_RECEIVED', 'orderid' => $transaction_id])];
+
+        if (!$api_result || !$api_result['success']) {
+            throw new Exception($api_result['message'] ?? 'Data API provider failed.');
+        }
+
+        // 6. Update transaction with API response
+        $final_status = (isset($api_result['statuscode']) && $api_result['statuscode'] == '100') ? 'pending' : 'failed';
+
+        $stmt_update = $conn->prepare("UPDATE transactions SET status = ?, api_response = ? WHERE id = ?");
+        $stmt_update->bind_param("ssi", $final_status, $api_result['response'], $transaction_id);
+        $stmt_update->execute();
+        $stmt_update->close();
+
+        if ($final_status === 'failed') {
+            throw new Exception('Transaction failed at API provider.');
+        }
+
+        $conn->commit();
+        api_response(true, 'Your data purchase request has been submitted successfully and is being processed.');
+
+    } catch (Exception $e) {
+        $conn->rollback();
+        error_log("Data Purchase Error: " . $e->getMessage());
         api_response(false, "An error occurred during the transaction. Please check your transaction history or contact support if your wallet was debited.");
     }
 }

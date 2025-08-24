@@ -26,6 +26,10 @@ switch ($action) {
         verify_vtu_service();
         break;
 
+    case 'purchase_exam_pin':
+        purchase_exam_pin();
+        break;
+
     case 'verify_betting_customer':
         verify_betting_customer();
         break;
@@ -271,6 +275,103 @@ function get_data_plans() {
     $stmt->close();
 
     api_response(true, 'Plans fetched successfully', $plans);
+}
+
+function purchase_exam_pin() {
+    global $conn;
+    $user_id = $_SESSION['user_id'];
+
+    $product_id = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
+    $quantity = filter_input(INPUT_POST, 'quantity', FILTER_VALIDATE_INT);
+
+    if (empty($product_id) || empty($quantity) || $quantity <= 0) {
+        api_response(false, 'Missing required fields for purchase.');
+    }
+
+    // 1. Get product details and user balance
+    $stmt = $conn->prepare("SELECT p.amount, p.user_discount_percentage, p.api_provider, p.api_product_id, p.name, u.balance FROM vtu_products p, users u WHERE p.id = ? AND p.service_type = 'exam_pin' AND u.id = ?");
+    $stmt->bind_param("ii", $product_id, $user_id);
+    $stmt->execute();
+    $details = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    if (!$details) {
+        api_response(false, 'Invalid exam PIN product selected.');
+    }
+
+    // 2. Calculate final price and check balance
+    $base_price = (float)$details['amount'];
+    $discount = $base_price * ((float)$details['user_discount_percentage'] / 100);
+    $final_price = ($base_price - $discount) * $quantity;
+
+    if ((float)$details['balance'] < $final_price) {
+        api_response(false, 'Insufficient wallet balance.');
+    }
+
+    // 3. Fetch API credentials for the provider
+    $provider = $details['api_provider'];
+    $stmt_api = $conn->prepare("SELECT * FROM vtu_apis WHERE provider_name = ?");
+    $stmt_api->bind_param("s", $provider);
+    $stmt_api->execute();
+    $api_details = $stmt_api->get_result()->fetch_assoc();
+    $stmt_api->close();
+
+    if (empty($api_details) || empty($api_details['api_key'])) {
+        api_response(false, "API for {$provider} is not configured by the administrator.");
+    }
+
+    // 4. All checks passed, begin transaction
+    $conn->begin_transaction();
+    try {
+        // Debit user
+        $stmt_debit = $conn->prepare("UPDATE users SET balance = balance - ? WHERE id = ?");
+        $stmt_debit->bind_param("di", $final_price, $user_id);
+        $stmt_debit->execute();
+        $stmt_debit->close();
+
+        // Log transaction
+        $description = "Exam PIN Purchase: " . $details['name'] . " (Qty: " . $quantity . ")";
+        $stmt_log = $conn->prepare("INSERT INTO transactions (user_id, type, vtu_service_type, amount, total_amount, status, gateway, description) VALUES (?, 'debit', 'exam_pin', ?, ?, 'pending', ?, ?)");
+        $stmt_log->bind_param("iddss", $user_id, $base_price, $final_price, $provider, $description);
+        $stmt_log->execute();
+        $transaction_id = $stmt_log->insert_id;
+        $stmt_log->close();
+
+        // 5. Call the selected API provider
+        $api_result = null;
+        if ($provider === 'NaijaResultPins') {
+            // TODO: Implement NaijaResultPins API call
+            $api_result = ['success' => true, 'response' => json_encode(['status' => true, 'code' => '000', 'cards' => [['pin' => 'PIN1234567890', 'serial_no' => 'SERIAL123']]])];
+        } elseif ($provider === 'VTPass') {
+            // TODO: Implement VTPass Exam PIN API call
+            api_response(false, "VTPass for Exam PINs is not yet implemented.");
+        }
+
+        if (!$api_result || !$api_result['success']) {
+            throw new Exception($api_result['message'] ?? 'Exam PIN API provider failed.');
+        }
+
+        // 6. Update transaction with API response
+        $api_response_data = json_decode($api_result['response'], true);
+        $final_status = (isset($api_response_data['status']) && $api_response_data['status'] === true) ? 'completed' : 'failed';
+
+        $stmt_update = $conn->prepare("UPDATE transactions SET status = ?, api_response = ? WHERE id = ?");
+        $stmt_update->bind_param("ssi", $final_status, $api_result['response'], $transaction_id);
+        $stmt_update->execute();
+        $stmt_update->close();
+
+        if ($final_status === 'failed') {
+            throw new Exception('Transaction failed at API provider.');
+        }
+
+        $conn->commit();
+        api_response(true, 'Your Exam PINs have been generated successfully.', ['cards' => $api_response_data['cards']]);
+
+    } catch (Exception $e) {
+        $conn->rollback();
+        error_log("Exam PIN Purchase Error: " . $e->getMessage());
+        api_response(false, "An error occurred during the transaction. Please check your transaction history or contact support if your wallet was debited.");
+    }
 }
 
 function purchase_betting_funding() {

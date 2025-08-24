@@ -76,8 +76,11 @@ include 'includes/header.php';
                             <td><?php echo htmlspecialchars($txn['reference']); ?></td>
                             <td>
                                 <?php if ($txn['invoice_id']): ?>
-                                    <a href="view-invoice.php?id=<?php echo $txn['invoice_id']; ?>" class="btn btn-sm btn-outline-primary">View Invoice</a>
+                                    <a href="view-invoice.php?id=<?php echo $txn['invoice_id']; ?>" class="btn btn-sm btn-outline-primary" title="View Invoice"><i class="fas fa-file-invoice"></i></a>
                                 <?php endif; ?>
+                                <a href="download_receipt.php?id=<?php echo $txn['id']; ?>" class="btn btn-sm btn-outline-secondary" title="Download Receipt">
+                                    <i class="fas fa-file-pdf"></i>
+                                </a>
                             </td>
                         </tr>
                         <?php endforeach; ?>

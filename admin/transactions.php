@@ -195,10 +195,10 @@ include 'includes/header.php';
                                 </form>
                             <?php elseif (!empty($trans['invoice_id'])): ?>
                                 <!-- View Invoice button for all other transactions that have an invoice -->
-                                <a href="view-invoice.php?id=<?php echo $trans['invoice_id']; ?>" class="btn btn-info btn-sm">View Invoice</a>
+                                <a href="view-invoice.php?id=<?php echo $trans['invoice_id']; ?>" class="btn btn-info btn-sm" title="View Invoice"><i class="fas fa-file-invoice"></i></a>
+                                <a href="../download_receipt.php?id=<?php echo $trans['id']; ?>" class="btn btn-secondary btn-sm" title="Download Receipt"><i class="fas fa-file-pdf"></i></a>
                             <?php else: ?>
-                                <!-- Fallback for transactions without an invoice -->
-                                N/A
+                                <a href="../download_receipt.php?id=<?php echo $trans['id']; ?>" class="btn btn-secondary btn-sm" title="Download Receipt"><i class="fas fa-file-pdf"></i></a>
                             <?php endif; ?>
                         </td>
                     </tr>

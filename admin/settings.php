@@ -277,13 +277,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_service_pricing']
 // Handle VTU API Settings
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_vtu_apis'])) {
     $providers = ['VTPass', 'ClubKonnect', 'NaijaResultPins'];
-    $stmt = $conn->prepare("INSERT INTO vtu_apis (provider_name, api_key, username) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE api_key = VALUES(api_key), username = VALUES(username)");
+    $providers = ['VTPass', 'ClubKonnect', 'NaijaResultPins'];
+    $stmt = $conn->prepare("INSERT INTO vtu_apis (provider_name, api_key, secret_key, username, is_sandbox) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE api_key = VALUES(api_key), secret_key = VALUES(secret_key), username = VALUES(username), is_sandbox = VALUES(is_sandbox)");
 
     foreach ($providers as $provider) {
         $api_key = $_POST[strtolower($provider) . '_api_key'] ?? '';
+        $secret_key = $_POST[strtolower($provider) . '_secret_key'] ?? null;
         $username = $_POST[strtolower($provider) . '_username'] ?? null;
+        $is_sandbox = isset($_POST[strtolower($provider) . '_is_sandbox']) ? 1 : 0;
 
-        $stmt->bind_param("sss", $provider, $api_key, $username);
+        // We only bind 5 params, but the table has more. This is fine for this operation.
+        $stmt->bind_param("ssssi", $provider, $api_key, $secret_key, $username, $is_sandbox);
         $stmt->execute();
     }
     $stmt->close();
@@ -707,9 +711,21 @@ include 'includes/header.php';
                 <?php endif; ?>
                 <form action="settings.php?tab=vtu_apis" method="POST">
                     <h5 class="mt-4">VTPass API</h5>
+                    <div class="form-check form-switch mb-2">
+                        <input class="form-check-input" type="checkbox" role="switch" id="vtpass_is_sandbox" name="vtpass_is_sandbox" value="1" <?php if(!empty($vtu_apis['VTPass']['is_sandbox'])) echo 'checked'; ?>>
+                        <label class="form-check-label" for="vtpass_is_sandbox">Enable Sandbox Mode</label>
+                    </div>
                     <div class="mb-3">
-                        <label for="vtpass_api_key" class="form-label">API Key</label>
+                        <label for="vtpass_username" class="form-label">API Username/Email (for Sandbox)</label>
+                        <input type="text" class="form-control" id="vtpass_username" name="vtpass_username" value="<?php echo htmlspecialchars($vtu_apis['VTPass']['username'] ?? ''); ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="vtpass_api_key" class="form-label">API Key (for Live)</label>
                         <input type="password" class="form-control" id="vtpass_api_key" name="vtpass_api_key" value="<?php echo htmlspecialchars($vtu_apis['VTPass']['api_key'] ?? ''); ?>">
+                    </div>
+                     <div class="mb-3">
+                        <label for="vtpass_secret_key" class="form-label">Secret Key (for Live)</label>
+                        <input type="password" class="form-control" id="vtpass_secret_key" name="vtpass_secret_key" value="<?php echo htmlspecialchars($vtu_apis['VTPass']['secret_key'] ?? ''); ?>">
                     </div>
 
                     <hr>

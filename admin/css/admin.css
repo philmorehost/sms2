@@ -1,0 +1,93 @@
+/* Admin-specific styles can go here */
+.brand-text {
+    font-weight: bold !important;
+}
+
+/* Responsive, scrollable tabs for mobile */
+.nav-tabs-responsive {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.nav-tabs-responsive::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for a cleaner look */
+}
+.nav-tabs-responsive .nav-item {
+    flex: 0 0 auto;
+}
+
+/* Fix for badge text color on light backgrounds */
+.badge.bg-warning,
+.badge.bg-info,
+.badge.bg-light,
+.badge.bg-secondary,
+.badge-warning,
+.badge-info,
+.badge-secondary {
+    color: #212529 !important;
+}
+
+/* Classic Admin Stat Box Style */
+.stat-box {
+    position: relative;
+    display: block;
+    padding: 20px;
+    border-radius: 0.75rem; /* Rounded corners */
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+.stat-box .inner {
+    position: relative;
+    z-index: 10;
+}
+
+.stat-box h3 {
+    font-size: 38px;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    padding: 0;
+    white-space: nowrap;
+}
+
+.stat-box p {
+    font-size: 15px;
+}
+
+.stat-box .icon {
+    position: absolute;
+    top: auto;
+    bottom: 10px;
+    right: 15px;
+    z-index: 0;
+    font-size: 70px;
+    color: rgba(0, 0, 0, 0.15);
+    transition: all .3s linear;
+}
+
+.stat-box:hover .icon {
+    font-size: 75px;
+}
+
+.stat-box-footer {
+    position: relative;
+    text-align: center;
+    padding: 3px 0;
+    color: #fff;
+    color: rgba(255, 255, 255, 0.8);
+    display: block;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}
+
+.stat-box-footer:hover {
+    color: #fff;
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.stat-box.bg-primary { background-color: #0d6efd !important; }
+.stat-box.bg-success { background-color: #198754 !important; }
+.stat-box.bg-info { background-color: #0dcaf0 !important; }
+.stat-box.bg-secondary { background-color: #6c757d !important; }

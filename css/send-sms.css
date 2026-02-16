@@ -1,0 +1,11 @@
+.char-count {
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #6c757d;
+    text-align: right;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,0 +1,1164 @@
+Afghanistan	Roshan	-	20	0.0051
+Afghanistan	Areeba (MTN)	-	-	0.1099
+Afghanistan	Afghan Wireless Communication Company (AWCC)	-	1	0.1477
+Afghanistan	Afghan Telecom	-	-	0.0051
+Afghanistan	Etisalat	-	50	0.1483
+Albania	Eagle Mobil	-	3	0.011
+Albania	Albania Mobile Communications (AMC)	-	1	0.009
+Albania	PLUS COM. (PLUS)	-	4	0.009
+Albania	Vodafone Albania	-	2	0.023
+Algeria	Nedjma	-	3	0.1216
+Algeria	Mobilis	-	1	0.062
+Algeria	Djezzy	-	2	0.122
+Andorra	Mobiland_Andorra Tel	-	3	0.00401
+Angola	Unitel	631	2	0.0032
+Angola	Movicel	631	4	0.0054
+Argentina	Telecom Personal S.A	-	340	0.0801
+Argentina	Nextel Communications Argentina S.A	-	20	0.0861
+Argentina	Mtel Argentina Radiomensaje S.A	-	30	0.0112
+Argentina	AMX Argentina-CLARO	-	310	0.031
+Argentina	*	-	0	0.0112
+Argentina	Telefonica Comunicaciones Personales S.A	-	10	0.0769
+Armenia	ArmenTel	283	1	0.01
+Armenia	Orange Armenia CJSC	283	10	0.01
+Armenia	Vivacell (K-Telecom)	283	5	0.01
+Armenia	Karabagh	283	4	0.004
+Aruba	SETAR N.V	363	1	0.0053
+Aruba	New Millennium Telecom Services N.V. (Digicel)	363	2	0.0038
+Australia	Telstra Corporation	505	1	0.00281
+Australia	Lycamobile	505	19	0.01601
+Australia	Optus Mobile Pty Ltd	505	2	0.01601
+Australia	Hutchison 3G	505	6	0.00281
+Australia	Vodafone Network Pty Ltd	505	3	0.00281
+Austria	YESSS! Telekommunikation GmbH	-	12	0.0075
+Austria	T-Mobile Austria GmbH	-	3	0.0075
+Austria	Orange	-	5	0.0075
+Austria	Mundio Mobile	-	15	0.0075
+Austria	mobilkom austria A1	-	1	0.0075
+Austria	Lycamobile	-	8	0.0075
+Austria	Hutchison 3G Austria GmbH	-	10	0.0075
+Azerbaijan	Catel (CDMA-800)	400	501	0.1905
+Azerbaijan	Bakcell	400	2	0.2405
+Azerbaijan	Azerfon	400	4	0.1245
+Azerbaijan	azercell	400	1	0.1255
+Bahrain	Viva	426	4	0.004
+Bahrain	MTC Vodafone(zain)	426	2	0.004
+Bahrain	batelco	426	1	0.004
+Bangladesh	Teletalk	-	4	0.0357
+Bangladesh	Banglalink	-	-	0.0115
+Bangladesh	City Cell	-	5	0.0115
+Bangladesh	Grameen Phone	-	1	0.0115
+Bangladesh	AkTel(Robi)	-	2	0.0115
+Belarus	BelCel JV	257	3	0.0565
+Belarus	Belarusian Telecommunications Network CJSC (BeST)	257	4	0.0302
+Belarus	MTS	257	2	0.0302
+Belarus	JV Mobile Digital Communications Ltd (Velcom)	257	1	0.0565
+Belgium	Lycamobile	-	6	0.0063
+Belgium	Base N.V.	-	20	0.009
+Belgium	*	-	9999	0.009
+Belgium	Proximus	-	1	0.0063
+Belgium	Mobistar S.A.	-	10	0.009
+Belize	International Teleco	702	68	0.006
+Belize	SPEEDNET (prepaid)	702	99	0.006
+Belize	Belize Telecommunication Ltd	702	67	0.006
+Benin	BBCOM(Bell Benin)	-	4	0.0185
+Benin	Glomobile Benin Ltd.	-	5	0.0185
+Benin	Spacetel-Benin (MTN)	-	3	0.0065
+Benin	Office des(Libercom)	-	1	0.0065
+Benin	EtisalatBenin(TELCEL	-	2	0.0185
+Bhutan	TashiCell	402	77	0.0055
+Bhutan	B-Mobile	402	11	0.0039
+Bolivia	Telecel(Tigo)	736	3	0.2033
+Bolivia	Entel	736	2	0.006
+Bolivia	Nuevatel PCS De Viva	736	1	0.0065
+Bosnia and Herzegovina	RS Telecom (m:tel)	218	5	0.0045
+Bosnia and Herzegovina	GSM BIH (BH Telecom)	218	90	0.0045
+Bosnia and Herzegovina	ERONET	218	3	0.0045
+Botswana	Orange Botswana	652	2	0.004
+Botswana	Mascom Wireless	652	1	0.0052
+Botswana	Botswana Telecom BTC	652	4	0.0078
+Brazil	Vivo	-	6	0.0082
+Brazil	Unicel do Brasil	-	37	0.0082
+Brazil	TIM	-	2	0.0082
+Brazil	TERAPAR PARTICIPACOE	-	11	0.0082
+Brazil	Sercomtel Celular	-	15	0.0082
+Brazil	PORTO SEGURO TELECOM	-	54	0.0082
+Brazil	OPTIONS COMPUTADORES	-	36	0.0082
+Brazil	Oi-TNL	-	31	0.0082
+Brazil	Nextel	-	0	0.0082
+Brazil	DATORA MOBILE TELECO	-	18	0.0082
+Brazil	CTBC Celular	-	32	0.0082
+Brazil	Claro-Americel	-	5	0.0082
+Brazil	Brasil Telecom-Oi	-	16	0.0082
+Brazil	*	-	999	0.0082
+Brunei Darussalam	DST Communications Sdn Bhd	528	11	0.0035
+Brunei Darussalam	B-Mobile Communications	528	2	0.004
+Bulgaria	MobilTel AD	-	1	0.0396
+Bulgaria	BTC mobile	-	3	0.0461
+Bulgaria	Cosmo Bulgaria Mobile	-	5	0.0396
+Burkina Faso	Orange(Celtel)	613	-	0.1811
+Burkina Faso	Telmob S.A.	613	1	0.00101
+Burkina Faso	Telecel Faso(Moov)	613	3	0.0042
+Burundi	Viettel (Lumitel)	-	8	0.007
+Burundi	ONATEL	-	3	0.0095
+Burundi	ECONET LEO	-	-	0.007
+Burundi	Africell	-	2	0.004
+Burundi	Spacetel	-	-	0.007
+Burundi	HITS Telecom	-	7	0.007
+Cambodia	VIETTEL (Metfone)	456	8	0.008
+Cambodia	S Telecom	456	3	0.008
+Cambodia	Latelz Co. Ltd SMART	456	6	0.005
+Cambodia	Hello Axiata	456	2	0.008
+Cambodia	Excell (now SEATEL)	456	-	0.008
+Cambodia	Camshin(Mfone)	456	18	0.008
+Cambodia	CamGSM (Mobitel)	456	1	0.008
+Cambodia	CADCOMMS(QB)	456	4	0.008
+Cambodia	BeelineKH (Sotelco)	456	9	0.008
+Cameroon	Nexttel	-	4	0.0055
+Cameroon	Camtel	-	3	0.00325
+Cameroon	MTN	-	1	0.0055
+Cameroon	Orange	-	2	0.0055
+Cape Verde	T+ Telecom	625	2	0.0064
+Cape Verde	CV Telecom (Movel)	625	1	0.0054
+Central African Republic	Orange	623	3	0.0116
+Central African Republic	NationLink Telecom	623	4	0.00175
+Central African Republic	INVIVENT	623	0	0.00175
+Central African Republic	Atlantique(Moov CAR)	623	1	0.01
+Central African Republic	Telecel	623	2	0.005
+Chad	Millicom (Tchad Mobile)	622	3	0.0095
+Chad	Celtel	622	1	0.0416
+Chile	VTR Banda Ancha SA 	730	0	0.0051
+Chile	Nextel SA	730	4	0.0051
+Chile	*	730	9999	0.0051
+Chile	TelefonicaMovistar	730	2	0.0051
+Chile	EntelTelefonia	730	10	0.0051
+Chile	ENTEL PCS	730	1	0.0051
+Chile	Claro	730	3	0.0051
+China	China Unicom	460	1	0.019
+China	China Telecom	460	3	0.019
+China	China Mobile	460	2	0.019
+Colombia	Telef(Movistar)	732	123	0.00191
+Colombia	Comcel S.A (CLARO)	732	-	0.00191
+Colombia	Tigo	732	111	0.00191
+Comoros	HURI	654	1	0.004
+Congo	MTN(Libertis Tele)	629	10	0.1415
+Congo	Warid Congo	629	7	0.181
+Congo	Celtel Congo	629	1	0.181
+Cook Islands	Telecom Cook Islands	548	1	0.0055
+Costa Rica	Movistar	-	4	0.0185
+Costa Rica	Instituto Costarricense de Electricidad (ICE)	-	1	0.0075
+Costa Rica	Claro	-	3	0.0075
+Croatia	vipnet	-	10	0.0035
+Croatia	T-Mobile HR	-	1	0.0035
+Croatia	Tele2	-	2	0.0053
+Cuba	Cubacel	368	1	0.002
+Cyprus	CYTAmobile-Vodafone	-	1	0.001
+Cyprus	PrimeTel PLC	-	0	0.0084
+Cyprus	MTN (Areeba Ltd)	-	10	0.009
+Czech Republic	Vodafone	-	3	0.004
+Czech Republic	T-Mobile	-	1	0.004
+Czech Republic	O2	-	2	0.004
+Democratic Republic of the Con	CCT(Orange)	630	-	0.0215
+Democratic Republic of the Con	Africell	630	-	0.0215
+Democratic Republic of the Con	Sait-T(Tigo)	630	-	0.0052
+Democratic Republic of the Con	Celtel(Zain)	630	2	0.181
+Democratic Republic of the Con	Vodacom	630	1	0.0275
+Denmark	Lycamobile Denmark	-	12	0.0274
+Denmark	Hi3G	-	6	0.0234
+Denmark	Telia (Orange)	-	20	0.0274
+Denmark	Telenor(Sonofon)	-	2	0.0274
+Denmark	Tele2	-	77	0.0234
+Denmark	TDC Mobil	-	1	0.0234
+Denmark	Barablu Mobile	-	7	0.0234
+Djibouti	Evatis	638	1	0.0095
+East Timor	Timor Telecom	514	2	0.005
+Ecuador	Porta (Conecel)	-	1	0.0075
+Ecuador	Movistar (Otecel)	-	0	0.0075
+Ecuador	CNT Mobile	-	-	0.0075
+Egypt	Etisalat	602	3	0.0032
+Egypt	Vodafone	602	2	0.059
+Egypt	mobinil	602	1	0.059
+El Salvador	Unknown	706	unknown	0.0189
+El Salvador	*	706	0	0.0101
+El Salvador	Telfonica	706	4	0.0101
+El Salvador	Telemovil(Tigo)	706	3	0.0101
+El Salvador	DIGICEL	706	2	0.0101
+El Salvador	CTE Telecom/Claro	706	1	0.0101
+Equatorial Guinea	HiTs GESA	627	2	0.004
+Equatorial Guinea	GETESA	627	1	0.004
+Eritrea	Eritel	657	1	0.046
+Estonia	Tele 2 Eesti	-	3	0.007
+Estonia	Radiolinja Eesti	-	2	0.0025
+Estonia	EMT	-	1	0.007
+Ethiopia	EthioMobile	636	1	0.0043
+Falkland Islands	Touch	750	1	0.006
+Faroe Islands	Faroese Telecom GSM	288	1	0.007
+Faroe Islands	Kall GSM(Vodafone)	288	2	0.007
+Micronesia	FSM Telecommunication Corporation	-	1	0.02627
+Finland	Alands Telekommunikation	-	-	0.0266
+Finland	Telia Finland	-	-	0.028
+Finland	Elisa Oyj	-	5	0.028
+Finland	DNA Verkot Oy	-	12	0.028
+France	Transatel	-	22	0.027
+France	Lycamobile	-	25	0.0122
+France	Free Moblie	-	15	0.027
+France	Soci (SFR)	-	10	0.027
+France	Orange France	-	1	0.027
+France	Bouygues T	-	20	0.027
+French Guiana	Orange Guyane	-	1	0.0086
+French Guiana	Dauphin Telecom Guyane	-	8	0.0086
+French Guiana	Digicel Antilles Francaises Guyane	-	20	0.01
+French Guiana	Outremer T	-	2	0.0086
+French Polynesia	VINI	547	20	0.006
+Gabon	Libertis	628	1	0.0045
+Gabon	Azur (USAN)	628	4	0.0044
+Gabon	Celtel (Airtel)	628	3	0.2211
+Gabon	TELECEL-moov	628	2	0.0045
+Gambia	Comium	607	3	0.0036
+Gambia	Qcell	607	4	0.00265
+Gambia	Gamcel	607	1	0.00265
+Gambia	Africell	607	2	0.004
+Georgia	Magti GSM (MagtiCom)	282	2	0.004
+Georgia	QCell (Beeline)	282	4	0.004
+Georgia	GeoCell	282	1	0.004
+Germany	vistream GmbH	-	16	0.0164
+Germany	T-Mobile D	-	1	0.0164
+Germany	MobilCom(Freenet)	-	13	0.0164
+Germany	O2	-	7	0.0164
+Germany	E-Plus	-	3	0.0164
+Germany	Vodafone D2	-	2	0.0164
+Germany	LycaMobile	-	43	0.0164
+Ghana	Zain (Airtel)	620	6	0.0032
+Ghana	Kasapa Telecom Ltd (CDMA)	620	4	0.0032
+Ghana	Glo Mobile	620	7	0.0032
+Ghana	Ghana Tel(Vodafone)	620	2	0.0032
+Ghana	Mobitel (tiGO)	620	3	0.0032
+Ghana	Scancom Ltd (MTN)	620	1	0.0032
+Gibraltar	Gibtelecom	266	1	0.00401
+Gibraltar	Gibraltar	266	6	0.00401
+Greece	vodafone	-	5	0.0075
+Greece	cosmote	-	1	0.0075
+Greece	WIND(TIM)	-	9	0.0075
+Greenland	Tele Greenland A/S	290	1	0.00401
+Guadeloupe	Dauphin Telecom	-	8	0.02
+Guadeloupe	Orange Cara	-	1	0.0095
+Guadeloupe	Outremer T	-	2	0.0111
+Guadeloupe	Saint Martin Et Saint Barthelemy Tel Cell SARL	-	3	0.0599
+Guadeloupe	Bouygues(Digicel)	-	20	0.0111
+Guatemala	Telefonica	704	3	0.0105
+Guatemala	Tigo	704	-	0.0172
+Guatemala	Claro	704	-	0.0051
+Guinea	Sotelgui	611	2	0.0095
+Guinea	Orange Guin	611	1	0.0095
+Guinea	Intercel	611	3	0.0095
+Guinea	Cellcom Guin	611	5	0.0095
+Guinea	Areeba-Guin	611	4	0.0095
+Guinea-Bissau	Orange Bissau	632	3	0.0065
+Guinea-Bissau	Guinetel	632	1	0.0025
+Guinea-Bissau	Areeba(SpaceTel)	632	2	0.0025
+Guyana	Guyana Telephone & Telegraph	738	2	0.01
+Guyana	Digicel Guyana	738	1	0.0095
+Haiti	Unigestion Holding S.A (Digicel)	372	2	0.0055
+Haiti	Netcom(Rectel)	372	3	0.0055
+Haiti	Haiti Mobile(Rectel)	372	50	0.0055
+Haiti	Voila(ComCEL)	372	-	0.0055
+Honduras	Sercom (Claro)	708	1	0.0047
+Honduras	Empresa Hondurena	708	30	0.0047
+Honduras	Celtel (Tigo)	708	2	0.0037
+Honduras	Digicel Hondura	708	40	0.002
+Hong Kong	SmarTone Mobile Communications Ltd	-	6	0.0106
+Hong Kong	SmarTone Mobile	-	15	0.0106
+Hong Kong	Hong Kong CSL Ltd	-	18	0.0106
+Hong Kong	CITIC Telecom 1616	-	1	0.0025
+Hong Kong	New World PCS(CSL)	-	10	0.002
+Hong Kong	Hong Kong Telecommunications (HKT) Limited	-	-	0.002
+Hong Kong	Trident Telecom Ventures Ltd	-	8	0.002
+Hong Kong	China Mobile Hong Kong Company Limited	-	-	0.002
+Hong Kong	PCCW Limited (Hong Kong Telecommunications (HKT) Limited)	-	-	0.002
+Hong Kong	PCCW - HKT Telephone Ltd	-	29	0.002
+Hong Kong	Mandarin(PCCW- HKT)	-	16	0.002
+Hong Kong	Hutchison3G (Hutchison Telecommunications Hong Kong Holdings Limited)	-	-	0.002
+Hong Kong	Hutchison Telephone Company Ltd	-	4	0.002
+Hong Kong	Hutchison - CDMA	-	5	0.002
+Hong Kong	China Unicom International Ltd	-	7	0.002
+Hong Kong	China Motion Telecom (HK) Ltd	-	9	0.002
+Hungary	T-Mobile	-	30	0.0075
+Hungary	vodafone	-	70	0.0075
+Hungary	Telenor (PANNON)	-	1	0.004
+Iceland	Tal	-	12	0.0025
+Iceland	Null niu ehf	-	6	0.0025
+Iceland	Landss Siminn hf	-	1	0.012
+Iceland	IMC Islande ehf (Viking)	-	4	0.0025
+Iceland	IceCell	-	7	0.0025
+Iceland	Og fjarskipti hf. (Vodafone)	-	2	0.004
+Iceland	Nova ehf.	-	11	0.002
+Indonesia	Telkom Flexi	-	7	0.00295
+Indonesia	Komselindo STKB-C (AMPS)	-	28	0.0031
+Indonesia	Smart	-	9	0.0166
+Indonesia	Esia	-	99	0.0166
+Indonesia	TelkomSel	-	10	0.127
+Indonesia	Indosat(DCS)	-	1	0.0943
+Indonesia	Axis	-	8	0.00195
+Indonesia	Hutchison	-	89	0.4014
+Indonesia	Excelcomindo GSM	-	11	0.0362
+Iran	Rightel	432	20	0.0737
+Iran	Telecommunication Kish Co. (Kifzo)	432	14	0.031
+Iran	Mobile Communications Company of Iran (TCI)	432	11	0.058
+Iran	Irancell	432	35	0.0485
+Iran	Talya	432	32	0.031
+Iraq	Mobitel	418	45	0.0215
+Iraq	Korektel	418	40	0.0215
+Iraq	Itisaluna	418	8	0.0215
+Iraq	Iraqtel	418	1	0.0215
+Iraq	Asia Cell	418	5	0.0215
+Iraq	ZAIN (formerly IRAQNA	418	30	0.0215
+Iraq	ZAIN (formerly Atheer)	418	20	0.0215
+Ireland	LIffey Telecom (Tesco)	-	-	0.0065
+Ireland	Clever Communication	-	9	0.0065
+Ireland	Vodafone Ireland plc	-	1	0.0065
+Ireland	O2 Communications	-	2	0.0065
+Ireland	Meteor	-	3	0.0065
+Ireland	Hutchison 3G Ireland	-	5	0.0065
+Israel	Wataniya Palestine	425	0	0.0015
+Israel	Pelephone Communicat	425	3	0.0025
+Israel	Palestine (Jawaal)	425	5	0.002
+Israel	orange	425	1	0.0005
+Israel	mirs	425	77	0.0005
+Israel	Cellcom	425	2	0.0005
+Italy	Wind Telecomunicazioni S.p.A	-	88	0.0055
+Italy	TIM Italia S.p.A	-	1	0.005
+Italy	RFI-Rete Ferroviaria Italiana S.p.A	-	30	0.005
+Italy	H3G S.p.A. (UMTS)	-	99	0.0045
+Italy	Vodafone S.p.A.	-	10	0.005
+Italy	LycaMobile	-	35	0.0055
+Japan	SoftBank Mobile	-	4	0.014
+Japan	Rakuten Mobile	-	-	0.014
+Japan	NTT Docomo Inc	-	1	0.014
+Japan	Okinawa cellular	-	-	0.014
+Japan	KDDI Corporation	-	7	0.014
+Japan	*	-	999	0.014
+Jordan	Fastlink(Zain)	416	1	0.0562
+Jordan	Orange(Mobilcom)	416	77	0.0562
+Jordan	UMNIAH	416	3	0.0562
+Kenya	Safaricom	-	2	0.0039
+Kenya	Airtel (celtel)	-	3	0.181
+Kenya	yu (Econet Wireless)	-	5	0.0039
+Kenya	Orange(Telkom Kenya)	-	7	0.0039
+Kiribati	Telecom Services Kiribati Ltd (TSKL)	-	9	0.0025
+Kuwait	viva	419	4	0.1067
+Kuwait	wataniya telecom	419	3	0.0046
+Kuwait	Zain Mobile Telecommunication Company (MTC)	419	-	0.1067
+Kyrgyzstan	AkTel (Fonex)	437	3	0.003
+Kyrgyzstan	BiMoCom (Megacom)	437	5	0.004
+Kyrgyzstan	Beeline (Sky)	437	1	0.002
+Kyrgyzstan	O! (Nur Telecom)	437	9	0.00101
+Laos	Unitel(Start)	457	3	0.0025
+Laos	ETL	457	2	0.0025
+Laos	Lao Telecom (ETC)	457	1	0.1575
+Laos	Tango-Millicom-Tigo	457	8	0.002
+Lebanon	Alfa (MIC-1)	415	1	0.0072
+Lebanon	MTC Touch (MIC-2)	415	3	0.0059
+Lesotho	Econet Ezi-Cel	651	2	0.0045
+Lesotho	Vodacom	651	1	0.004
+Liberia	MTN(Lonestar)	618	-	0.01
+Liberia	Libercell	618	2	0.01
+Liberia	comium liberia	618	4	0.002
+Liberia	Celcom Telecommunication Inc	618	7	0.0025
+Libya	Libyana	606	0	0.1656
+Libya	Al-Madar (Orbit)	606	1	0.19
+Liechtenstein	Telcom FL (Swisscom)	-	1	0.0155
+Liechtenstein	Mobilkom	-	5	0.0084
+Liechtenstein	Alpmobil (Tele2)	-	77	0.00401
+Liechtenstein	Viag (Orange)	-	2	0.004
+Lithuania	Bite GSM UAB	-	2	0.0062
+Lithuania	Tele2 UAB	-	3	0.0062
+Lithuania	Omnitel	-	1	0.0062
+Luxembourg	LuxGSM S.A	-	1	0.002
+Luxembourg	VOXmobile	-	99	0.06901
+Luxembourg	Tango	-	77	0.06901
+Macau	SmarTone Mobile	455	0	0.0025
+Macau	Hutchison Telephone	455	3	0.0025
+Macau	Companhia de Telecomunica	455	1	0.0025
+Macedonia	T-Mobile	294	1	0.0035
+Macedonia	ONE (Cosmofon)	294	2	0.001
+Macedonia	VIP Operator	294	3	0.002
+Madagascar	Sacel	646	3	0.01
+Madagascar	Orange	646	2	0.01
+Madagascar	Bharti Airtel	646	1	0.1806
+Madagascar	Telma	646	4	0.002
+Malawi	Bharti Airtel	650	10	0.1806
+Malawi	TNM	650	1	0.042
+Malaysia	U Mobile	502	-	0.014
+Malaysia	maxis	502	12	0.014
+Malaysia	Digi	502	16	0.014
+Malaysia	Celcom	502	13	0.014
+Maldives	Wmobile (Wataniya Telecom)	472	2	0.0025
+Maldives	Dhiraagu	472	1	0.0033
+Mali	Malitel	610	1	0.1765
+Mali	Orange Mali (Ikatel)	610	2	0.01
+Malta	Vodafone Malta	-	1	0.002
+Malta	Melita Mobile	-	77	0.002
+Malta	Go(Mobisle Commu)	-	21	0.002
+Marshall Islands	Islands National Telecommunications Authority (MINTA)	-	1	0.0025
+Martinique	Outremer T	-	2	0.0055
+Martinique	Orange Martinique	-	1	0.0055
+Martinique	DIGICEL (Bouygues)	-	20	0.0055
+Martinique	Dauphin Telecom Martinique	-	8	0.0055
+Mauritania	Mattel(EMatel)	609	1	0.0057
+Mauritania	Chinguitel	609	2	0.0134
+Mauritania	Mauritel Mobiles	609	10	0.01
+Mauritius	MTML	617	2	0.0395
+Mauritius	Orange(Cell Plus)	617	1	0.0124
+Mauritius	Emtel	617	10	0.1045
+Mexico	Telcel (Radiomovil)	-	20	0.009
+Mexico	Pegaso Com(Movistar)	-	30	0.009
+Mexico	Nextel Mexico	-	10	0.009
+Mexico	Iusacell/Nextel/AT&T	-	-	0.009
+Mexico	*	-	999	0.009
+Moldova	Unit	-	3	0.0608
+Moldova	Voxtel(orange)	-	1	0.0608
+Moldova	Moldcell	-	2	0.0608
+Moldova	Eventis Mobile	-	4	0.0125
+Monaco	Monaco Telecom	212	10	0.0145
+Mongolia	MobiCom Co. Ltd	428	99	0.0075
+Mongolia	Unitel Co. Ltd	428	88	0.0039
+Mongolia	Skytel	428	91	0.0061
+Mongolia	GMobile	428	98	0.004
+Morocco	Medi Telecom	-	0	0.061
+Morocco	Itissalat (IAM)	-	1	0.061
+Morocco	INWI (Wana)	-	5	0.061
+Mozambique	MOVITEL	-	3	0.00365
+Mozambique	Mcel	-	1	0.00365
+Mozambique	Vodacom	-	4	0.00365
+Myanmar	ATOM (Telenor)	414	-	0.0105
+Myanmar	OOREDOO	414	5	0.0105
+Myanmar	Myanmar Posts and Telecommunications (MPT)	414	1	0.0105
+Namibia	MTC Namibia (MTC)	649	1	0.01
+Namibia	Leo (Orascom)	649	3	0.01
+Nauru	Digicel	536	2	0.003
+Nepal	Namaste(NTC Mobile)	-	-	0.007
+Nepal	Ncell (Spice Nepal)	-	2	0.007
+Netherlands	Vodafone Libertel B.V	-	4	0.009
+Netherlands	Telfort B.V	-	12	0.011
+Netherlands	T-Mobile Netherlands B.V	-	16	0.009
+Netherlands	Lycamobile	-	9	0.009
+Netherlands	KPN B.V	-	8	0.009
+Netherlands	Blyk N.V (Elephan Ta	-	3	0.009
+Netherlands	Barablu Mobile Benelux Ltd	-	6	0.009
+Netherlands	6GMOBILE B.V.	-	14	0.009
+Netherlands	Tele2 Nederland B.V	-	2	0.009
+Netherlands Antilles	Telcell	362	51	0.01
+Netherlands Antilles	Radcomm	362	0	0.01
+Netherlands Antilles	East Caribbean Cellular (CDMA)	362	95	0.01
+Netherlands Antilles	UTS Wireless Cura	362	91	0.0158
+Netherlands Antilles	Digicel (former Cura	362	69	0.0037
+New Caledonia	Mobilis	546	1	0.0115
+New Zealand	vodaphone	530	1	0.1137
+New Zealand	TelstraClear	530	4	0.0235
+New Zealand	2 Degrees Mobile	530	24	0.1453
+New Zealand	Telecom New Zealand (CDMA)	530	5	0.0593
+Nicaragua	Movistar NI	710	30	0.013
+Nicaragua	SERCOM S.A.(Claro)	710	73	0.0143
+Niger	SahelCom	614	5	0.004
+Niger	orange	614	4	0.004
+Niger	Celtel-Niger	614	2	0.2211
+Niger	Telecel-Niger	614	3	0.004
+Nigeria	Visafone Comm	-	25	0.0071
+Nigeria	starcoms	-	9999	0.0071
+Nigeria	Reliance Telecomm	-	9999	0.0071
+Nigeria	N-I-TEL	-	9999	0.0025
+Nigeria	Multi-links Telecomm	-	97	0.0071
+Nigeria	Alpha Technologies	-	9999	0.0266
+Nigeria	MTN	-	30	0.0049
+Nigeria	M-Tel	-	40	0.0071
+Nigeria	globacom	-	50	0.00465
+Nigeria	Celtel (Airtel)	-	20	0.0059
+Nigeria	9mobile	-	-	0.0019
+Norway	Lycamobile	-	23	0.0105
+Norway	TeliaSonera(Netcom)	-	2	0.0105
+Norway	Telenor Mobil	-	1	0.0105
+Norway	Tele2(Mobile Norway)	-	4	0.0105
+Norway	Network(MobileNorway	-	5	0.0105
+Oman	OmanMobile	422	2	0.115
+Oman	Nawras (Qatari Tele)	422	3	0.115
+Pakistan	Telenor Pakistan	410	6	0.0095
+Pakistan	ZONG (CMPak)	410	4	0.0095
+Pakistan	Mobilink GSM	410	1	0.009
+Pakistan	Warid Telecomminication	410	7	0.0095
+Pakistan	Ufone (Pakistan Telecommunication Mobile Limited)	410	-	0.0095
+Palau	Palau National Communications Corporation (PNCC)	-	1	0.01
+Palau	Palau Mobile Corporation (PMC)	-	80	0.013
+Panama	Digicel	-	4	0.006
+Panama	Telefonica Moviles	-	2	0.0202
+Panama	Cable & Wireless Panam	-	1	0.0145
+Panama	Claro	-	3	0.006
+Papua New Guinea	Digicel (PNG) Ltd	537	3	0.0245
+Papua New Guinea	B-Mobile (PMC)	537	2	0.0085
+Paraguay	Telecel / Tigo	744	4	0.0028
+Paraguay	Personal	744	5	0.007
+Paraguay	Hola Paragu(VOXTEL)	744	1	0.007
+Paraguay	Claro	744	2	0.007
+Peru	*	716	9999	0.013
+Peru	Telefonica(Movistar)	716	6	0.057
+Peru	Nextel(Entel)	716	-	0.0045
+Peru	America Movil(Claro)	716	10	0.013
+Philippines	*	-	9999	0.0027
+Philippines	Nextel	-	88	0.0027
+Philippines	Extelcom CDMA	-	99	0.0027
+Philippines	Cure(Red Telecom)	-	18	0.0027
+Philippines	Smart	-	3	0.0027
+Philippines	Globetelecom	-	2	0.111
+Philippines	Sun Cellular(DigiTel)	-	-	0.0027
+Poland	Telekomunikacja Kole	-	9	0.0052
+Poland	Tele2 Polska(Netia)	-	4	0.0052
+Poland	Polska Telefonia Cyfrowa Era	-	2	0.0052
+Poland	Polkomtel Plus	-	1	0.0052
+Poland	P4 Sp zoo	-	6	0.0057
+Poland	orange	-	3	0.0052
+Poland	Mobyland Sp. z o.o.	-	16	0.0052
+Poland	E-Telko Sp. z o.o.	-	8	0.0052
+Poland	Cyfrowy POLSAT(MVNO)	-	12	0.0052
+Poland	CenterNet S.A.	-	15	0.0052
+Poland	*	-	9999	0.0052
+Portugal	vodafone	-	1	0.0045
+Portugal	TMN	-	6	0.0045
+Portugal	Portugal LycaMobile	-	0	0.0045
+Portugal	optimus	-	3	0.0045
+Qatar	vodaphone	-	2	0.0088
+Qatar	Q-Tel	-	1	0.0088
+South Korea	SK Telecom	-	5	0.0081
+South Korea	LG Telecom	-	6	0.0081
+South Korea	KT Freetel	-	2	0.0081
+Reunion	Soci(SRR)	-	10	0.0615
+Reunion	Outremer T	-	2	0.0605
+Reunion	Orange R	-	0	0.0605
+Romania	Vodafone Rom	-	1	0.0327
+Romania	Telemobil-Zapp(CDMA)	-	4	0.0327
+Romania	Cosmote Rom	-	3	0.0327
+Romania	orange	-	10	0.0327
+Romania	Romania Data Systems (DIGI.mobil)	-	5	0.0327
+Rwanda	Rwanda Airtel	-	14	0.1806
+Rwanda	TIGO RWANDA S.A	-	13	0.0052
+Rwanda	RWANDATEL S.A.	-	12	0.0578
+Rwanda	MTN Rwandacell SARL	-	10	0.0052
+Samoa	SamoaTel	549	27	0.011
+Samoa	Digicel	549	1	0.0234
+San Marino	Telecom Italia San Marino S.p.A.	292	1	0.0025
+Sao Tome and Principe	CSTmovel	626	1	0.0025
+Saudi Arabia	Virgin Mobile	420	0	0.006
+Saudi Arabia	PTC (iDEN)	420	7	0.0215
+Saudi Arabia	zain	420	4	0.0215
+Saudi Arabia	Etihad Etisalat Company (Mobily)	420	3	0.0215
+Saudi Arabia	Saudi Telecom Company (STC)	420	1	0.006
+Senegal	Tigo (Sentel GSM)	608	2	0.01
+Senegal	Sonatel (Alize)	608	1	0.01
+Senegal	Expresso (Sudatel)	608	3	0.01
+Seychelles	MediaTech	633	2	0.0585
+Seychelles	Telecom (Seychelles) Ltd	633	10	0.181
+Seychelles	Cable and Wireless (Seychelles) Ltd	633	1	0.00928
+Sierra Leone	Mobitel	619	25	0.01
+Sierra Leone	Dtatel (SL) Ltd CDMA	619	50	0.01
+Sierra Leone	Datatel (SL) Ltd GSM	619	40	0.01
+Sierra Leone	Comium Sierra leone INC	619	4	0.01
+Sierra Leone	Celtel (SL) Ltd	619	1	0.2031
+Sierra Leone	Millicom (SL) Ltd	619	2	0.01
+Sierra Leone	Africell (SL)Ltd PCS	619	5	0.0038
+Slovakia	Telefonica O2	-	6	0.012
+Slovakia	T-Mobile UMTS	-	2	0.012
+Slovakia	Orange(globatel)	-	1	0.012
+Slovenia	Western Wireless(Tusmobil d.o.o.)	-	-	0.0097
+Slovenia	Si.Mobil-Vodafone	-	40	0.0097
+Slovenia	Mobitel	-	41	0.0097
+Slovenia	T-2 d.o.o.	-	64	0.0097
+Solomon Islands	Solomon Telekom Company Ltd (BREEZE)	540	1	0.0055
+Solomon Islands	BMobile Limited	540	0	0.0055
+Somalia	Telesom	637	1	0.012
+Somalia	Somafone	637	4	0.012
+Somalia	NationLink Telecom	637	10	0.012
+Somalia	Hargeysa Telesom	637	82	0.012
+Somalia	Bosaso Golis	637	30	0.012
+Somalia	HORMUUD	637	25	0.007
+South Africa	vodacom	-	1	0.006
+South Africa	USAL licence holders	-	31	0.006
+South Africa	Telkom Mobile (8TA)	-	2	0.006
+South Africa	mtn	-	10	0.006
+South Africa	cell c	-	7	0.006
+Spain	Xfera M(Yoigo)	-	4	0.011
+Spain	Vodafone	-	1	0.011
+Spain	Telefonica(Movistar)	-	7	0.0061
+Spain	Telecable De Asturias	-	16	0.011
+Spain	Lycamobile Spain	-	25	0.0066
+Spain	Lleida Networks	-	26	0.0066
+Spain	Llamaya	-	33	0.0066
+Spain	Jazz Telecom S a u	-	21	0.011
+Spain	FranceTelecom(Orange	-	9	0.011
+Spain	Fonyou	-	20	0.0066
+Spain	Euskaltel S a	-	8	0.011
+Spain	E-plus M(Simyo)	-	19	0.011
+Spain	Cableuropa S a u	-	18	0.011
+Spain	Bt Espa	-	15	0.011
+Spain	R Cable Y Telecomunicaciones Galicia	-	17	0.011
+Sri Lanka	MTN Dialog(Axiata)	413	2	0.0055
+Sri Lanka	Hutchison	413	8	0.0101
+Sri Lanka	Etisalat	413	3	0.00356
+Sri Lanka	Bharti Airtel Lanka (Pvt)	413	5	0.0055
+Sri Lanka	Mobitel	413	1	0.0055
+St. Pierre and Miquelon	Miquelon Telecom	308	-	0.05
+Sudan	Network of the World	634	5	0.0075
+Sudan	Sudani One	634	7	0.0075
+Sudan	Mobitel(Zain)	634	1	0.0075
+Sudan	Areeba Sudan(MTN)	634	2	0.0075
+Suriname	(Uniqa) Intelsur	746	4	0.0081
+Suriname	Telesur	746	2	0.0093
+Suriname	Digicel Suriname N.V.	746	3	0.0068
+Sweden	Wireless Maingate	-	20	0.0085
+Sweden	Tigo Ltd	-	34	0.0085
+Sweden	TeliaSonera	-	1	0.0085
+Sweden	Telenor (Vodafone Europolitan)	-	8	0.012
+Sweden	Mundio Mobile	-	19	0.0085
+Sweden	INFOBIP LIMITED	-	23	0.0085
+Sweden	Hi3G	-	2	0.0085
+Sweden	Comviq (Tele2)	-	7	0.012
+Sweden	Beepsend	-	26	0.0085
+Sweden	Lycamobile Sweden	-	12	0.0085
+Sweden	42 Telecom	-	16	0.0085
+Sweden	TDC Mobil	-	14	0.0085
+Switzerland	Swisscom Mobile AG	228	1	0.011
+Switzerland	orange	228	3	0.011
+Switzerland	LycaMobile	228	54	0.011
+Switzerland	In&Phone SA	228	7	0.01
+Switzerland	Comfone AG	228	5	0.01
+Switzerland	Bebbicell AG	228	51	0.011
+Switzerland	sunrise	228	2	0.011
+Switzerland	Tele2 Telecommunication Services AG	228	8	0.011
+Syria	syriatel	417	1	0.0123
+Syria	MTN Syria	417	2	0.0123
+Taiwan	T-Star(VIBO) Telecom	466	-	0.011
+Taiwan	TransAsia	466	99	0.011
+Taiwan	Taiwan Mobile	466	-	0.011
+Taiwan	MobiTai	466	93	0.011
+Taiwan	KG Telecom	466	88	0.011
+Taiwan	Far EasTone	466	1	0.011
+Taiwan	Chunghwa Telecom LDM	466	92	0.011
+Tajikistan	TAKOM (Beeline)	436	5	0.0109
+Tajikistan	MLT (TT-Mobile) Megafone	436	-	0.0109
+Tajikistan	Babilon Mobile	436	4	0.0109
+Tajikistan	Tcell (INDIGO)	436	2	0.0109
+Tajikistan	Tcell (Somoncom)	436	1	0.0109
+Tanzania	Tritel Ltd.	640	1	0.004
+Tanzania	Tanzania Telecom-munications Company Ltd.	640	9	0.004
+Tanzania	Smart	640	8	0.004
+Tanzania	Zantel (Zanzibar)	640	3	0.063
+Tanzania	Vodacom	640	4	0.007
+Tanzania	Vodacom (T) Ltd.	640	4	0.004
+Tanzania	MIC (Tigo) Ltd.	640	-	0.0635
+Tanzania	Bharti Airtel	640	5	0.1806
+Thailand	True Move Company Ltd(True Move)	520	99	0.008
+Thailand	Total Access Communications Co(DTAC)	520	18	0.008
+Thailand	TOT 3G (Thai Mobile)	520	20	0.008
+Thailand	NMT CDMA	520	15	0.008
+Thailand	HUTCH CDMA	520	10	0.008
+Thailand	Digital Phone Co Ltd(GSM 1800)	520	23	0.008
+Thailand	CAT CDMA	520	2	0.008
+Thailand	CAT	520	0	0.008
+Thailand	*	520	9999	0.008
+Thailand	Advanced Info Service PLC (AIS GSM)	520	1	0.008
+Togo	Telecel	615	3	0.0451
+Togo	Togocel	615	1	0.0411
+Tonga	U-Call	539	1	0.032
+Tonga	Shoreline (Tonfon)	539	43	0.032
+Tonga	Digicel Tonga	539	88	0.032
+Tunisia	TunisieTelcom(TUNTEL	605	2	0.0052
+Tunisia	Tunisiana(Orascom)	605	3	0.0052
+Tunisia	Orange	605	1	0.0052
+Turkey	turkcell	-	1	0.0032
+Turkey	Telsim (Vodafone)	-	2	0.0032
+Turkey	AVEA(Aria)	-	3	0.0127
+Turkmenistan	TM-Cell	438	2	0.0335
+Turkmenistan	BCTI	438	1	0.0095
+Uganda	Airtel Uganda	-	1	0.004
+Uganda	MTN (Uganda) Ltd	-	10	0.0798
+Uganda	Uganda Telecom Ltd	-	11	0.004
+Uganda	Orange(Africell)	-	-	0.004
+Ukraine	Ukrtelecom	255	7	0.0095
+Ukraine	Telesystems (CDMA)	255	21	0.0095
+Ukraine	MTS Ukraine (UMC)	255	1	0.0095
+Ukraine	life(Astelit)	255	6	0.0095
+Ukraine	Kyivstar	255	3	0.0095
+Ukraine	Golden Telecom	255	5	0.0095
+Ukraine	Beeline (Radio)	255	2	0.0095
+United Arab Emirates	etisalat	424	2	0.011
+United Arab Emirates	du	424	3	0.0073
+United Kingdom	UK Wave Telecom LTD	-	78	0.023
+United Kingdom	UK Vodafone LTD	-	15	0.023
+United Kingdom	UK Teleware plc	-	19	0.023
+United Kingdom	UK Routo Telecommunications LTD	-	22	0.023
+United Kingdom	UK Orange	-	33	0.0217
+United Kingdom	UK OnePhone LTD	-	8	0.023
+United Kingdom	UK O2 LTD	-	10	0.023
+United Kingdom	UK Hutchison 3G Ltd	-	20	0.023
+United Kingdom	UK BT	-	77	0.0217
+United Kingdom	Truphon SoftCellular	-	25	0.023
+United Kingdom	Tismi BV (UK)	-	0	0.023
+United Kingdom	Telet Research (N.I.) Limited	-	0	0.023
+United Kingdom	TANGO NETWORKS UK LTD	-	0	0.023
+United Kingdom	T-Mobile (UK) Ltd	-	32	0.0217
+United Kingdom	Stour Marine Limited	-	0	0.023
+United Kingdom	Sky UK Limited	-	0	0.023
+United Kingdom	Mass Response Service GmbH	-	0	0.028
+United Kingdom	Lycamobile UK Limted	-	26	0.023
+United Kingdom	Jersey Telecom	-	50	0.023
+United Kingdom	Jersey Airtel Limited	-	3	0.023
+United Kingdom	Isle of Man Manx Telecom	-	58	0.023
+United Kingdom	Guernsey C & W  Limited	-	55	0.023
+United Kingdom	Guernsey Airtel Limited	-	995	0.023
+United Kingdom	Everything Everywher	-	30	0.0217
+United Kingdom	Cloud9	-	18	0.023
+United Kingdom	Cable & Wireless Guernsey Ltd	-	7	0.023
+United Kingdom	*	-	9999	0.023
+United Kingdom	all operator	-	0	0.023
+Uruguay	Telef(Movistar)	748	7	0.0111
+Uruguay	Claro(AM Wireless)	748	10	0.0111
+Uruguay	Antel (Compania)	748	1	0.0111
+Uzbekistan	Uzmacom	434	2	0.005
+Uzbekistan	Coscom(UCell)	434	5	0.005
+Uzbekistan	Uzdunrobita	434	7	0.005
+Uzbekistan	Unitel(Beeline)	434	4	0.005
+Uzbekistan	Buztel	434	1	0.005
+Vanuatu	Telecom Vanuatu Ltd	541	1	0.0273
+Vanuatu	Digicel (Vanuatu) Ltd	541	5	0.0035
+Venezuela	Movistar	734	4	0.006
+Venezuela	Movilnet	734	6	0.006
+Venezuela	Digitel	734	1	0.006
+Vietnam	VinaPhone(VNPT)	452	-	0.0103
+Vietnam	Viettel Mobile	452	4	0.0103
+Vietnam	S-Fone (CDMA)	452	3	0.0103
+Vietnam	MobiFon	452	1	0.0103
+Vietnam	HT Mobile (Vietnamo)	452	5	0.0103
+Vietnam	BEELINE (GTEL)	452	7	0.0103
+Yemen	Yemen Mobile(CDMA)	421	3	0.005
+Yemen	MTN	421	2	0.0067
+Yemen	Y (HiTS-Unitel)	421	4	0.005
+Yemen	Sabafon	421	1	0.0042
+Serbia	Telekom Srbija a.d.	220	3	0.039
+Serbia	Vip mobile d.o.o.	220	5	0.009
+Serbia	Telenor d.o.o.	220	1	0.009
+Zambia	Zamtel MTS	-	3	0.006
+Zambia	MTN(Telecel)	-	2	0.006
+Zambia	CelTel	-	1	0.0054
+Zimbabwe	Telecel	648	3	0.0033
+Zimbabwe	NetOne	648	1	0.033
+Zimbabwe	Econet	648	4	0.04431
+Palestine	Wataniya Palestine	423	1	0.021
+Palestine	jawwal	423	5	0.012
+Ivory Coast	Oricel C	612	6	0.0185
+Ivory Coast	Comium Ivory Coast Inc (KoZ)	612	4	0.2565
+Ivory Coast	MTN C	612	5	0.0123
+Ivory Coast	Orange C	612	3	0.0123
+Ivory Coast	Atlantique Cellulaire (MOOV)	612	2	0.0025
+BARBADOS	Sunbeach Communications	342	820	0.008
+BARBADOS	Cellular Communicati	342	810	0.0055
+BARBADOS	Digicel Barbados Ltd.	342	750	0.008
+BARBADOS	Cable&Wireless	342	600	0.0122
+Jamaica	Oceanic Digital Jamaica	338	70	0.0075
+Jamaica	*	338	999	0.0075
+Jamaica	Digicel Jamaica	338	50	0.0122
+Jamaica	Cable&Wireless(LIME)	338	180	0.002
+Latvia	Triatel	-	3	0.0025
+Latvia	Tele2	-	2	0.002
+Latvia	Latvijas Mobilais Telefons (LMT)	-	1	0.002
+Latvia	IZZI	-	8	0.002
+Latvia	MTS GSM	-	7	0.0025
+Latvia	Bite Latvija	-	5	0.0025
+Anguilla	Wireless Ventu Digi	365	930	0.0093
+Anguilla	Cable & Wireless (GSM)	365	840	0.0092
+Antigua and Barbuda	Digicel Antigua	344	930	0.0028
+Antigua and Barbuda	Cable & Wireless (An	344	920	0.0028
+Antigua and Barbuda	APUA PCS	344	30	0.0028
+Bahamas	BaTelCel	364	390	0.004
+Bermuda	M3Wireless(Mobility)	350	2	0.0037
+Bermuda	Digicel	350	1	0.0095
+Bermuda	Cellular One (CMDA-800)	350	0	0.0037
+Grenada	Digicel	352	30	0.00225
+Grenada	Cable and Wireless	352	110	0.00225
+Guam	Wave Runner Llc	535	400	0.0025
+Guam	Choice Phone Llc Dba Iconn	535	12	0.0025
+Guam	Pulse Mobile Llc	535	140	0.06251
+Guam	It&e Overseas Inc. - Gu	535	32	0.002
+Guam	Guam Tele Authority	535	33	0.002
+Guam	docomo	535	470	0.05701
+Northern Mariana Islands	Wave Runner Llc	534	400	0.0055
+Saint Kitts and Nevis	UTS CariGlobe	356	7	0.0099
+Saint Kitts and Nevis	Digicel	356	50	0.0099
+Saint Kitts and Nevis	Cable & Wireless	356	110	0.0099
+Saint Lucia	Digicel St. Lucia	358	50	0.0028
+Saint Lucia	Cable & Wireless St. Lucia	358	110	0.0189
+Trinidad and Tobago	Telecom of Trinidad and Tobago	374	12	0.0028
+Trinidad and Tobago	LaqTel Ltd	374	140	0.0092
+Trinidad and Tobago	Digicel Trinidad and Tobago Ltd	374	130	0.0028
+Turks and Caicos Islands	IslandCom Communication Ltd	376	352	0.0033
+Turks and Caicos Islands	Digicel (TCI) Ltd	376	5	0.0033
+Turks and Caicos Islands	Cable and Wireless (GSM)	376	350	0.0194
+British Virgin Islan	Caribbean Cellular Telephone Ltd	348	570	0.0027
+British Virgin Islan	Digicel (BVI) Ltd	348	770	0.0027
+British Virgin Islan	Cable & Wireless (West Indies)	348	170	0.00279
+Dominican Repblic	Trilogy_Domini(Viva)	370	4	0.0099
+Dominican Repblic	Tricom	370	3	0.0099
+Dominican Repblic	Orange Dominicana	370	1	0.0099
+Dominican Repblic	Compania(Claro)	370	2	0.0099
+Dominica Commnwealth	Digicel Dominica	366	20	0.0028
+Dominica Commnwealth	Cable & Wireless Dom	366	110	0.0027
+Puerto Rico	Suncom T-mobile Usa	330	490	0.0099
+Puerto Rico	PRTC(Claro)	330	11	0.0051
+Puerto Rico	AT&T(New Cingular)	330	30	0.0119
+Puerto Rico (1)	Suncom T-mobile Usa	0	0	0.0071
+Puerto Rico (1)	Suncom Dba T-mobile Usa	0	490	0.0038
+Puerto Rico (1)	PRTC(Claro)	0	11	0.0038
+Puerto Rico (1)	AT&T(New Cingular)	0	30	0.0122
+Russian Federation	TELE2 Teleset	-	0	0.004
+Russian Federation	Stuvtelesot	-	0	0.004
+Russian Federation	Rostelecom	-	0	0.004
+Russian Federation	Nizhny Novgorod Cellular Communications	-	0	0.004
+Russian Federation	New Telephone Company	-	0	0.004
+Russian Federation	MOTIV(Ekaterinburg 2000 GSM)	-	0	0.004
+Russian Federation	Mobile TeleSystems	-	0	0.004
+Russian Federation	MegaFon	-	0	0.004
+Russian Federation	Extel(Bee Line)	-	28	0.004
+Russian Federation	Eniseytelekom(ETK)	-	0	0.004
+Russian Federation	Don Telecom	-	0	0.004
+Russian Federation	Altaysvyaz	-	0	0.004
+Russian Federation	AKOS	-	0	0.004
+Russian Federation	SMARTS	-	0	0.004
+Russian Federation	Baykalvestkom	-	0	0.004
+Montenegro	m:tel CG	297	3	0.0095
+Montenegro	Telenor(ProMonte)	297	1	0.0065
+Montenegro	T-Mobile	297	2	0.0095
+Swaziland	Swazi MTN Limited	653	10	0.0082
+USA-Canada	Unknown	-	unknown	0.004
+USA-Canada	TELUS Quebec	-	657	0.017
+USA-Canada	CA - TELUS Mobility	-	-	0.017
+USA-Canada	CA - Rogers	-	-	0.017
+USA-Canada	CA - Bell Mobility	-	-	0.017
+USA-Canada	*	-	999	0.017
+USA-Canada	US - AT&T Mobility	-	-	0.0035
+USA-Canada	US - Verizon Wireless	-	-	0.0035
+USA-Canada	Thunder Bay Mobility	-	656	0.0035
+USA-Canada	Telebec Limited Partnership	-	9	0.0035
+USA-Canada	US - T-mobile USA	-	-	0.006
+USA-Canada	US - Sprint Spectrum	-	-	0.0085
+USA-Canada	CA - SaskTel Mobility	-	-	0.0035
+USA-Canada	Powertel	-	270	0.0035
+USA-Canada	Omnipoint Communications	-	16	0.0035
+USA-Canada	Northwestel Mobility Inc	-	5	0.0035
+USA-Canada	NorthernTel Limited Partnership	-	4	0.0035
+USA-Canada	Nextel Communication	-	870	0.0035
+USA-Canada	US - West Central Cellular	-	-	0.0035
+USA-Canada	MetroPCS	-	660	0.0035
+USA-Canada	Level 3 Communicatio	-	1	0.0035
+USA-Canada	Landline	-	998	0.0035
+USA-Canada	Globalive Wireless Mngmt	-	490	0.0035
+USA-Canada	CA - Fido Solutions	-	-	0.0286
+USA-Canada	Digicel	-	621	0.0035
+USA-Canada	Dave Wireless	-	320	0.0035
+USA-Canada	Cricket Communicatio	-	16	0.0035
+USA-Canada	US - Cellcom	-	-	0.0035
+USA-Canada	Cable & Wireless	-	620	0.0035
+USA-Canada	block	-	12212	0.0035
+USA-Canada	All CDMA Networks	-	997	0.0035
+USA-Canada	CA - Aliant Telecom (Mobility)	-	-	0.0035
+Montserrat	Cable & Wireless	354	860	0.013
+Dominican Repblic1	WIND Telecom	0	5	0.0099
+Dominican Repblic1	Trilogy_Domini(Viva)	0	4	0.0095
+Dominican Repblic1	Tricom	0	3	0.0095
+Dominican Repblic1	Orange Dominicana	0	1	0.0095
+Dominican Repblic1	Compania(Claro)	0	2	0.0099
+Dominican Repblic2	Compania(Claro)	0	0	0.0099
+Dominican Repblic2	Trilogy_Domini(Viva)	0	4	0.0099
+Dominican Repblic2	Orange Dominicana	0	0	0.0099
+South Sudan	Southtel Mobile	659	0	0.012
+South Sudan	Vivacell Mobile	659	5	0.012
+South Sudan	Zain Mobile	659	0	0.012
+South Sudan	Mtn Mobile	659	0	0.009
+South Sudan	Gemtel Mobile	659	0	0.012
+North Korea	SunNet	467	193	0.0199
+North Korea	Koryolink	467	192	0.0232
+India	*	-	0	0.006
+India	VODAFONE_West Bengal	-	0	0.0045
+India	VODAFONE_UP-WEST	-	0	0.0055
+India	VODAFONE_UP-East	-	0	0.0055
+India	VODAFONE_Tamil Nadu	-	0	0.0055
+India	VODAFONE_Rajasthan	-	0	0.0055
+India	VODAFONE_Punjab	-	0	0.0065
+India	VODAFONE_Orissa	-	0	0.0045
+India	VODAFONE_North East	-	0	0.0055
+India	VODAFONE_Mumbai	-	0	0.0055
+India	VODAFONE_Maharashtra	-	0	0.0045
+India	VODAFONE_Madhya Pradesh	-	0	0.0055
+India	VODAFONE_Kolkata	-	0	0.0055
+India	VODAFONE_Kerala	-	0	0.0055
+India	VODAFONE_Karnataka	-	0	0.0055
+India	VODAFONE_Jammu & Kashmir	-	0	0.0055
+India	VODAFONE_Himachal Pradesh	-	0	0.0055
+India	VODAFONE_Haryana	-	0	0.0055
+India	VODAFONE_Gujarat	-	0	0.0045
+India	VODAFONE_Delhi	-	0	0.0055
+India	VODAFONE_Chennai	-	0	0.0055
+India	VODAFONE_Bihar	-	0	0.0055
+India	VODAFONE_Assam	-	0	0.0055
+India	VODAFONE_Andhra Pradesh	-	0	0.0055
+India	VIDEOCON_West Bengal	-	0	0.0055
+India	VIDEOCON_UP-WEST	-	0	0.0055
+India	VIDEOCON_UP-East	-	0	0.0055
+India	VIDEOCON_Tamil Nadu	-	0	0.0055
+India	VIDEOCON_Rajasthan	-	0	0.0055
+India	VIDEOCON_Punjab	-	0	0.0055
+India	VIDEOCON_Orissa	-	0	0.0055
+India	VIDEOCON_North East	-	0	0.0055
+India	VIDEOCON_Mumbai	-	0	0.0055
+India	VIDEOCON_Maharashtra	-	0	0.0055
+India	VIDEOCON_Madhya Pradesh	-	0	0.0055
+India	VIDEOCON_Kolkata	-	0	0.0055
+India	VIDEOCON_Kerala	-	0	0.0055
+India	VIDEOCON_Karnataka	-	0	0.0055
+India	VIDEOCON_Jammu & Kashmir	-	0	0.0055
+India	VIDEOCON_Himachal Pradesh	-	0	0.0055
+India	VIDEOCON_Haryana	-	0	0.0055
+India	VIDEOCON_Gujarat	-	0	0.0055
+India	VIDEOCON_Delhi	-	0	0.0055
+India	VIDEOCON_Bihar	-	0	0.0065
+India	VIDEOCON_Assam	-	0	0.0055
+India	VIDEOCON_Andhra Pradesh	-	0	0.0055
+India	Unitech Wireless_West Bengal	-	0	0.0055
+India	Unitech Wireless_UP-West	-	0	0.0055
+India	Unitech Wireless_UP-East	-	0	0.0055
+India	Unitech Wireless_Tamil Nadu	-	0	0.0045
+India	Unitech Wireless_Rajasthan	-	0	0.0055
+India	Unitech Wireless_Punjab	-	0	0.0055
+India	Unitech Wireless_Orissa	-	0	0.0055
+India	Unitech Wireless_North East	-	0	0.0055
+India	Unitech Wireless_Mumbai	-	0	0.0055
+India	Unitech Wireless_Maharashtra	-	0	0.0055
+India	Unitech Wireless_Madhya Pradesh	-	0	0.0055
+India	Unitech Wireless_Kolkata	-	0	0.0055
+India	Unitech Wireless_Kerala	-	0	0.0055
+India	Unitech Wireless_Karnataka	-	0	0.0055
+India	Unitech Wireless_Jammu & Kashmir	-	0	0.0055
+India	Unitech Wireless_Himachal Pradesh	-	0	0.0055
+India	Unitech Wireless_Haryana	-	0	0.0055
+India	Unitech Wireless_Gujarat	-	0	0.0055
+India	Unitech Wireless_Delhi	-	0	0.0055
+India	Unitech Wireless_Bihar	-	0	0.0055
+India	Unitech Wireless_Assam	-	0	0.0055
+India	Unitech Wireless_Andhra Pradesh	-	0	0.0055
+India	Tata Teleservices_West Bengal	-	0	0.0055
+India	Tata Teleservices_UP-WEST	-	0	0.0055
+India	Tata Teleservices_UP-East	-	0	0.0055
+India	Tata Teleservices_Tamil Nadu	-	0	0.0055
+India	Tata Teleservices_Rajasthan	-	0	0.0055
+India	Tata Teleservices_Punjab	-	0	0.0055
+India	Tata Teleservices_Orissa	-	0	0.0055
+India	Tata Teleservices_North East	-	0	0.0055
+India	Tata Teleservices_Mumbai	-	0	0.0055
+India	Tata Teleservices_Maharashtra	-	0	0.0055
+India	Tata Teleservices_Madhya Pradesh	-	0	0.0055
+India	Tata Teleservices_Kolkata	-	0	0.0055
+India	Tata Teleservices_Kerala	-	0	0.0055
+India	Tata Teleservices_Karnataka	-	0	0.0065
+India	Tata Teleservices_Jammu & Kashmir	-	0	0.0055
+India	Tata Teleservices_Himachal Pradesh	-	0	0.0055
+India	Tata Teleservices_Haryana	-	0	0.0055
+India	Tata Teleservices_Gujarat	-	0	0.0055
+India	Tata Teleservices_Delhi	-	0	0.0055
+India	Tata Teleservices_Chennai	-	0	0.0055
+India	Tata Teleservices_Bihar	-	0	0.0055
+India	Tata Teleservices_Assam	-	0	0.0055
+India	Tata Teleservices_Andhra Pradesh	-	0	0.0055
+India	Shyam Telelink_West Bengal	-	0	0.0055
+India	Shyam Telelink_UP-WEST	-	0	0.0055
+India	Shyam Telelink_UP-East	-	0	0.0055
+India	Shyam Telelink_Tamil Nadu	-	0	0.0065
+India	Shyam Telelink_Rajasthan	-	0	0.0055
+India	Shyam Telelink_Punjab	-	0	0.0055
+India	Shyam Telelink_Orissa	-	0	0.0055
+India	Shyam Telelink_North East	-	0	0.0055
+India	Shyam Telelink_Mumbai	-	0	0.0055
+India	Shyam Telelink_Maharashtra	-	0	0.0055
+India	Shyam Telelink_Madhya Pradesh	-	0	0.0055
+India	Shyam Telelink_Kolkata	-	0	0.0055
+India	Shyam Telelink_Kerala	-	0	0.0055
+India	Shyam Telelink_Karnataka	-	0	0.0055
+India	Shyam Telelink_Jammu & Kashmir	-	0	0.0055
+India	Shyam Telelink_Himachal Pradesh	-	0	0.0055
+India	Shyam Telelink_Haryana	-	0	0.0055
+India	Shyam Telelink_Gujarat	-	0	0.0055
+India	Shyam Telelink_Delhi	-	0	0.0055
+India	Shyam Telelink_Bihar	-	0	0.0055
+India	Shyam Telelink_Assam	-	0	0.0055
+India	Shyam Telelink_Andhra Pradesh	-	0	0.0055
+India	SPICE_Maharashtra	-	0	0.0055
+India	SPICE_Haryana	-	0	0.0055
+India	SPICE_Delhi	-	0	0.0055
+India	SPICE_Andhra Pradesh	-	0	0.0055
+India	S.Tel_Orissa	-	0	0.0055
+India	S.Tel_North East	-	0	0.0055
+India	S.Tel_Jammu & Kashmir	-	0	0.0055
+India	S.Tel_Himachal Pradesh	-	0	0.0055
+India	S.Tel_Bihar	-	0	0.0055
+India	S.Tel_Assam	-	0	0.0055
+India	Reliance_West Bengal	-	0	0.0055
+India	Reliance_UP-WEST	-	0	0.0055
+India	Reliance_UP-East	-	0	0.0055
+India	Reliance_Tamil Nadu	-	0	0.0055
+India	Reliance_Rajasthan	-	0	0.0045
+India	Reliance_Punjab	-	0	0.0055
+India	Reliance_Orissa	-	0	0.0055
+India	Reliance_North East	-	0	0.0065
+India	Reliance_Mumbai	-	0	0.0055
+India	Reliance_Maharashtra	-	0	0.0055
+India	Reliance_Madhya Pradesh	-	0	0.0045
+India	Reliance_Kolkata	-	0	0.0055
+India	Reliance_Kerala	-	0	0.0055
+India	Reliance_Karnataka	-	0	0.0055
+India	Reliance_Jammu & Kashmir	-	0	0.0055
+India	Reliance_Himachal Pradesh	-	0	0.0055
+India	Reliance_Haryana	-	0	0.0055
+India	Reliance_Gujarat	-	0	0.0045
+India	Reliance_Delhi	-	0	0.0055
+India	Reliance_Chennai	-	0	0.0055
+India	Reliance_Bihar	-	0	0.0055
+India	Reliance_Assam	-	0	0.0055
+India	Reliance_Andhra Pradesh	-	0	0.0055
+India	MTNL_Mumbai	-	0	0.0055
+India	MTNL_Delhi	-	0	0.0055
+India	LOOP Telecom_West Bengal	-	0	0.0055
+India	LOOP Telecom_UP-WEST	-	0	0.0055
+India	LOOP Telecom_UP-East	-	0	0.0055
+India	LOOP Telecom_Tamil Nadu	-	0	0.0055
+India	LOOP Telecom_Rajasthan	-	0	0.0055
+India	LOOP Telecom_Punjab	-	0	0.0055
+India	LOOP Telecom_Orissa	-	0	0.0055
+India	LOOP Telecom_North East	-	0	0.0055
+India	LOOP Telecom_Mumbai	-	0	0.0055
+India	LOOP Telecom_Maharashtra	-	0	0.0055
+India	LOOP Telecom_Madhya Pradesh	-	0	0.0055
+India	LOOP Telecom_Kolkata	-	0	0.0055
+India	LOOP Telecom_Kerala	-	0	0.0055
+India	LOOP Telecom_Karnataka	-	0	0.0055
+India	LOOP Telecom_Jammu & Kashmir	-	0	0.0055
+India	LOOP Telecom_Himachal Pradesh	-	0	0.0055
+India	LOOP Telecom_Haryana	-	0	0.0055
+India	LOOP Telecom_Gujarat	-	0	0.0055
+India	LOOP Telecom_Delhi	-	0	0.0055
+India	LOOP Telecom_Bihar	-	0	0.0055
+India	LOOP Telecom_Assam	-	0	0.0055
+India	LOOP Telecom_Andhra Pradesh	-	0	0.0055
+India	IDEA_West Bengal	-	0	0.0055
+India	IDEA_UP-West	-	0	0.0045
+India	IDEA_UP-East	-	0	0.0055
+India	IDEA_Tamil Nadu	-	0	0.0065
+India	IDEA_Rajasthan	-	0	0.0055
+India	IDEA_Punjab	-	0	0.0055
+India	IDEA_Orissa	-	0	0.0055
+India	IDEA_North East	-	0	0.0055
+India	IDEA_Mumbai	-	0	0.0055
+India	IDEA_Maharashtra	-	0	0.0055
+India	IDEA_Madhya Pradesh	-	0	0.0055
+India	IDEA_Kolkata	-	0	0.0055
+India	IDEA_Kerala	-	0	0.0055
+India	IDEA_Karnataka	-	0	0.0055
+India	IDEA_Jammu & Kashmir	-	0	0.0055
+India	IDEA_Himachal Pradesh	-	0	0.0055
+India	IDEA_Haryana	-	0	0.0055
+India	IDEA_Gujarat	-	0	0.0065
+India	IDEA_Delhi	-	0	0.0055
+India	IDEA_Bihar	-	0	0.0055
+India	IDEA_Assam	-	0	0.0055
+India	IDEA_Andhra Pradesh	-	0	0.0055
+India	Etisalat_UP-WEST	-	0	0.0055
+India	Etisalat_UP-East	-	0	0.0055
+India	Etisalat_Tamil Nadu	-	0	0.0055
+India	Etisalat_Rajasthan	-	0	0.0055
+India	Etisalat_Punjab	-	0	0.0055
+India	Etisalat_Mumbai	-	0	0.0055
+India	Etisalat_Maharashtra	-	0	0.0055
+India	Etisalat_Madhya Pradesh	-	0	0.0055
+India	Etisalat_Kerala	-	0	0.0055
+India	Etisalat_Karnataka	-	0	0.0055
+India	Etisalat_Haryana	-	0	0.0055
+India	Etisalat_Gujarat	-	0	0.0055
+India	Etisalat_Delhi	-	0	0.0055
+India	Etisalat_Bihar	-	0	0.0055
+India	Etisalat_Andhra Pradesh	-	0	0.0055
+India	BSNL_West Bengal	-	0	0.0055
+India	BSNL_UP-WEST	-	0	0.0055
+India	BSNL_UP-East	-	0	0.0065
+India	BSNL_Tamil Nadu	-	0	0.0055
+India	BSNL_Rajasthan	-	0	0.0055
+India	BSNL_Punjab	-	0	0.0055
+India	BSNL_Orissa	-	0	0.0055
+India	BSNL_North East	-	0	0.0055
+India	BSNL_Maharashtra	-	0	0.0055
+India	BSNL_Madhya Pradesh	-	0	0.0055
+India	BSNL_Kolkata	-	0	0.0055
+India	BSNL_Kerala	-	0	0.0055
+India	BSNL_Karnataka	-	0	0.0055
+India	BSNL_Jammu & Kashmir	-	0	0.0055
+India	BSNL_Himachal Pradesh	-	0	0.0055
+India	BSNL_Haryana	-	0	0.0055
+India	BSNL_Gujarat	-	0	0.0055
+India	BSNL_Chennai	-	0	0.0055
+India	BSNL_Bihar	-	0	0.0055
+India	BSNL_Assam	-	0	0.0055
+India	BSNL_Andhra Pradesh	-	0	0.0065
+India	AIRTEL_West Bengal	-	0	0.0055
+India	AIRTEL_UP-West	-	0	0.0055
+India	AIRTEL_UP-East	-	0	0.0055
+India	AIRTEL_Tamil Nadu	-	0	0.0055
+India	AIRTEL_Rajasthan	-	0	0.0055
+India	AIRTEL_Punjab	-	0	0.0055
+India	AIRTEL_Orissa	-	0	0.0055
+India	AIRTEL_North East	-	0	0.0055
+India	AIRTEL_Mumbai	-	0	0.0055
+India	AIRTEL_Maharashtra	-	0	0.0055
+India	AIRTEL_Madhya Pradesh	-	0	0.0055
+India	AIRTEL_Kolkata	-	0	0.0055
+India	AIRTEL_Kerala	-	0	0.0055
+India	AIRTEL_Karnataka	-	0	0.0055
+India	AIRTEL_Jammu & Kashmir	-	0	0.0055
+India	AIRTEL_Himachal Pradesh	-	0	0.0065
+India	AIRTEL_Haryana	-	0	0.0055
+India	AIRTEL_Gujarat	-	0	0.0055
+India	AIRTEL_Delhi	-	0	0.0045
+India	AIRTEL_Chennai	-	0	0.0055
+India	AIRTEL_Bihar	-	0	0.0055
+India	AIRTEL_Assam	-	0	0.0055
+India	AIRTEL_Andhra Pradesh	-	0	0.0045
+India	AIRCEL_West Bengal	-	0	0.0055
+India	AIRCEL_UP-WEST	-	0	0.0055
+India	AIRCEL_UP-East	-	0	0.0055
+India	AIRCEL_Tamil Nadu	-	0	0.0055
+India	AIRCEL_Rajasthan	-	0	0.0055
+India	AIRCEL_Punjab	-	0	0.0055
+India	AIRCEL_Orissa	-	0	0.0055
+India	AIRCEL_North East	-	0	0.0055
+India	AIRCEL_Mumbai	-	0	0.0055
+India	AIRCEL_Maharashtra	-	0	0.0055
+India	AIRCEL_Madhya Pradesh	-	0	0.0055
+India	AIRCEL_Kolkata	-	0	0.0055
+India	AIRCEL_Kerala	-	0	0.0055
+India	AIRCEL_Karnataka	-	0	0.0055
+India	AIRCEL_Jammu & Kashmir	-	0	0.0055
+India	AIRCEL_Himachal Pradesh	-	0	0.0055
+India	AIRCEL_Haryana	-	0	0.0055
+India	AIRCEL_Gujarat	-	0	0.0055
+India	AIRCEL_Delhi	-	0	0.0065
+India	AIRCEL_Chennai	-	0	0.0055
+India	AIRCEL_Bihar	-	0	0.0055
+India	AIRCEL_Assam	-	0	0.0055
+India	AIRCEL_Andhra Pradesh	-	0	0.0055
+Cayman Islands	Digicel Cayman Ltd	346	50	0.0038
+Cayman Islands	Cable & Wireless	346	140	0.005
+Kazakhstan	Kazakhtelekom	401	8	0.0105
+Kazakhstan	Tele2-MTS	401	77	0.0055
+Kazakhstan	K-Cell	401	2	0.0105
+Kazakhstan	Beeline	401	1	0.0061

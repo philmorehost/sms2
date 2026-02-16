@@ -1,0 +1,1130 @@
+[30-Aug-2025 17:32:30 Africa/Lagos] PHP Warning:  Undefined variable $row in /home/appsms/public_html/app/helpers.php on line 376
+[30-Aug-2025 17:32:30 Africa/Lagos] PHP Warning:  Trying to access array offset on null in /home/appsms/public_html/app/helpers.php on line 376
+[09-Sep-2025 22:25:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:25:52 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:25:57 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:26:02 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:26:07 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:26:12 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:26:17 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:26:22 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:26:28 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:26:32 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:26:41 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:26:46 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:26:51 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:27:00 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:27:09 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:27:15 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:27:19 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:27:24 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:27:30 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:27:49 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:27:50 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:27:50 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:27:51 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[09-Sep-2025 22:27:54 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:34:06 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:34:11 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:34:15 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:34:21 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:34:26 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:34:32 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:34:36 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:34:41 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:34:46 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:34:52 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:34:56 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:35:02 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:35:07 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:35:11 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:35:16 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:35:22 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:35:26 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:35:31 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:35:36 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:35:42 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:35:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:36:03 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:36:06 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:36:10 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:36:16 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:36:21 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:36:25 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:36:31 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:36:36 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:36:40 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:36:46 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:36:51 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:36:56 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:37:30 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:42:24 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:42:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:42:34 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:42:39 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:42:44 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:42:51 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:42:57 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:43:02 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:43:08 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:43:12 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:43:18 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:43:22 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:43:27 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:43:32 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:43:38 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:43:42 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:43:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:43:52 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:43:57 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:44:02 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:44:08 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:44:12 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:44:18 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:44:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:45:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:46:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:47:49 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:48:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:49:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:50:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:51:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:52:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:53:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:54:49 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:56:01 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:56:53 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:58:49 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 22:59:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:00:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:01:49 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:02:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:03:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:04:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:05:44 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:06:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:06:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:07:00 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:07:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:07:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:08:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:08:59 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:09:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:09:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:10:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:10:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:11:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:11:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:12:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:12:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:13:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:14:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:14:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:15:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:15:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:16:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:16:50 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:17:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:17:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:18:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:18:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:19:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:19:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:20:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:20:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:21:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:21:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:22:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:22:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:23:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:23:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:24:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:24:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:25:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:25:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:26:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:26:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:27:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:27:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:28:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:28:52 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:29:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:29:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:30:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:30:49 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:31:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:31:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:32:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:32:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:33:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:33:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:34:14 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:34:15 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:34:18 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:34:26 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:34:27 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:34:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:34:33 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:34:37 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:34:43 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:34:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:34:52 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:34:58 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:35:02 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:35:07 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:35:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:35:30 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:35:32 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:35:37 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:35:43 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:35:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:35:53 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:35:57 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:36:02 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:36:07 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:36:12 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:36:18 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:36:22 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:36:27 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:36:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:36:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:37:30 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:37:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:38:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:38:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:39:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:39:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:40:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:40:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:41:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:41:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:42:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:42:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:43:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:43:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:44:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:44:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:45:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:45:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:46:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:46:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:47:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:47:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:48:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:48:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:49:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:49:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:50:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:50:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:51:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:51:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:52:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:52:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:53:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:53:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:54:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:54:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:55:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:55:49 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:56:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:56:50 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:57:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:57:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:58:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:58:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:59:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[07-Oct-2025 23:59:49 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:00:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:00:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:01:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:01:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:02:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:02:51 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:03:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:03:49 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:04:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:04:50 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:05:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:05:52 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:06:37 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:06:49 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:07:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:07:50 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:08:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:08:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:09:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:10:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:10:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:11:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:12:01 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:12:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:12:48 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:13:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:13:47 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:14:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:15:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:16:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:17:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:18:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:19:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:20:25 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:20:28 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 00:20:33 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 01:00:29 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 08:11:11 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 08:11:15 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 08:11:21 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 08:11:26 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 08:11:30 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 08:11:35 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 08:11:42 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 08:11:51 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[08-Oct-2025 08:11:56 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function api_error() in /home/appsms/public_html/ajax/get_new_messages.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/get_new_messages.php on line 8
+[16-Feb-2026 19:19:59 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function send_email_with_attachment() in /home/appsms/public_html/ajax/email_tool_results.php:44
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/email_tool_results.php on line 44
+[16-Feb-2026 19:20:17 Africa/Lagos] PHP Fatal error:  Uncaught Error: Call to undefined function send_email_with_attachment() in /home/appsms/public_html/ajax/email_tool_results.php:44
+Stack trace:
+#0 {main}
+  thrown in /home/appsms/public_html/ajax/email_tool_results.php on line 44

@@ -1,0 +1,205 @@
+/* Basic Layout */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f6f9;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.main-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background-color: #fff;
+    color: #333;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1038;
+    border-right: 1px solid #dee2e6;
+    transition: left .3s ease-in-out;
+}
+
+/* This is the key part for the fix */
+.content-wrapper {
+    flex-grow: 1;
+    /* The 60px top padding is for the fixed top navbar */
+    padding-top: 60px;
+    margin-left: 260px; /* This should fix the overlap */
+    transition: margin-left .3s ease-in-out;
+    width: calc(100% - 260px); /* Ensure it takes up the remaining space */
+}
+
+/* Top Navbar */
+.main-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 260px; /* Align with sidebar */
+    height: 60px;
+    z-index: 1037;
+    background-color: #fff;
+    border-bottom: 1px solid #dee2e6;
+    padding: 0 1rem;
+    transition: left .3s ease-in-out;
+}
+
+/* Main content area */
+.content {
+    padding: 1.5rem;
+}
+
+/* For mobile devices, the sidebar will be hidden */
+@media (max-width: 991.98px) {
+    .main-sidebar {
+        left: -260px;
+    }
+
+    .content-wrapper {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .main-header {
+        left: 0;
+    }
+}
+
+/* Wallet Card */
+.wallet-card {
+    background: linear-gradient(45deg, #0d6efd, #0dcaf0);
+    color: white;
+}
+
+/* Service Buttons */
+.service-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    border-radius: 8px;
+    text-align: center;
+    padding: 20px 10px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid #e3e3e3;
+    height: 100%;
+    font-size: 0.9rem;
+}
+.service-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    color: #0d6efd;
+}
+.service-btn i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    display: block;
+    color: #0d6efd;
+    transition: color 0.3s ease;
+}
+.service-btn:hover i {
+    color: #0a58ca;
+}
+.service-btn span {
+    font-weight: 500;
+}
+
+/* Stats Cards */
+.stat-card {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e3e3e3;
+}
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: #fff;
+}
+.stat-info .stat-label {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+.stat-info .stat-value {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+/* Styles from add-funds.css, now centralized */
+.payment-method-tabs {
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 1.5rem;
+}
+.payment-method-tab {
+    cursor: pointer;
+    padding: 1rem 1.5rem;
+    border: 1px solid transparent;
+    border-bottom: 0;
+    margin-right: 5px;
+    color: #6c757d;
+}
+.payment-method-tab.active {
+    border-color: #dee2e6 #dee2e6 #fff;
+    border-radius: .25rem .25rem 0 0;
+    background-color: #fff;
+    font-weight: 600;
+    color: #0d6efd;
+}
+.payment-method-content {
+    display: none;
+}
+.payment-method-content.active {
+    display: block;
+}
+
+/* Sidebar Navigation */
+.nav-sidebar .nav-link {
+    color: #333;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    margin: 2px 0;
+}
+.nav-sidebar .nav-link:hover {
+    background-color: #f4f6f9;
+}
+.nav-sidebar .nav-link.active {
+    background-color: #0d6efd;
+    color: #fff;
+}
+.nav-sidebar .nav-icon {
+    width: 25px;
+    text-align: center;
+    margin-right: 10px;
+}
+.brand-link {
+    display: block;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+}
+.impersonation-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1040;
+}

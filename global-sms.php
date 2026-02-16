@@ -231,13 +231,37 @@ document.addEventListener('DOMContentLoaded', function() {
         recipientCountSpan.textContent = validNumbers.length;
     }
     recipientsTextarea.addEventListener('input', updateRecipientCount);
+    const chars1Unit = <?php echo (int)($settings['sms_chars_1unit'] ?? 160); ?>;
+    const charsMultUnit = <?php echo (int)($settings['sms_chars_multunit'] ?? 153); ?>;
+    const maxSmsUnits = <?php echo (int)($settings['sms_max_units'] ?? 10); ?>;
+    const sendBtn = document.getElementById('send-btn');
+
     messageTextarea.addEventListener('input', function() {
         const charCount = this.value.length;
         charNumSpan.textContent = charCount;
-        if (charCount <= 160) {
-            smsPartsSpan.textContent = 1;
+        let parts = 1;
+        if (charCount <= chars1Unit) {
+            parts = 1;
         } else {
-            smsPartsSpan.textContent = Math.ceil(charCount / 153);
+            parts = Math.ceil(charCount / charsMultUnit);
+        }
+        smsPartsSpan.textContent = parts;
+
+        if (maxSmsUnits > 0 && parts > maxSmsUnits) {
+            messageTextarea.classList.add('is-invalid');
+            sendBtn.disabled = true;
+            if (!document.getElementById('max-sms-error')) {
+                const errorDiv = document.createElement('div');
+                errorDiv.id = 'max-sms-error';
+                errorDiv.className = 'invalid-feedback';
+                errorDiv.textContent = `You have exceeded the maximum of ${maxSmsUnits} SMS pages.`;
+                messageTextarea.parentNode.appendChild(errorDiv);
+            }
+        } else {
+            messageTextarea.classList.remove('is-invalid');
+            sendBtn.disabled = false;
+            const errorDiv = document.getElementById('max-sms-error');
+            if (errorDiv) errorDiv.remove();
         }
     });
     // Manually trigger count on page load for pre-filled data
@@ -326,16 +350,17 @@ document.addEventListener('DOMContentLoaded', function() {
         sendButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Calculating...`;
         sendButton.disabled = true;
         const route = 'global';
+        const message = smsForm.querySelector('[name="message"]').value;
         fetch('ajax/calculate_cost.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `recipients=${encodeURIComponent(recipients)}&route=${encodeURIComponent(route)}`
+            body: `recipients=${encodeURIComponent(recipients)}&route=${encodeURIComponent(route)}&message=${encodeURIComponent(message)}`
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
                 const currencySymbol = '<?php echo htmlspecialchars($settings['global_wallet_currency'] ?? 'EUR'); ?>';
-                confirmRecipientCountSpan.textContent = data.recipient_count;
+                confirmRecipientCountSpan.textContent = data.recipient_count + " (Total Units: " + (data.recipient_count * data.units) + ")";
                 confirmTotalCostSpan.textContent = currencySymbol + ' ' + data.cost;
                 costConfirmationModal.show();
             } else {

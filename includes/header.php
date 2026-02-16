@@ -177,8 +177,8 @@ if ($admin_stmt) {
                             echo '<li class="nav-item dropdown">';
                             echo '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="nav-icon fas fa-file-alt"></i> <span class="nav-link-text">Pages</span></a>';
                             echo '<ul class="dropdown-menu">';
-                            foreach ($visible_pages as $page) {
-                                echo '<li><a class="dropdown-item" href="page.php?slug=' . htmlspecialchars($page['slug']) . '">' . htmlspecialchars($page['title']) . '</a></li>';
+                            foreach ($visible_pages as $pg) {
+                                echo '<li><a class="dropdown-item" href="page.php?slug=' . htmlspecialchars($pg['slug']) . '">' . htmlspecialchars($pg['title']) . '</a></li>';
                             }
                             echo '</ul></li>';
                         }
@@ -322,8 +322,8 @@ if ($admin_stmt) {
                                echo '<li class="nav-item dropdown">';
                                echo '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="nav-icon fas fa-file-alt"></i> Pages</a>';
                                echo '<ul class="dropdown-menu">';
-                               foreach ($visible_pages as $page) {
-                                   echo '<li><a class="dropdown-item" href="page.php?slug=' . htmlspecialchars($page['slug']) . '">' . htmlspecialchars($page['title']) . '</a></li>';
+                               foreach ($visible_pages as $pg) {
+                                   echo '<li><a class="dropdown-item" href="page.php?slug=' . htmlspecialchars($pg['slug']) . '">' . htmlspecialchars($pg['title']) . '</a></li>';
                                }
                                echo '</ul></li>';
                            }

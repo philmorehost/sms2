@@ -379,6 +379,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_service_pricing']
         'price_otp'         => $_POST['price_otp'],
         'price_whatsapp'    => $_POST['price_whatsapp'],
         'price_voice_audio' => $_POST['price_voice_audio'],
+        'sms_chars_1unit'   => $_POST['sms_chars_1unit'],
+        'sms_chars_multunit' => $_POST['sms_chars_multunit'],
+        'sms_max_units'     => $_POST['sms_max_units'],
     ];
 
     $stmt = $conn->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
@@ -660,7 +663,26 @@ include 'includes/header.php';
                             <div class="form-text">Cost per WhatsApp message sent.</div>
                         </div>
                     </div>
-                    <button type="submit" name="save_service_pricing" class="btn btn-primary">Save Pricing</button>
+                    <hr>
+                    <h4>SMS Unit Configuration</h4>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="sms_chars_1unit" class="form-label">Characters per Page (1 Unit)</label>
+                            <input type="number" class="form-control" id="sms_chars_1unit" name="sms_chars_1unit" value="<?php echo htmlspecialchars($_POST['sms_chars_1unit'] ?? $settings['sms_chars_1unit'] ?? '160'); ?>">
+                            <div class="form-text">Standard: 160 characters.</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="sms_chars_multunit" class="form-label">Characters per Page (> 1 Unit)</label>
+                            <input type="number" class="form-control" id="sms_chars_multunit" name="sms_chars_multunit" value="<?php echo htmlspecialchars($_POST['sms_chars_multunit'] ?? $settings['sms_chars_multunit'] ?? '153'); ?>">
+                            <div class="form-text">Standard: 153 characters for multi-page messages.</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="sms_max_units" class="form-label">Maximum SMS Pages (Units)</label>
+                            <input type="number" class="form-control" id="sms_max_units" name="sms_max_units" value="<?php echo htmlspecialchars($_POST['sms_max_units'] ?? $settings['sms_max_units'] ?? '10'); ?>">
+                            <div class="form-text">Maximum pages a customer can send per phone number.</div>
+                        </div>
+                    </div>
+                    <button type="submit" name="save_service_pricing" class="btn btn-primary">Save Pricing & Configuration</button>
                 </form>
             </div>
 

@@ -2,6 +2,12 @@
 $page_title = 'Message Reports';
 require_once 'app/bootstrap.php';
 
+// Authenticate user
+if (!isset($current_user)) {
+    header("Location: login.php");
+    exit();
+}
+
 // --- Search and Filter Logic ---
 $search_term = $_GET['search'] ?? '';
 $type_filter = $_GET['type'] ?? '';

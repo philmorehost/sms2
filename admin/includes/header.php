@@ -5,6 +5,8 @@ require_once __DIR__ . '/../../app/bootstrap.php';
 // Explicitly including helpers.php to ensure all helper functions are available across the admin panel.
 require_once __DIR__ . '/../../app/helpers.php';
 
+define('IS_ADMIN_AREA', true);
+
 // Centralized check for admin access. is_admin() is defined in helpers.php.
 // It checks if the user is an admin and not currently impersonating another user.
 if (!is_admin()) {

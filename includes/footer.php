@@ -6,6 +6,8 @@
                 All rights reserved.
             </footer>
 
+            <?php include_once 'includes/bottom_nav.php'; ?>
+
         </div> <!-- .content-wrapper -->
     </div> <!-- .wrapper -->
 

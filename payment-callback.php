@@ -60,9 +60,17 @@ if ($result['status'] == true && $result['data']['status'] == 'success') {
         // This is a new, valid transaction. Update our database.
         $conn->begin_transaction();
         try {
-            // 1. Update user's balance
+            // 1. Get the subtotal (actual credit amount) from the transaction record
+            $stmt_credit = $conn->prepare("SELECT amount FROM transactions WHERE reference = ?");
+            $stmt_credit->bind_param("s", $db_reference);
+            $stmt_credit->execute();
+            $txn_data = $stmt_credit->get_result()->fetch_assoc();
+            $credit_amount = $txn_data['amount'] ?? $amount; // Fallback to raw amount if subtotal not found
+            $stmt_credit->close();
+
+            // 2. Update user's balance with the subtotal amount (total minus charges)
             $stmt_user = $conn->prepare("UPDATE users SET balance = balance + ? WHERE id = ?");
-            $stmt_user->bind_param("di", $amount, $_SESSION['user_id']);
+            $stmt_user->bind_param("di", $credit_amount, $_SESSION['user_id']);
             $stmt_user->execute();
             $stmt_user->close();
 
@@ -81,10 +89,10 @@ if ($result['status'] == true && $result['data']['status'] == 'success') {
             $deposits_count_stmt->execute();
             $deposits_count = $deposits_count_stmt->get_result()->fetch_assoc()['count'];
 
-            if ($deposits_count == 1 && $user['referred_by'] !== null) {
-                $referrer_id = $user['referred_by'];
-                $commission_rate = 0.10; // 10%
-                $commission_amount = $amount * $commission_rate;
+            if ($deposits_count == 1 && $current_user['referred_by'] !== null) {
+                $referrer_id = $current_user['referred_by'];
+                $commission_rate = (float)($settings['referral_bonus_percentage'] ?? 10) / 100;
+                $commission_amount = $credit_amount * $commission_rate;
 
                 // Award commission to referrer
                 $ref_update_stmt = $conn->prepare("UPDATE users SET referral_balance = referral_balance + ? WHERE id = ?");

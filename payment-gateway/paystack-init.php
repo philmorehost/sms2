@@ -22,10 +22,11 @@ if (!$total_amount || $total_amount <= 0) {
 }
 
 // Calculate subtotal and VAT from the total amount
+// User pays exactly $total_amount, charges are deducted from it.
 $settings = get_settings();
 $vat_percentage = (float)($settings['vat_percentage'] ?? 0);
-$subtotal = $total_amount / (1 + ($vat_percentage / 100));
-$vat_amount = $total_amount - $subtotal;
+$vat_amount = $total_amount * ($vat_percentage / 100);
+$subtotal = $total_amount - $vat_amount;
 
 
 // Amount in Kobo (Paystack requires the amount in the lowest currency unit)

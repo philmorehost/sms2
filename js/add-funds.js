@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const vatCalculationDiv = document.getElementById('vat-calculation');
     const subtotalDisplay = document.getElementById('subtotal-display');
     const vatDisplay = document.getElementById('vat-display');
-    const totalDisplay = document.getElementById('total-display');
+    const totalDisplayManual = document.getElementById('total-display-manual');
 
     const planButtons = document.querySelectorAll('.pricing-plan-btn');
     const paymentTabs = document.querySelectorAll('.payment-method-tab');
@@ -34,13 +34,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const vatRate = parseFloat(vatCalculationDiv.dataset.vatRate) / 100;
             if (amount > 0 && vatRate > 0) {
                 const currencySymbol = vatCalculationDiv.dataset.currencySymbol;
-                const subtotal = amount;
-                const vatAmount = subtotal * vatRate;
-                const totalAmount = subtotal + vatAmount;
+                const totalAmount = amount;
+                const vatAmount = totalAmount * vatRate;
+                const creditAmount = totalAmount - vatAmount;
 
-                subtotalDisplay.textContent = `${currencySymbol}${subtotal.toFixed(2)}`;
+                totalDisplayManual.textContent = `${currencySymbol}${totalAmount.toFixed(2)}`;
                 vatDisplay.textContent = `${currencySymbol}${vatAmount.toFixed(2)}`;
-                totalDisplay.textContent = `${currencySymbol}${totalAmount.toFixed(2)}`;
+                subtotalDisplay.textContent = `${currencySymbol}${creditAmount.toFixed(2)}`;
                 vatCalculationDiv.style.display = 'block';
             } else {
                 vatCalculationDiv.style.display = 'none';

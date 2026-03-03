@@ -2,6 +2,8 @@
 $page_title = 'Admin Dashboard';
 include 'includes/header.php';
 
+$csrf_token = generate_csrf_token();
+
 // Fetch stats for the dashboard
 function get_count($conn, $sql) {
     $stmt = $conn->prepare($sql);
@@ -18,12 +20,17 @@ function get_count($conn, $sql) {
 // Total Users
 $total_users = get_count($conn, "SELECT COUNT(id) as count FROM users WHERE is_admin = 0");
 
-// Total Users Wallet Balance
-$stmt_wallet = $conn->prepare("SELECT SUM(balance) as total_balance FROM users WHERE is_admin = 0");
-$total_wallet_balance = 0;
+// Total Users Wallet Balance (Local + Global)
+$stmt_wallet = $conn->prepare("SELECT
+    (SELECT SUM(balance) FROM users WHERE is_admin = 0) as total_local,
+    (SELECT SUM(balance) FROM global_wallets) as total_global");
+$total_local_balance = 0;
+$total_global_balance = 0;
 if ($stmt_wallet) {
     $stmt_wallet->execute();
-    $total_wallet_balance = $stmt_wallet->get_result()->fetch_assoc()['total_balance'] ?? 0;
+    $balances = $stmt_wallet->get_result()->fetch_assoc();
+    $total_local_balance = $balances['total_local'] ?? 0;
+    $total_global_balance = $balances['total_global'] ?? 0;
     $stmt_wallet->close();
 }
 
@@ -79,8 +86,8 @@ $pending_payments = get_count($conn, "SELECT COUNT(id) as count FROM manual_depo
     <div class="col-lg-3 col-md-6 mb-4">
         <div class="stat-box bg-success">
             <div class="inner">
-                <h3><?php echo get_currency_symbol() . number_format($total_wallet_balance, 2); ?></h3>
-                <p>Users Wallet (Total Balance)</p>
+                <h3><?php echo get_currency_symbol() . number_format($total_local_balance, 2); ?></h3>
+                <p>Local Wallets Total</p>
             </div>
             <div class="icon">
                 <i class="fas fa-wallet"></i>
@@ -90,6 +97,18 @@ $pending_payments = get_count($conn, "SELECT COUNT(id) as count FROM manual_depo
     </div>
     <div class="col-lg-3 col-md-6 mb-4">
         <div class="stat-box bg-info">
+            <div class="inner">
+                <h3><?php echo number_format($total_global_balance, 2); ?></h3>
+                <p>Global Wallets Total</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-globe"></i>
+            </div>
+            <a href="users.php" class="stat-box-footer">View Users <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stat-box bg-warning">
             <div class="inner">
                 <h3><?php echo $total_groups; ?></h3>
                 <p>Contact Groups</p>

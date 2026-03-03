@@ -1,0 +1,14 @@
+[Tue Mar  3 13:58:57 2026] PHP 8.3.6 Development Server (http://localhost:8000) started
+[Tue Mar  3 14:00:53 2026] [::1]:48480 Accepted
+[Tue Mar  3 14:00:53 2026] PHP Warning:  require_once(/app/app/config.php): Failed to open stream: No such file or directory in /app/app/bootstrap.php on line 8
+[Tue Mar  3 14:00:53 2026] PHP Fatal error:  Uncaught Error: Failed opening required '/app/app/config.php' (include_path='.:/usr/share/php') in /app/app/bootstrap.php:8
+Stack trace:
+#0 /app/admin/login.php(2): require_once()
+#1 {main}
+  thrown in /app/app/bootstrap.php on line 8
+[Tue Mar  3 14:00:53 2026] [::1]:48480 [500]: GET /admin/login.php - Uncaught Error: Failed opening required '/app/app/config.php' (include_path='.:/usr/share/php') in /app/app/bootstrap.php:8
+Stack trace:
+#0 /app/admin/login.php(2): require_once()
+#1 {main}
+  thrown in /app/app/bootstrap.php on line 8
+[Tue Mar  3 14:00:53 2026] [::1]:48480 Closing

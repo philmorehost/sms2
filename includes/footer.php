@@ -21,5 +21,12 @@
             <i class="fab fa-whatsapp"></i>
         </a>
     <?php endif; ?>
+
+    <?php
+    // Explicitly close the database connection
+    if (isset($conn)) {
+        $conn->close();
+    }
+    ?>
 </body>
 </html>

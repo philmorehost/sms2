@@ -18,5 +18,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script src="../js/main.js"></script> <!-- Reusing user's main js -->
+
+    <?php
+    // Explicitly close the database connection
+    if (isset($conn)) {
+        $conn->close();
+    }
+    ?>
 </body>
 </html>

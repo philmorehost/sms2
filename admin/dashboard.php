@@ -57,6 +57,9 @@ $pending_payments = get_count($conn, "SELECT COUNT(id) as count FROM manual_depo
         <a href="settings.php" class="btn btn-secondary">
             <i class="fas fa-cog me-1"></i> Platform Settings
         </a>
+        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#creditDebitModal">
+            <i class="fas fa-exchange-alt me-1"></i> Credit/Debit User
+        </button>
     </div>
 </div>
 
@@ -205,5 +208,142 @@ $pending_payments = get_count($conn, "SELECT COUNT(id) as count FROM manual_depo
     </div>
 </div>
 
+
+<!-- Credit/Debit Modal -->
+<div class="modal fade" id="creditDebitModal" tabindex="-1" aria-labelledby="creditDebitModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="creditDebitForm">
+                <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="creditDebitModalLabel">Credit/Debit User Wallet</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="creditDebitMessage"></div>
+                    <div class="mb-3">
+                        <label for="user_search" class="form-label">Search User (Username or Email)</label>
+                        <input type="text" class="form-control" id="user_search" autocomplete="off" placeholder="Start typing...">
+                        <div id="user_results" class="list-group mt-1" style="position: absolute; z-index: 1000; width: 93%;"></div>
+                        <input type="hidden" name="user_id" id="target_user_id" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Select Wallet</label>
+                        <select class="form-select" name="wallet_type" id="wallet_type" required>
+                            <option value="local">Local Wallet (<?php echo get_currency_symbol(); ?>)</option>
+                            <option value="global">Global Wallet</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Action</label>
+                        <select class="form-select" name="action_type" id="action_type" required>
+                            <option value="credit">Credit (+)</option>
+                            <option value="debit">Debit (-)</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="credit_amount" class="form-label">Amount</label>
+                        <input type="number" step="0.01" class="form-control" name="amount" id="credit_amount" required min="0.01">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description (Optional)</label>
+                        <textarea class="form-control" name="description" id="description" rows="2" placeholder="e.g., Manual correction"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="confirmCreditDebitBtn">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const userSearch = document.getElementById('user_search');
+    const userResults = document.getElementById('user_results');
+    const targetUserId = document.getElementById('target_user_id');
+    const creditDebitForm = document.getElementById('creditDebitForm');
+    const creditDebitMessage = document.getElementById('creditDebitMessage');
+
+    let searchTimeout;
+
+    userSearch.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        const query = this.value.trim();
+        if (query.length < 2) {
+            userResults.innerHTML = '';
+            return;
+        }
+
+        searchTimeout = setTimeout(() => {
+            fetch(`ajax/search_users_simple.php?query=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        let html = '';
+                        data.users.forEach(u => {
+                            html += `<a href="#" class="list-group-item list-group-item-action select-user" data-id="${u.id}" data-username="${u.username}">
+                                        ${u.username} (${u.email})
+                                     </a>`;
+                        });
+                        userResults.innerHTML = html;
+                    }
+                });
+        }, 300);
+    });
+
+    userResults.addEventListener('click', function(e) {
+        const item = e.target.closest('.select-user');
+        if (item) {
+            e.preventDefault();
+            targetUserId.value = item.dataset.id;
+            userSearch.value = item.dataset.username;
+            userResults.innerHTML = '';
+        }
+    });
+
+    creditDebitForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('confirmCreditDebitBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Processing...';
+
+        const formData = new FormData(this);
+        fetch('ajax/credit_debit_user.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                creditDebitMessage.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+                creditDebitForm.reset();
+                targetUserId.value = '';
+                // Optional: Refresh dashboard stats
+                setTimeout(() => location.reload(), 1500);
+            } else {
+                creditDebitMessage.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+                btn.disabled = false;
+                btn.innerHTML = 'Submit';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            creditDebitMessage.innerHTML = '<div class="alert alert-danger">A server error occurred.</div>';
+            btn.disabled = false;
+            btn.innerHTML = 'Submit';
+        });
+    });
+
+    // Close results when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!userSearch.contains(e.target) && !userResults.contains(e.target)) {
+            userResults.innerHTML = '';
+        }
+    });
+});
+</script>
 
 <?php include 'includes/footer.php'; ?>

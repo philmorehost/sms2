@@ -70,7 +70,7 @@ if ($result['status'] == true && $result['data']['status'] == 'success') {
 
             // 2. Update user's balance with the subtotal amount (total minus charges)
             $stmt_user = $conn->prepare("UPDATE users SET balance = balance + ? WHERE id = ?");
-            $stmt_user->bind_param("di", $credit_amount, $_SESSION['user_id']);
+            $stmt_user->bind_param("di", $credit_amount, $current_user['id']);
             $stmt_user->execute();
             $stmt_user->close();
 
@@ -85,7 +85,7 @@ if ($result['status'] == true && $result['data']['status'] == 'success') {
             // --- Check for Referral Commission ---
             // Check if it's the user's first deposit and if they were referred
             $deposits_count_stmt = $conn->prepare("SELECT COUNT(id) as count FROM transactions WHERE user_id = ? AND type = 'deposit' AND status = 'completed'");
-            $deposits_count_stmt->bind_param("i", $_SESSION['user_id']);
+            $deposits_count_stmt->bind_param("i", $current_user['id']);
             $deposits_count_stmt->execute();
             $deposits_count = $deposits_count_stmt->get_result()->fetch_assoc()['count'];
 
@@ -101,7 +101,7 @@ if ($result['status'] == true && $result['data']['status'] == 'success') {
 
                 // Log the referral earning
                 $ref_log_stmt = $conn->prepare("INSERT INTO referral_earnings (referrer_id, referred_id, transaction_id, amount, commission_rate) VALUES (?, ?, ?, ?, ?)");
-                $ref_log_stmt->bind_param("iiidd", $referrer_id, $_SESSION['user_id'], $transaction['id'], $commission_amount, $commission_rate);
+                $ref_log_stmt->bind_param("iiidd", $referrer_id, $current_user['id'], $transaction['id'], $commission_amount, $commission_rate);
                 $ref_log_stmt->execute();
             }
             // --- End Referral Check ---

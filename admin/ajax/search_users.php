@@ -16,9 +16,10 @@ $page = isset($_POST['page']) ? (int)$_POST['page'] : 1;
 $limit = 10;
 $offset = ($page - 1) * $limit;
 
-$sql = "SELECT u.id, u.username, u.email, u.phone_number, u.balance, u.created_at, u.is_admin, u.is_email_verified, u.api_access_status, r.username as referrer_username
+$sql = "SELECT u.id, u.username, u.email, u.phone_number, u.balance, u.created_at, u.is_admin, u.is_email_verified, u.api_access_status, r.username as referrer_username, gw.balance as global_balance
         FROM users u
-        LEFT JOIN users r ON u.referred_by = r.id";
+        LEFT JOIN users r ON u.referred_by = r.id
+        LEFT JOIN global_wallets gw ON u.id = gw.user_id";
 $count_sql = "SELECT COUNT(u.id) as total FROM users u";
 
 $where_clauses = [];
@@ -89,7 +90,8 @@ if (empty($users)) {
         $html .= '<td>' . $user['id'] . '</td>';
         $html .= '<td>' . htmlspecialchars($user['username']) . '</td>';
         $html .= '<td>' . htmlspecialchars($user['email']) . '</td>';
-        $html .= '<td>' . get_currency_symbol() . number_format($user['balance'], 2) . '</td>';
+        $global_bal = isset($user['global_balance']) ? ' / <span class="text-info" title="Global Wallet Balance">' . number_format($user['global_balance'], 2) . '</span>' : '';
+        $html .= '<td>' . get_currency_symbol() . number_format($user['balance'], 2) . $global_bal . '</td>';
         $html .= '<td>' . ($user['is_admin'] ? '<span class="badge bg-success">Yes</span>' : '<span class="badge bg-secondary">No</span>') . '</td>';
         $html .= '<td class="verification-status-cell">' . ($user['is_email_verified'] ? '<span class="badge bg-success">Yes</span>' : '<span class="badge bg-danger">No</span>') . '</td>';
 

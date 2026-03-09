@@ -131,7 +131,6 @@ if ($admin_stmt) {
                                 <li><a class="dropdown-item" href="global-sms.php">Send Global SMS</a></li>
                                 <li><a class="dropdown-item" href="send-voice-sms.php">Voice SMS (TTS)</a></li>
                                 <li><a class="dropdown-item" href="send-voice-audio.php">Voice From File</a></li>
-                                <li><a class="dropdown-item" href="send-whatsapp.php">WhatsApp</a></li>
                                 <li><a class="dropdown-item" href="otp-templates.php">OTP Templates</a></li>
                                 <li><a class="dropdown-item" href="birthday-scheduler.php">Birthday Scheduler</a></li>
 								<li><a class="dropdown-item" href="phonebook.php">Phone Book</a></li>
@@ -276,7 +275,6 @@ if ($admin_stmt) {
                                    <li><a class="dropdown-item" href="global-sms.php">Send Global SMS</a></li>
                                    <li><a class="dropdown-item" href="send-voice-sms.php">Voice SMS (TTS)</a></li>
                                    <li><a class="dropdown-item" href="send-voice-audio.php">Voice From File</a></li>
-                                   <li><a class="dropdown-item" href="send-whatsapp.php">WhatsApp</a></li>
                                    <li><a class="dropdown-item" href="otp-templates.php">OTP Templates</a></li>
                                    <li><a class="dropdown-item" href="birthday-scheduler.php">Birthday Scheduler</a></li>
                                </ul>

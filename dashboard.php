@@ -110,12 +110,6 @@ $banner_stmt->close();
                         </a>
                     </div>
                     <div class="col-4 col-md-4 col-lg-4">
-                        <a href="send-whatsapp.php" class="service-btn">
-                            <i class="fab fa-whatsapp"></i>
-                            <span>WhatsApp</span>
-                        </a>
-                    </div>
-                    <div class="col-4 col-md-4 col-lg-4">
                         <a href="referrals.php" class="service-btn">
                             <i class="fas fa-users"></i>
                             <span>Refer</span>

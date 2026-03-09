@@ -895,56 +895,6 @@ function send_voice_audio_api($user, $caller_id, $recipients, $audio_url, $conn)
     }
 }
 
-function send_whatsapp_message($user, $recipient, $template_code, $parameters, $button_parameters, $header_parameters, $conn) {
-    $settings = get_settings();
-    $api_endpoint = 'https://my.kudisms.net/api/whatsapp';
-    $api_token = $settings['whatsapp_api_token'] ?? '';
-    if (empty($api_token)) return ['success' => false, 'message' => 'WhatsApp API is not configured by the administrator.'];
-
-    $price_per_message = (float)($settings['price_whatsapp'] ?? 25.0);
-    if ($user['balance'] < $price_per_message) return ['success' => false, 'message' => "Insufficient balance."];
-
-    $post_data = ['token' => $api_token, 'recipient' => $recipient, 'template_code' => $template_code, 'parameters' => $parameters, 'button_parameters' => $button_parameters, 'header_parameters' => $header_parameters];
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $api_endpoint);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_data));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($ch);
-    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $curl_error = curl_error($ch);
-    curl_close($ch);
-
-    if ($response === false) return ['success' => false, 'message' => "cURL Error: " . $curl_error];
-
-    $api_result = json_decode($response, true);
-    if (!is_array($api_result)) $api_result = [];
-    $is_successful = ($http_code == 200 && isset($api_result['status']) && $api_result['status'] == 'success');
-
-    if ($is_successful) {
-        $conn->begin_transaction();
-        try {
-            $stmt_balance = $conn->prepare("UPDATE users SET balance = balance - ? WHERE id = ?");
-            $stmt_balance->bind_param("di", $price_per_message, $user['id']);
-            $stmt_balance->execute();
-            $message_summary = "WhatsApp message sent with template " . $template_code;
-            $stmt_log = $conn->prepare("INSERT INTO messages (user_id, sender_id, recipients, message, cost, status, type, api_response) VALUES (?, ?, ?, ?, ?, 'success', 'whatsapp', ?)");
-            $stmt_log->bind_param("isssds", $user['id'], 'WhatsApp', $recipient, $message_summary, $price_per_message, $response);
-            if (!$stmt_log->execute()) {
-                throw new mysqli_sql_exception("Failed to insert into messages table for WhatsApp: " . $stmt_log->error);
-            }
-            $conn->commit();
-            return ['success' => true, 'message' => "WhatsApp message sent successfully!"];
-        } catch (mysqli_sql_exception $exception) {
-            $conn->rollback();
-            error_log("WhatsApp DB transaction failed: " . $exception->getMessage());
-            return ['success' => false, 'message' => "Database transaction failed."];
-        }
-    } else {
-        $error_msg = $api_result['msg'] ?? 'An unknown error occurred with the WhatsApp gateway.';
-        return ['success' => false, 'message' => "API Error: " . $error_msg];
-    }
-}
 
 function is_banned($value, $type) {
     global $conn;

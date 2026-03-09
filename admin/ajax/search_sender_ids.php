@@ -78,10 +78,10 @@ if (empty($submissions)) {
         $html .= '<td>' . date('Y-m-d H:i', strtotime($sub['created_at'])) . '</td>';
 
         $status = htmlspecialchars($sub['status']);
-        $badge_class = 'badge-secondary';
-        if ($status == 'approved') $badge_class = 'badge-success';
-        if ($status == 'rejected') $badge_class = 'badge-danger';
-        if ($status == 'pending') $badge_class = 'badge-warning';
+        $badge_class = 'bg-secondary';
+        if ($status == 'approved') $badge_class = 'bg-success';
+        if ($status == 'rejected') $badge_class = 'bg-danger';
+        if ($status == 'pending') $badge_class = 'bg-warning text-dark';
         $html .= '<td><span class="badge ' . $badge_class . '">' . ucfirst($status) . '</span></td>';
 
         $html .= '<td>';

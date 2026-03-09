@@ -377,7 +377,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_service_pricing']
         'price_sms_corp'    => $_POST['price_sms_corp'],
         'price_voice_tts'   => $_POST['price_voice_tts'],
         'price_otp'         => $_POST['price_otp'],
-        'price_whatsapp'    => $_POST['price_whatsapp'],
         'price_voice_audio' => $_POST['price_voice_audio'],
         'sms_chars_1unit'   => $_POST['sms_chars_1unit'],
         'sms_chars_multunit' => $_POST['sms_chars_multunit'],
@@ -654,13 +653,6 @@ include 'includes/header.php';
                              <label for="price_voice_audio" class="form-label">Voice from File Price</label>
                             <input type="number" step="0.001" class="form-control" id="price_voice_audio" name="price_voice_audio" value="<?php echo htmlspecialchars($_POST['price_voice_audio'] ?? $settings['price_voice_audio'] ?? '35'); ?>">
                             <div class="form-text">Cost per Voice call recipient from an audio file.</div>
-                        </div>
-                    </div>
-                     <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="price_whatsapp" class="form-label">WhatsApp Message Price</label>
-                            <input type="number" step="0.001" class="form-control" id="price_whatsapp" name="price_whatsapp" value="<?php echo htmlspecialchars($_POST['price_whatsapp'] ?? $settings['price_whatsapp'] ?? '25'); ?>">
-                            <div class="form-text">Cost per WhatsApp message sent.</div>
                         </div>
                     </div>
                     <hr>

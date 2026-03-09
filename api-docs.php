@@ -358,34 +358,6 @@ curl --location --request POST '<?php echo SITE_URL; ?>/api/voice_audio.php' \
         </div>
         <!-- End Send Voice from Audio File Endpoint -->
 
-        <!-- Send WhatsApp Endpoint -->
-        <div id="send-whatsapp" class="api-endpoint">
-            <h5>Send WhatsApp Message</h5>
-            <p>
-                <span class="method text-success">POST</span>
-                <span class="url"><?php echo SITE_URL; ?>/api/whatsapp.php</span>
-            </p>
-            <p>This endpoint sends a message using a pre-approved WhatsApp template.</p>
-
-            <h6>Parameters</h6>
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                     <thead>
-                        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><code>token</code></td><td>string</td><td><strong>Required.</strong> Your API Key.</td></tr>
-                        <tr><td><code>recipient</code></td><td>string</td><td><strong>Required.</strong> The recipient's phone number.</td></tr>
-                        <tr><td><code>template_code</code></td><td>string</td><td><strong>Required.</strong> The code for your approved WhatsApp template.</td></tr>
-                        <tr><td><code>parameters</code></td><td>string</td><td><em>Optional.</em> Comma-separated values for the message body variables.</td></tr>
-                        <tr><td><code>button_parameters</code></td><td>string</td><td><em>Optional.</em> Comma-separated values for button URL variables.</td></tr>
-                        <tr><td><code>header_parameters</code></td><td>string</td><td><em>Optional.</em> Comma-separated values for header variables (e.g., image URLs).</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <!-- End Send WhatsApp Endpoint -->
-
         <!-- Generate and Send OTP Endpoint -->
         <div id="generate-otp" class="api-endpoint">
             <h5>Generate and Send OTP</h5>

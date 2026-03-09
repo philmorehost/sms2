@@ -72,11 +72,69 @@ function run_installer_and_migrations($conn) {
     }
 }
 
-// Only run installer if lock file doesn't exist.
-// Migrations are now handled separately via migrate.php to reduce database load.
+// Run installer and migrations
+function run_migrations($conn) {
+    // First, ensure the migrations table itself exists to prevent fatal errors.
+    $conn->query("CREATE TABLE IF NOT EXISTS `migrations` (
+      `id` int(11) NOT NULL AUTO_INCREMENT,
+      `migration` varchar(255) NOT NULL,
+      `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+      PRIMARY KEY (`id`),
+      UNIQUE KEY `migration` (`migration`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+
+    $migrations_ran = [];
+    $stmt_migrations = $conn->prepare("SELECT migration FROM migrations");
+    if ($stmt_migrations) {
+        $stmt_migrations->execute();
+        $result = $stmt_migrations->get_result();
+        while($row = $result->fetch_assoc()) {
+            $migrations_ran[] = $row['migration'];
+        }
+        $stmt_migrations->close();
+    }
+
+    $migration_files = glob(__DIR__ . '/../sql/migrations/*.sql');
+    sort($migration_files);
+
+    foreach ($migration_files as $file) {
+        $filename = basename($file);
+        if (!in_array($filename, $migrations_ran)) {
+            $sql = file_get_contents($file);
+            // Split the SQL file into individual queries
+            $queries = explode(';', $sql);
+
+            $all_successful = true;
+            foreach ($queries as $query) {
+                $query = trim($query);
+                if (!empty($query)) {
+                    try {
+                        $conn->query($query);
+                    } catch (mysqli_sql_exception $e) {
+                        $ignorable_errors = [1060, 1061, 1050, 1022];
+                        if (!in_array($e->getCode(), $ignorable_errors)) {
+                            $all_successful = false;
+                            error_log("Error running migration: $filename. Query: [$query]. Error: " . $e->getMessage());
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if ($all_successful) {
+                $stmt = $conn->prepare("INSERT INTO migrations (migration) VALUES (?)");
+                $stmt->bind_param("s", $filename);
+                $stmt->execute();
+                $stmt->close();
+            }
+        }
+    }
+}
+
 if (!file_exists(__DIR__ . '/install.lock')) {
     run_installer_and_migrations($conn);
 }
+run_migrations($conn);
 
 
 // 4.5. Load Site Settings and Define Constants

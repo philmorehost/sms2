@@ -39,7 +39,7 @@ include 'includes/public_header.php';
         <div class="section-header">
             <span>Our Services</span>
             <h2>A Complete Suite of Messaging Solutions</h2>
-            <p>From simple SMS to interactive WhatsApp campaigns, we've got you covered.</p>
+            <p>From simple SMS to advanced messaging campaigns, we've got you covered.</p>
         </div>
         <div class="services-grid">
             <div class="service-card">

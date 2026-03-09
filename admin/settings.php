@@ -237,7 +237,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_api_settings'])) 
     $settings_to_update = [];
     $api_keys = [
         'kudisms_api_key_sms', 'kudisms_api_key_senderid', 'kudisms_api_key_tts',
-        'otp_api_key', 'whatsapp_api_token'
+        'otp_api_key'
     ];
 
     foreach ($api_keys as $key) {
@@ -783,7 +783,7 @@ include 'includes/header.php';
             <!-- API Keys Tab -->
             <div class="tab-pane fade <?php if($active_tab == 'api') echo 'show active'; ?>" id="api">
                 <h4>Service API Settings</h4>
-                <p>Manage third-party API keys for services like SMS, Voice, and WhatsApp.</p>
+                <p>Manage third-party API keys for services like SMS and Voice.</p>
                 <hr>
                  <?php if ($success && $active_tab == 'api'): ?>
                     <div class="alert alert-success"><?php echo $success; ?></div>
@@ -812,12 +812,6 @@ include 'includes/header.php';
                     <div class="mb-3">
                         <label for="otp_api_key" class="form-label">OTP API Key</label>
                         <input type="password" class="form-control" id="otp_api_key" name="otp_api_key" value="<?php echo htmlspecialchars($settings['otp_api_key'] ?? ''); ?>">
-                    </div>
-                    <hr>
-                    <h5 class="mt-4">WhatsApp Gateway API</h5>
-                    <div class="mb-3">
-                        <label for="whatsapp_api_token" class="form-label">WhatsApp API Token</label>
-                        <input type="password" class="form-control" id="whatsapp_api_token" name="whatsapp_api_token" value="<?php echo htmlspecialchars($settings['whatsapp_api_token'] ?? ''); ?>">
                     </div>
                     <button type="submit" name="save_api_settings" class="btn btn-primary">Save API Settings</button>
                 </form>

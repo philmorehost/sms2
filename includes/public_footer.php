@@ -81,10 +81,5 @@
 
     <script src="js/landing.js"></script>
 
-    <?php if (!empty($admin_contact_footer['phone_number'])): ?>
-        <a href="https://wa.me/<?php echo htmlspecialchars($admin_contact_footer['phone_number']); ?>" class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Chat with us on WhatsApp">
-            <i class='bx bxl-whatsapp'></i>
-        </a>
-    <?php endif; ?>
 </body>
 </html>

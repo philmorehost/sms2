@@ -57,11 +57,6 @@ include 'includes/public_header.php';
                 <h3>OTP Service</h3>
                 <p>Secure your application with our fast and reliable One-Time Password (OTP) service.</p>
             </div>
-            <div class="service-card">
-                <div class="card-icon"><i class='bx bxl-whatsapp'></i></div>
-                <h3>WhatsApp Messaging</h3>
-                <p>Engage customers on the world's most popular messaging app. Send notifications, alerts, and more.</p>
-            </div>
         </div>
     </div>
 </section>

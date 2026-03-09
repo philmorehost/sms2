@@ -27,11 +27,6 @@ $services = [
         'key' => 'price_otp',
         'description' => 'Specialized route for sending One-Time Passwords.',
         'unit' => 'per OTP'
-    ],
-    'WhatsApp Messages' => [
-        'key' => 'price_whatsapp',
-        'description' => 'Send template-based messages via WhatsApp.',
-        'unit' => 'per message'
     ]
 ];
 

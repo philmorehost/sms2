@@ -16,12 +16,6 @@
     <!-- Custom JS -->
     <script src="js/main.js"></script>
 
-    <?php if (!empty($admin_phone_number)): ?>
-        <a href="https://wa.me/<?php echo htmlspecialchars($admin_phone_number); ?>" class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Chat with us on WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-        </a>
-    <?php endif; ?>
-
     <?php
     // Explicitly close the database connection
     if (isset($conn)) {

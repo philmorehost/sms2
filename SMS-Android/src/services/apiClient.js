@@ -1,6 +1,6 @@
 // SMS-Android/src/services/apiClient.js
-// Default to empty, should be set during app initialization or via environment variables
-let BASE_URL = 'https://yourdomain.com/web/api';
+// Automatically configured for Bulk SMS Platform
+let BASE_URL = 'https://philmoresms.com/web/api';
 
 let userToken = null;
 

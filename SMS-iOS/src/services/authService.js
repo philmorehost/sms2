@@ -34,6 +34,26 @@ const authService = {
             setToken(response.token);
         }
         return response;
+    },
+
+    forgotPassword: async (email) => {
+        const body = new URLSearchParams();
+        body.append('email', email);
+        return await apiClient('/auth.php?action=forgot_password', {
+            method: 'POST',
+            body: body.toString(),
+        });
+    },
+
+    resetPassword: async (email, otp, password) => {
+        const body = new URLSearchParams();
+        body.append('email', email);
+        body.append('otp', otp);
+        body.append('password', password);
+        return await apiClient('/auth.php?action=reset_password', {
+            method: 'POST',
+            body: body.toString(),
+        });
     }
 };
 

@@ -66,6 +66,13 @@ const LoginScreen = ({ navigation }) => {
                         Don't have an account? <Text style={styles.registerAction}>Register</Text>
                     </Text>
                 </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={styles.forgotLink}
+                    onPress={() => navigation.navigate('ForgotPassword')}
+                >
+                    <Text style={styles.forgotText}>Forgot Password?</Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );
@@ -103,6 +110,14 @@ const styles = StyleSheet.create({
     registerAction: {
         color: colors.primary,
         fontWeight: '600',
+    },
+    forgotLink: {
+        marginTop: 16,
+        alignItems: 'center',
+    },
+    forgotText: {
+        color: colors.textLight,
+        fontSize: 14,
     }
 });
 

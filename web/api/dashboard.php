@@ -25,6 +25,7 @@ $trans_stmt->close();
 
 mobile_api_success([
     'stats' => [
+        'username' => $user['username'],
         'messages_sent' => (int)$messages_sent_count,
         'balance' => (float)$user['balance']
     ],

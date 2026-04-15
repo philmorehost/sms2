@@ -7,6 +7,7 @@ import dashboardService from '../services/dashboardService';
 
 const DashboardScreen = ({ navigation }) => {
     const [data, setData] = useState(null);
+    const [username, setUsername] = useState('User');
     const [refreshing, setRefreshing] = useState(false);
 
     const fetchData = async () => {
@@ -14,6 +15,7 @@ const DashboardScreen = ({ navigation }) => {
             const response = await dashboardService.getSummary();
             if (response.status === 'success') {
                 setData(response);
+                setUsername(response.stats.username || 'User');
             }
         } catch (error) {
             console.error(error);
@@ -39,7 +41,7 @@ const DashboardScreen = ({ navigation }) => {
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             >
                 <View style={styles.header}>
-                    <Text style={styles.welcome}>Hello, User</Text>
+                    <Text style={styles.welcome}>Hello, {username}</Text>
                     <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
                         <View style={styles.headerIcon}>
                             <Text style={styles.headerIconText}>U</Text>
@@ -50,36 +52,32 @@ const DashboardScreen = ({ navigation }) => {
                 <View style={styles.walletCard}>
                     <Text style={styles.walletLabel}>Main Balance</Text>
                     <Text style={styles.walletAmount}>₦{data.stats.balance.toLocaleString()}</Text>
-                    <TouchableOpacity style={styles.addFundsBtn}>
+                    <TouchableOpacity
+                        style={styles.addFundsBtn}
+                        onPress={() => navigation.navigate('FundWallet')}
+                    >
                         <Text style={styles.addFundsText}>+ Add Funds</Text>
                     </TouchableOpacity>
                 </View>
 
-                <View style={styles.quickActions}>
-                    <TouchableOpacity
-                        style={styles.actionItem}
-                        onPress={() => navigation.navigate('Messaging', { type: 'sms' })}
-                    >
-                        <View style={[styles.actionIcon, { backgroundColor: '#E3F2FD' }]}>
-                            <Text style={styles.actionIconText}>💬</Text>
-                        </View>
-                        <Text style={styles.actionLabel}>SMS</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.actionItem}
-                        onPress={() => navigation.navigate('Messaging', { type: 'voice' })}
-                    >
-                        <View style={[styles.actionIcon, { backgroundColor: '#F3E5F5' }]}>
-                            <Text style={styles.actionIconText}>📞</Text>
-                        </View>
-                        <Text style={styles.actionLabel}>Voice</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.actionItem}>
-                        <View style={[styles.actionIcon, { backgroundColor: '#E8F5E9' }]}>
-                            <Text style={styles.actionIconText}>📊</Text>
-                        </View>
-                        <Text style={styles.actionLabel}>Reports</Text>
-                    </TouchableOpacity>
+                <View style={styles.servicesGrid}>
+                    <ServiceItem icon="💬" label="SMS" onPress={() => navigation.navigate('Messaging', { type: 'sms' })} bg="#E3F2FD" />
+                    <ServiceItem icon="🌍" label="Global SMS" onPress={() => navigation.navigate('Messaging', { type: 'sms', route: 'global' })} bg="#FFF3E0" />
+                    <ServiceItem icon="📞" label="Voice" onPress={() => navigation.navigate('Messaging', { type: 'voice' })} bg="#F3E5F5" />
+                    <ServiceItem icon="🎵" label="Voice File" onPress={() => navigation.navigate('Messaging', { type: 'voice_audio' })} bg="#FFF9C4" />
+                    <ServiceItem icon="🛡️" label="OTP" onPress={() => navigation.navigate('OtpTemplates')} bg="#E0F2F1" />
+                    <ServiceItem icon="👥" label="Refer" onPress={() => navigation.navigate('Referral')} bg="#FCE4EC" />
+                    <ServiceItem icon="🎧" label="Support" onPress={() => navigation.navigate('Support')} bg="#E8F5E9" />
+                    <ServiceItem icon="🔍" label="Extractor" onPress={() => navigation.navigate('NumberExtractor')} bg="#FFFDE7" />
+                    <ServiceItem icon="🧹" label="Filter" onPress={() => navigation.navigate('NumberFilter')} bg="#F1F8E9" />
+                    <ServiceItem icon="📔" label="Phonebook" onPress={() => navigation.navigate('Phonebook')} bg="#EFEBE9" />
+                    <ServiceItem icon="📈" label="Reports" onPress={() => navigation.navigate('Reports')} bg="#F3E5F5" />
+                    <ServiceItem icon="🆔" label="Register ID" onPress={() => navigation.navigate('RegisterId')} bg="#E8EAF6" />
+                    <ServiceItem icon="💳" label="G-Wallet" onPress={() => navigation.navigate('GlobalWallet')} bg="#F3E5F5" />
+                    <ServiceItem icon="🏷️" label="Pricing" onPress={() => navigation.navigate('Pricing')} bg="#FFF3E0" />
+                    <ServiceItem icon="🎂" label="Birthday" onPress={() => navigation.navigate('BirthdayScheduler')} bg="#FFFDE7" />
+                    <ServiceItem icon="🌐" label="Coverage" onPress={() => navigation.navigate('GlobalCoverage')} bg="#E1F5FE" />
+                    <ServiceItem icon="⏳" label="Schedules" onPress={() => navigation.navigate('Schedules')} bg="#F1F8E9" />
                 </View>
 
                 <View style={styles.sectionHeader}>
@@ -104,6 +102,15 @@ const DashboardScreen = ({ navigation }) => {
         </SafeAreaView>
     );
 };
+
+const ServiceItem = ({ icon, label, onPress, bg }) => (
+    <TouchableOpacity style={styles.serviceItem} onPress={onPress}>
+        <View style={[styles.serviceIcon, { backgroundColor: bg }]}>
+            <Text style={styles.serviceIconText}>{icon}</Text>
+        </View>
+        <Text style={styles.serviceLabel}>{label}</Text>
+    </TouchableOpacity>
+);
 
 const styles = StyleSheet.create({
     container: {
@@ -164,29 +171,36 @@ const styles = StyleSheet.create({
         color: colors.white,
         fontWeight: '600',
     },
-    quickActions: {
+    servicesGrid: {
         flexDirection: 'row',
+        flexWrap: 'wrap',
         justifyContent: 'space-between',
-        marginBottom: 32,
+        marginBottom: 24,
     },
-    actionItem: {
-        alignItems: 'center',
+    serviceItem: {
         width: '30%',
+        alignItems: 'center',
+        marginBottom: 20,
     },
-    actionIcon: {
+    serviceIcon: {
         width: 60,
         height: 60,
-        borderRadius: 15,
+        borderRadius: 18,
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 8,
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
     },
-    actionIconText: {
+    serviceIconText: {
         fontSize: 24,
     },
-    actionLabel: {
-        fontSize: 14,
-        fontWeight: '500',
+    serviceLabel: {
+        fontSize: 13,
+        fontWeight: '600',
         color: colors.text,
     },
     sectionHeader: {

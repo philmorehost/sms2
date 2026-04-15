@@ -8,10 +8,11 @@ import smsService from '../services/smsService';
 import senderService from '../services/senderService';
 
 const MessagingScreen = ({ route }) => {
-    const { type } = route.params || { type: 'sms' };
+    const { type, route: msgRoute } = route.params || { type: 'sms', route: 'promotional' };
     const [senderId, setSenderId] = useState('');
     const [recipients, setRecipients] = useState('');
     const [message, setMessage] = useState('');
+    const [audioUrl, setAudioUrl] = useState('');
     const [loading, setLoading] = useState(false);
     const [senders, setSenders] = useState([]);
 
@@ -26,16 +27,29 @@ const MessagingScreen = ({ route }) => {
     }, []);
 
     const handleSend = async () => {
-        if (!senderId || !recipients || !message) {
+        if (!senderId || !recipients || (type !== 'voice_audio' && !message) || (type === 'voice_audio' && !audioUrl)) {
             Alert.alert('Error', 'Please fill in all fields');
             return;
         }
 
         setLoading(true);
         try {
-            const res = type === 'sms'
-                ? await smsService.sendSms(senderId, recipients, message)
-                : await smsService.sendVoice(senderId, recipients, message);
+            let res;
+            if (type === 'sms') {
+                res = await smsService.sendSms(senderId, recipients, message, msgRoute);
+            } else if (type === 'voice') {
+                res = await smsService.sendVoice(senderId, recipients, message);
+            } else {
+                // voice_audio
+                const body = new URLSearchParams();
+                body.append('callerID', senderId);
+                body.append('recipients', recipients);
+                body.append('audio', audioUrl);
+                res = await apiClient('/messaging.php?action=send_voice_audio', {
+                    method: 'POST',
+                    body: body.toString()
+                });
+            }
 
             if (res.status === 'success') {
                 Alert.alert('Success', res.message);
@@ -51,10 +65,16 @@ const MessagingScreen = ({ route }) => {
         }
     };
 
+    const getTitle = () => {
+        if (type === 'sms') return msgRoute === 'global' ? 'Global SMS' : 'Bulk SMS';
+        if (type === 'voice') return 'Voice SMS (TTS)';
+        return 'Voice from File';
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.content}>
-                <Text style={styles.title}>Send {type === 'sms' ? 'SMS' : 'Voice Message'}</Text>
+                <Text style={styles.title}>{getTitle()}</Text>
 
                 <FintechInput
                     label={type === 'sms' ? "Sender ID" : "Caller ID"}
@@ -71,13 +91,22 @@ const MessagingScreen = ({ route }) => {
                     keyboardType="phone-pad"
                 />
 
-                <FintechInput
-                    label="Message"
-                    value={message}
-                    onChangeText={setMessage}
-                    placeholder="Type your message here..."
-                    multiline
-                />
+                {type === 'voice_audio' ? (
+                    <FintechInput
+                        label="Audio File URL"
+                        value={audioUrl}
+                        onChangeText={setAudioUrl}
+                        placeholder="https://example.com/audio.mp3"
+                    />
+                ) : (
+                    <FintechInput
+                        label="Message"
+                        value={message}
+                        onChangeText={setMessage}
+                        placeholder="Type your message here..."
+                        multiline
+                    />
+                )}
 
                 <FintechButton
                     title={loading ? "Sending..." : "Send Now"}

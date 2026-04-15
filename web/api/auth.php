@@ -66,6 +66,65 @@ if ($action === 'login') {
     } else {
         mobile_api_error('Registration failed');
     }
+} elseif ($action === 'forgot_password') {
+    $email = $_POST['email'] ?? '';
+    if (empty($email)) mobile_api_error('Email is required');
+
+    // Reuse existing logic from ajax/send_password_reset_otp.php if possible,
+    // but here we implement a standard mobile-friendly response.
+    $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    if ($stmt->get_result()->num_rows === 0) {
+        mobile_api_error('No account found with that email');
+    }
+    $stmt->close();
+
+    $otp = sprintf("%06d", mt_rand(0, 999999));
+    $expires_at = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+    $stmt = $conn->prepare("INSERT INTO password_resets (email, otp, expires_at) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $email, $otp, $expires_at);
+
+    if ($stmt->execute()) {
+        $subject = "Password Reset Code";
+        $message = "Your password reset code is: <b>$otp</b>. It expires in 1 hour.";
+        send_email($email, $subject, $message);
+        mobile_api_success([], 'Reset code sent to your email');
+    } else {
+        mobile_api_error('Failed to send reset code');
+    }
+} elseif ($action === 'reset_password') {
+    $email = $_POST['email'] ?? '';
+    $otp = $_POST['otp'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    if (empty($email) || empty($otp) || empty($password)) {
+        mobile_api_error('Email, OTP and new password are required');
+    }
+
+    $stmt = $conn->prepare("SELECT id FROM password_resets WHERE email = ? AND otp = ? AND expires_at > NOW() ORDER BY created_at DESC LIMIT 1");
+    $stmt->bind_param("ss", $email, $otp);
+    $stmt->execute();
+    if ($stmt->get_result()->num_rows === 0) {
+        mobile_api_error('Invalid or expired OTP');
+    }
+    $stmt->close();
+
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $stmt = $conn->prepare("UPDATE users SET password = ? WHERE email = ?");
+    $stmt->bind_param("ss", $hashed_password, $email);
+
+    if ($stmt->execute()) {
+        // Clear OTPs
+        $stmt_clear = $conn->prepare("DELETE FROM password_resets WHERE email = ?");
+        $stmt_clear->bind_param("s", $email);
+        $stmt_clear->execute();
+
+        mobile_api_success([], 'Password reset successful');
+    } else {
+        mobile_api_error('Failed to reset password');
+    }
 } else {
     mobile_api_error('Invalid action');
 }

@@ -23,6 +23,22 @@ if ($action === 'send_sms') {
     } else {
         mobile_api_error($result['message']);
     }
+} elseif ($action === 'send_voice_audio') {
+    $caller_id = $_POST['callerID'] ?? '';
+    $recipients = $_POST['recipients'] ?? '';
+    $audio_url = $_POST['audio'] ?? '';
+
+    if (empty($caller_id) || empty($recipients) || empty($audio_url)) {
+        mobile_api_error('Missing required parameters');
+    }
+
+    $result = send_voice_audio_api($user, $caller_id, $recipients, $audio_url, $conn);
+
+    if ($result['success']) {
+        mobile_api_success(['result' => $result], $result['message']);
+    } else {
+        mobile_api_error($result['message']);
+    }
 } elseif ($action === 'send_voice') {
     $caller_id = $_POST['callerID'] ?? '';
     $recipients = $_POST['recipients'] ?? '';

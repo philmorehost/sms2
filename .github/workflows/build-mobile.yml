@@ -40,7 +40,7 @@ jobs:
           fi
 
       - name: Upload APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
           path: SMS-Android/android/app/build/outputs/apk/release/*.apk
@@ -62,10 +62,10 @@ jobs:
 
       # Note: This step requires a full iOS project structure and Pods
       - name: Install CocoaPods
-        working-directory: ./SMS-iOS/ios
+        working-directory: ./SMS-iOS
         run: |
           if [ -d "ios" ]; then
-            pod install
+            cd ios && pod install
           else
             echo "iOS native folder not found. Skipping pod install."
           fi
@@ -75,7 +75,12 @@ jobs:
         working-directory: ./SMS-iOS
         run: |
           if [ -d "ios" ]; then
-            xcodebuild -workspace ios/SMSApp.xcworkspace -scheme SMSApp -sdk iphoneos -configuration Release build
+            # Using project instead of workspace if workspace doesn't exist yet
+            if [ -d "ios/SMSApp.xcworkspace" ]; then
+              xcodebuild -workspace ios/SMSApp.xcworkspace -scheme SMSApp -sdk iphoneos -configuration Release build
+            else
+              xcodebuild -project ios/SMSApp.xcodeproj -scheme SMSApp -sdk iphoneos -configuration Release build
+            fi
           else
             echo "iOS native folder not found. Skipping native build."
           fi

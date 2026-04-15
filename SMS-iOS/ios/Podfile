@@ -1,0 +1,17 @@
+platform :ios, '13.0'
+
+target 'SMSApp' do
+  use_react_native!(
+    :path => "../node_modules/react-native",
+    :hermes_enabled => true
+  )
+
+  target 'SMSAppTests' do
+    inherit! :complete
+    # Pods for testing
+  end
+
+  post_install do |installer|
+    react_native_post_install(installer)
+  end
+end

@@ -1,0 +1,3 @@
+// Minimal android/settings.gradle to allow Gradle to recognize the project
+rootProject.name = 'SMSApp'
+include ':app'

@@ -55,9 +55,7 @@ if ($action === 'login') {
     $api_key = 'sk_' . bin2hex(random_bytes(16));
     $ref_code = strtoupper(substr($username, 0, 3)) . bin2hex(random_bytes(2));
 
-    $stmt = $conn->prepare("INSERT INTO users (username, email, password, phone_number, api_key, referral_code, is_email_verified) VALUES (?, ?, ?, ?, ?, ?, 1)");
-    // Note: setting is_email_verified to 1 for easier demo/testing as requested in a typical fintech mobile context,
-    // but in production it should handle OTP.
+    $stmt = $conn->prepare("INSERT INTO users (username, email, password, phone_number, api_key, referral_code, is_email_verified) VALUES (?, ?, ?, ?, ?, ?, 0)");
     $stmt->bind_param("ssssss", $username, $email, $hashed_password, $phone, $api_key, $ref_code);
 
     if ($stmt->execute()) {

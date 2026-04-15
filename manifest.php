@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 $settings = get_settings();
 
 $manifest = [
-    'name' => $settings['site_name'] ?? 'Bulk SMS Platform',
+    'name' => $settings['site_name'] ?? 'PhilmoreSMS',
     'short_name' => $settings['site_name'] ?? 'SMS App',
     'start_url' => '/login.php',
     'display' => 'standalone',

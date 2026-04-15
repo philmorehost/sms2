@@ -150,7 +150,7 @@ if ($settings_stmt) {
 }
 // Define SITE_NAME from the database, with a fallback
 if (!defined('SITE_NAME')) {
-    define('SITE_NAME', $all_settings['site_name'] ?? 'Bulk SMS Platform');
+    define('SITE_NAME', $all_settings['site_name'] ?? 'PhilmoreSMS');
 }
 // Make settings globally available to avoid re-querying in helpers
 $GLOBALS['app_settings'] = $all_settings;

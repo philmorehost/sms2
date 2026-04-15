@@ -1,2 +1,2 @@
 # sms
-Bulk SMS Platform
+PhilmoreSMS

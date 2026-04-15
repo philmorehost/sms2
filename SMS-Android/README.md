@@ -19,7 +19,7 @@ This directory contains the React Native source code for the Android application
    ```bash
    npx react-native eject
    # OR if using a specific template
-   npx react-native init SMSApp --template react-native-template-typescript --directory .
+   npx react-native init PhilmoreSMS --template react-native-template-typescript --directory .
    ```
 
 3. **Configure API**

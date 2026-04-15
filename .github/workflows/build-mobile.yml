@@ -33,8 +33,8 @@ jobs:
         run: |
           if [ -d "android" ]; then
             cd android
-            chmod +x gradlew
-            ./gradlew assembleRelease
+            # Use system gradle instead of gradlew as the wrapper jar is missing
+            gradle assembleRelease
           else
             echo "Android native folder not found. Skipping native build."
           fi
@@ -76,10 +76,10 @@ jobs:
         run: |
           if [ -d "ios" ]; then
             # Using project instead of workspace if workspace doesn't exist yet
-            if [ -d "ios/SMSApp.xcworkspace" ]; then
-              xcodebuild -workspace ios/SMSApp.xcworkspace -scheme SMSApp -sdk iphoneos -configuration Release build
+            if [ -d "ios/PhilmoreSMS.xcworkspace" ]; then
+              xcodebuild -workspace ios/PhilmoreSMS.xcworkspace -scheme PhilmoreSMS -sdk iphoneos -configuration Release build
             else
-              xcodebuild -project ios/SMSApp.xcodeproj -scheme SMSApp -sdk iphoneos -configuration Release build
+              xcodebuild -project ios/PhilmoreSMS.xcodeproj -scheme PhilmoreSMS -sdk iphoneos -configuration Release build
             fi
           else
             echo "iOS native folder not found. Skipping native build."

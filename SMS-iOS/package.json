@@ -1,0 +1,31 @@
+{
+  "name": "SMS-iOS",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@react-navigation/bottom-tabs": "^6.5.11",
+    "@react-navigation/native": "^6.1.9",
+    "@react-navigation/stack": "^6.3.20",
+    "react": "18.2.0",
+    "react-native": "0.72.6",
+    "react-native-gesture-handler": "^2.13.4",
+    "react-native-safe-area-context": "^4.7.4",
+    "react-native-screens": "^3.27.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@babel/preset-env": "^7.20.0",
+    "@babel/runtime": "^7.20.0",
+    "@react-native/metro-config": "^0.72.11",
+    "babel-jest": "^29.2.1",
+    "jest": "^29.2.1",
+    "metro-react-native-babel-preset": "0.76.8"
+  }
+}

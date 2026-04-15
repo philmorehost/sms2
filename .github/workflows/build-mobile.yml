@@ -62,10 +62,10 @@ jobs:
 
       # Note: This step requires a full iOS project structure and Pods
       - name: Install CocoaPods
-        working-directory: ./SMS-iOS/ios
+        working-directory: ./SMS-iOS
         run: |
           if [ -d "ios" ]; then
-            pod install
+            cd ios && pod install
           else
             echo "iOS native folder not found. Skipping pod install."
           fi

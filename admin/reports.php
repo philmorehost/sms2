@@ -126,7 +126,6 @@ include 'includes/header.php';
                 <select name="type" class="form-select">
                     <option value="">All Types</option>
                     <option value="sms" <?php if(($_GET['type'] ?? '') == 'sms') echo 'selected'; ?>>SMS</option>
-                    <option value="whatsapp" <?php if(($_GET['type'] ?? '') == 'whatsapp') echo 'selected'; ?>>WhatsApp</option>
                     <option value="voice_otp" <?php if(($_GET['type'] ?? '') == 'voice_otp') echo 'selected'; ?>>Voice OTP</option>
                 </select>
             </div>

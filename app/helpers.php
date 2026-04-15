@@ -162,8 +162,17 @@ function debit_and_schedule_sms($user, $sender_id, $recipients, $message, $route
 
     $settings = get_settings();
     $price_per_sms = ($route === 'corporate') ? (float)($settings['price_sms_corp'] ?? 20.0) : (float)($settings['price_sms_promo'] ?? 10.0);
-    $recipient_numbers = preg_split('/[\s,;\n]+/', $recipients, -1, PREG_SPLIT_NO_EMPTY);
-    $total_cost = count($recipient_numbers) * $price_per_sms;
+
+    $recipient_numbers = filter_phone_numbers($recipients);
+    if (empty($recipient_numbers)) return ['success' => false, 'message' => "No valid recipient phone numbers found."];
+
+    $units = calculate_sms_units($message);
+    $max_units = (int)($settings['sms_max_units'] ?? 0);
+    if ($max_units > 0 && $units > $max_units) {
+        return ['success' => false, 'message' => "Your message exceeds the maximum allowed SMS pages ({$max_units})."];
+    }
+
+    $total_cost = count($recipient_numbers) * $units * $price_per_sms;
 
     if ($user['balance'] < $total_cost) {
         return ['success' => false, 'message' => "Insufficient balance. Required: " . get_currency_symbol() . number_format($total_cost, 2) . ", Available: " . get_currency_symbol() . number_format($user['balance'], 2)];
@@ -238,7 +247,14 @@ function debit_and_schedule_global_sms($user, $sender_id, $recipients, $message,
     if (!empty($errors)) return ['success' => false, 'message' => implode(' ', $errors)];
 
     $settings = get_settings();
-    $recipient_numbers = preg_split('/[\s,;\n]+/', $recipients, -1, PREG_SPLIT_NO_EMPTY);
+    $recipient_numbers = filter_phone_numbers($recipients);
+    if (empty($recipient_numbers)) return ['success' => false, 'message' => "No valid recipient phone numbers found."];
+
+    $units = calculate_sms_units($message);
+    $max_units = (int)($settings['sms_max_units'] ?? 0);
+    if ($max_units > 0 && $units > $max_units) {
+        return ['success' => false, 'message' => "Your message exceeds the maximum allowed SMS pages ({$max_units})."];
+    }
 
     $total_cost = 0;
     foreach ($recipient_numbers as $number) {
@@ -246,8 +262,8 @@ function debit_and_schedule_global_sms($user, $sender_id, $recipients, $message,
         if ($base_price === null) {
             return ['success' => false, 'message' => "Could not find a price for one of the numbers: {$number}."];
         }
-        // Use the base price directly without any markup, as per user request.
-        $total_cost += $base_price;
+        // Use the base price directly without any markup, multiplied by units
+        $total_cost += ($base_price * $units);
     }
 
     $global_wallet_currency = $settings['global_wallet_currency'] ?? 'EUR';
@@ -448,7 +464,14 @@ function send_bulk_sms($user, $sender_id, $recipients, $message, $route, $conn) 
     if (!empty($errors)) return ['success' => false, 'message' => implode(' ', $errors)];
 
     $settings = get_settings();
-    $recipient_numbers = preg_split('/[\s,;\n]+/', $recipients, -1, PREG_SPLIT_NO_EMPTY);
+    $recipient_numbers = filter_phone_numbers($recipients);
+    if (empty($recipient_numbers)) return ['success' => false, 'message' => "No valid recipient phone numbers found."];
+
+    $units = calculate_sms_units($message);
+    $max_units = (int)($settings['sms_max_units'] ?? 0);
+    if ($max_units > 0 && $units > $max_units) {
+        return ['success' => false, 'message' => "Your message exceeds the maximum allowed SMS pages ({$max_units})."];
+    }
 
     if ($route === 'global') {
         // --- Global Route Logic with Granular Pricing ---
@@ -459,8 +482,8 @@ function send_bulk_sms($user, $sender_id, $recipients, $message, $route, $conn) 
             if ($base_price === null) {
                 return ['success' => false, 'message' => "Could not find a price for one of the numbers: {$number}."];
             }
-            // Use the base price directly without any markup, as per user request.
-            $total_cost += $base_price;
+            // Use the base price directly without any markup, multiplied by units
+            $total_cost += ($base_price * $units);
         }
 
         $global_wallet_currency = $settings['global_wallet_currency'] ?? 'EUR';
@@ -571,7 +594,7 @@ function send_bulk_sms($user, $sender_id, $recipients, $message, $route, $conn) 
     } else {
         // --- Existing Promotional/Corporate Route Logic ---
         $price_per_sms = ($route === 'corporate') ? (float)($settings['price_sms_corp'] ?? 20.0) : (float)($settings['price_sms_promo'] ?? 10.0);
-        $total_cost = count($recipient_numbers) * $price_per_sms;
+        $total_cost = count($recipient_numbers) * $units * $price_per_sms;
 
         if ($user['balance'] < $total_cost) {
             return ['success' => false, 'message' => "Insufficient balance. Required: " . get_currency_symbol() . number_format($total_cost, 2) . ", Available: " . get_currency_symbol() . number_format($user['balance'], 2)];
@@ -602,6 +625,7 @@ function send_bulk_sms($user, $sender_id, $recipients, $message, $route, $conn) 
         if ($response === false) return ['success' => false, 'message' => "cURL Error: " . $curl_error];
 
         $api_result = json_decode($response, true);
+        if (!is_array($api_result)) $api_result = [];
         $is_successful = ($http_code == 200 && (($route === 'promotional' && isset($api_result['error_code']) && $api_result['error_code'] == '000') || ($route === 'corporate' && isset($api_result['status']) && $api_result['status'] == 'success')));
 
         if ($is_successful) {
@@ -746,6 +770,7 @@ function send_voice_tts($user, $caller_id, $recipients, $message, $conn) {
     if ($response === false) return ['success' => false, 'message' => "cURL Error: " . $curl_error];
 
     $api_result = json_decode($response, true);
+    if (!is_array($api_result)) $api_result = [];
     $is_successful = ($http_code == 200 && isset($api_result['status']) && $api_result['status'] == 'success');
 
     if ($is_successful) {
@@ -823,6 +848,7 @@ function send_voice_audio_api($user, $caller_id, $recipients, $audio_url, $conn)
     if ($response === false) return ['success' => false, 'message' => "cURL Error: " . $curl_error];
 
     $api_result = json_decode($response, true);
+    if (!is_array($api_result)) $api_result = [];
     $is_successful = ($http_code == 200 && isset($api_result['status']) && $api_result['status'] == 'success');
 
     if ($is_successful) {
@@ -869,55 +895,6 @@ function send_voice_audio_api($user, $caller_id, $recipients, $audio_url, $conn)
     }
 }
 
-function send_whatsapp_message($user, $recipient, $template_code, $parameters, $button_parameters, $header_parameters, $conn) {
-    $settings = get_settings();
-    $api_endpoint = 'https://my.kudisms.net/api/whatsapp';
-    $api_token = $settings['whatsapp_api_token'] ?? '';
-    if (empty($api_token)) return ['success' => false, 'message' => 'WhatsApp API is not configured by the administrator.'];
-
-    $price_per_message = (float)($settings['price_whatsapp'] ?? 25.0);
-    if ($user['balance'] < $price_per_message) return ['success' => false, 'message' => "Insufficient balance."];
-
-    $post_data = ['token' => $api_token, 'recipient' => $recipient, 'template_code' => $template_code, 'parameters' => $parameters, 'button_parameters' => $button_parameters, 'header_parameters' => $header_parameters];
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $api_endpoint);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_data));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($ch);
-    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $curl_error = curl_error($ch);
-    curl_close($ch);
-
-    if ($response === false) return ['success' => false, 'message' => "cURL Error: " . $curl_error];
-
-    $api_result = json_decode($response, true);
-    $is_successful = ($http_code == 200 && isset($api_result['status']) && $api_result['status'] == 'success');
-
-    if ($is_successful) {
-        $conn->begin_transaction();
-        try {
-            $stmt_balance = $conn->prepare("UPDATE users SET balance = balance - ? WHERE id = ?");
-            $stmt_balance->bind_param("di", $price_per_message, $user['id']);
-            $stmt_balance->execute();
-            $message_summary = "WhatsApp message sent with template " . $template_code;
-            $stmt_log = $conn->prepare("INSERT INTO messages (user_id, sender_id, recipients, message, cost, status, type, api_response) VALUES (?, ?, ?, ?, ?, 'success', 'whatsapp', ?)");
-            $stmt_log->bind_param("isssds", $user['id'], 'WhatsApp', $recipient, $message_summary, $price_per_message, $response);
-            if (!$stmt_log->execute()) {
-                throw new mysqli_sql_exception("Failed to insert into messages table for WhatsApp: " . $stmt_log->error);
-            }
-            $conn->commit();
-            return ['success' => true, 'message' => "WhatsApp message sent successfully!"];
-        } catch (mysqli_sql_exception $exception) {
-            $conn->rollback();
-            error_log("WhatsApp DB transaction failed: " . $exception->getMessage());
-            return ['success' => false, 'message' => "Database transaction failed."];
-        }
-    } else {
-        $error_msg = $api_result['msg'] ?? 'An unknown error occurred with the WhatsApp gateway.';
-        return ['success' => false, 'message' => "API Error: " . $error_msg];
-    }
-}
 
 function is_banned($value, $type) {
     global $conn;
@@ -987,6 +964,7 @@ function set_callback_url_api($callback_url) {
     curl_close($ch);
     if ($response === false) return ['success' => false, 'message' => "cURL Error: " . $curl_error];
     $api_result = json_decode($response, true);
+    if (!is_array($api_result)) $api_result = [];
     if ($http_code == 200 && isset($api_result['status']) && $api_result['status'] == 'success') {
         return ['success' => true, 'message' => $api_result['msg'] ?? 'Callback URL updated successfully.'];
     } else {
@@ -1011,6 +989,7 @@ function submit_sender_id_api($sender_id, $sample_message) {
     curl_close($ch);
     if ($response === false) return ['success' => false, 'message' => "cURL Error: " . $curl_error];
     $api_result = json_decode($response, true);
+    if (!is_array($api_result)) $api_result = [];
     if ($http_code == 200 && isset($api_result['status']) && $api_result['status'] == 'success') {
         return ['success' => true, 'message' => $api_result['msg'] ?? 'Sender ID submitted successfully.', 'data' => $api_result];
     } else {
@@ -1036,6 +1015,7 @@ function check_sender_id_api($sender_id) {
     curl_close($ch);
     if ($response === false) return ['success' => false, 'message' => "cURL Error: " . $curl_error];
     $api_result = json_decode($response, true);
+    if (!is_array($api_result)) $api_result = [];
     if ($http_code == 200 && isset($api_result['status']) && $api_result['status'] == 'success') {
         return ['success' => true, 'message' => $api_result['msg'] ?? 'Status checked successfully.', 'data' => $api_result];
     } else {
@@ -1146,6 +1126,7 @@ function submit_corporate_sender_id_api($sender_id, $document_paths) {
     }
 
     $api_result = json_decode($response, true);
+    if (!is_array($api_result)) $api_result = [];
     if ($http_code == 200 && isset($api_result['status']) && $api_result['status'] == 'success') {
         return ['success' => true, 'message' => $api_result['msg'] ?? 'Corporate Sender ID submitted successfully.', 'data' => $api_result];
     } else {
@@ -1188,6 +1169,7 @@ function submit_airtel_sender_id_api($data) {
     }
 
     $api_result = json_decode($response, true);
+    if (!is_array($api_result)) $api_result = [];
     if ($http_code == 200 && isset($api_result['status']) && $api_result['status'] == 'success') {
         return ['success' => true, 'message' => $api_result['msg'] ?? 'Airtel Sender ID submitted successfully.', 'data' => $api_result];
     } else {
@@ -1220,4 +1202,49 @@ function validate_csrf_token($token) {
     }
     return false;
 }
+
+/**
+ * Calculates the number of SMS units based on message length and settings.
+ *
+ * @param string $message The SMS message content.
+ * @return int The number of units.
+ */
+function calculate_sms_units($message) {
+    $settings = get_settings();
+    $chars_1unit = max(1, (int)($settings['sms_chars_1unit'] ?? 160));
+    $chars_multunit = max(1, (int)($settings['sms_chars_multunit'] ?? 153));
+
+    $length = mb_strlen($message, 'UTF-8');
+
+    if ($length <= $chars_1unit) {
+        return 1;
+    } else {
+        return ceil($length / $chars_multunit);
+    }
+}
+
+/**
+ * Filters a string of recipients, removes invalid characters, and returns an array of valid numbers.
+ *
+ * @param string $recipients_str Comma, space, or newline separated recipient numbers.
+ * @return array Array of valid phone numbers.
+ */
+function filter_phone_numbers($recipients_str) {
+    $raw_numbers = preg_split('/[\s,;\n]+/', $recipients_str, -1, PREG_SPLIT_NO_EMPTY);
+    $valid_numbers = [];
+
+    foreach ($raw_numbers as $number) {
+        // Remove all non-digit characters except maybe a leading plus
+        $clean_number = preg_replace('/(?<!^)\+|[^\d+]/', '', trim($number));
+
+        // Basic validation: length between 10 and 15 digits (including optional +)
+        $digit_only = preg_replace('/\D/', '', $clean_number);
+        if (strlen($digit_only) >= 10 && strlen($digit_only) <= 15) {
+            $valid_numbers[] = $clean_number;
+        }
+    }
+
+    return array_unique($valid_numbers);
+}
+
 ?>

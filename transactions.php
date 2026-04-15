@@ -3,7 +3,7 @@ $page_title = 'My Transactions';
 require_once 'app/bootstrap.php';
 
 // Authenticate user
-if (!isset($_SESSION['user_id'])) {
+if (!isset($current_user)) {
     header("Location: login.php");
     exit();
 }

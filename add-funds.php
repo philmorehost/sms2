@@ -68,15 +68,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_manual_payment'
 
         } else {
             // Creating a new deposit request from scratch
-            $vat_amount = $subtotal * ($vat_percentage / 100);
-            $total_amount = $subtotal + $vat_amount;
+            // User pays the exact amount entered ($subtotal here refers to the input field 'amount')
+            $total_amount = $subtotal;
+            $vat_amount = $total_amount * ($vat_percentage / 100);
+            $credit_amount = $total_amount - $vat_amount;
 
             $conn->begin_transaction();
             try {
                 // 1. Create an invoice with VAT details
                 $invoice_stmt = $conn->prepare("INSERT INTO invoices (user_id, status, subtotal, vat_percentage, vat_amount, total_amount) VALUES (?, 'unpaid', ?, ?, ?, ?)");
                 // Use $user instead of $current_user
-                $invoice_stmt->bind_param("idddd", $user['id'], $subtotal, $vat_percentage, $vat_amount, $total_amount);
+                $invoice_stmt->bind_param("idddd", $user['id'], $credit_amount, $vat_percentage, $vat_amount, $total_amount);
                 $invoice_stmt->execute();
                 $invoice_id = $conn->insert_id;
 
@@ -84,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_manual_payment'
                 $desc = "Manual Deposit Submission. Ref: " . $reference_id;
                 $trans_stmt = $conn->prepare("INSERT INTO transactions (user_id, invoice_id, reference, type, amount, total_amount, status, gateway, description) VALUES (?, ?, ?, 'deposit', ?, ?, 'pending', 'manual', ?)");
                 // Use $user instead of $current_user
-                $trans_stmt->bind_param("iisdds", $user['id'], $invoice_id, $reference_id, $subtotal, $total_amount, $desc);
+                $trans_stmt->bind_param("iisdds", $user['id'], $invoice_id, $reference_id, $credit_amount, $total_amount, $desc);
                 $trans_stmt->execute();
                 $transaction_id = $conn->insert_id;
 
@@ -96,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_manual_payment'
                 // 3. Log the manual deposit request for admin review
                 $manual_stmt = $conn->prepare("INSERT INTO manual_deposits (user_id, transaction_id, invoice_id, amount, reference_id, payment_date, status) VALUES (?, ?, ?, ?, ?, ?, 'pending')");
                 // Use $user instead of $current_user
-                $manual_stmt->bind_param("iiidss", $user['id'], $transaction_id, $invoice_id, $subtotal, $reference_id, $payment_date);
+                $manual_stmt->bind_param("iiidss", $user['id'], $transaction_id, $invoice_id, $credit_amount, $reference_id, $payment_date);
                 $manual_stmt->execute();
 
                 $conn->commit();
@@ -218,10 +220,10 @@ function get_deposit_status_badge($status) {
 
                 <?php if ($vat_percentage > 0): ?>
                 <div id="vat-calculation" class="mb-3" style="display: none;" data-vat-rate="<?php echo $vat_percentage; ?>" data-currency-symbol="<?php echo get_currency_symbol(); ?>">
-                    <p class="mb-1">Subtotal: <strong id="subtotal-display"></strong></p>
-                    <p class="mb-1">VAT (<?php echo $vat_percentage; ?>%): <strong id="vat-display"></strong></p>
+                    <p class="mb-1">Total to Pay: <strong id="total-display-manual"></strong></p>
+                    <p class="mb-1">Transaction Charges (<?php echo $vat_percentage; ?>%): <strong id="vat-display"></strong></p>
                     <hr class="my-1">
-                    <p class="mb-0 h5">Total to Pay: <strong id="total-display"></strong></p>
+                    <p class="mb-0 h5">Amount to Credit: <strong id="subtotal-display"></strong></p>
                 </div>
                 <?php endif; ?>
 

@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['extract'])) {
 
     if (empty($error) && !empty($raw_text)) {
         // Regex to find phone numbers (sequences of 10-15 digits, possibly with leading +)
-        preg_match_all('/[+\d\s-()]{10,20}/', $raw_text, $matches);
+        preg_match_all('/[+\d\s()\-]{10,20}/', $raw_text, $matches);
 
         $numbers = [];
         if (!empty($matches[0])) {

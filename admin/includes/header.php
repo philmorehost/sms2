@@ -5,6 +5,8 @@ require_once __DIR__ . '/../../app/bootstrap.php';
 // Explicitly including helpers.php to ensure all helper functions are available across the admin panel.
 require_once __DIR__ . '/../../app/helpers.php';
 
+define('IS_ADMIN_AREA', true);
+
 // Centralized check for admin access. is_admin() is defined in helpers.php.
 // It checks if the user is an admin and not currently impersonating another user.
 if (!is_admin()) {
@@ -50,7 +52,6 @@ function is_active($page_name) {
                         <li class="nav-item"><a href="support-tickets.php" class="nav-link <?php echo is_active('support-tickets.php'); ?>"><i class="nav-icon fas fa-life-ring"></i> Support Tickets</a></li>
                         
                         <li class="nav-item"><a href="otp-templates.php" class="nav-link <?php echo is_active('otp-templates.php'); ?>"><i class="nav-icon fas fa-shield-alt"></i> OTP Templates</a></li>
-                        <li class="nav-item"><a href="whatsapp-templates.php" class="nav-link <?php echo is_active('whatsapp-templates.php'); ?>"><i class="nav-icon fab fa-whatsapp"></i> WhatsApp Templates</a></li>
 						
 						
 						
@@ -172,7 +173,6 @@ function is_active($page_name) {
                             <li class="nav-item"><a href="sender-ids.php" class="nav-link <?php echo is_active('sender-ids.php'); ?>"><i class="nav-icon fas fa-id-card"></i> Sender IDs</a></li>
                             <li class="nav-item"><a href="caller-ids.php" class="nav-link <?php echo is_active('caller-ids.php'); ?>"><i class="nav-icon fas fa-phone-alt"></i> Caller IDs</a></li>
                             <li class="nav-item"><a href="otp-templates.php" class="nav-link <?php echo is_active('otp-templates.php'); ?>"><i class="nav-icon fas fa-shield-alt"></i> OTP Templates</a></li>
-                            <li class="nav-item"><a href="whatsapp-templates.php" class="nav-link <?php echo is_active('whatsapp-templates.php'); ?>"><i class="nav-icon fab fa-whatsapp"></i> WhatsApp Templates</a></li>
                             <li class="nav-item"><a href="transactions.php" class="nav-link <?php echo is_active('transactions.php'); ?>"><i class="nav-icon fas fa-exchange-alt"></i> All Transactions</a></li>
                             <li class="nav-item"><a href="manual-deposits.php" class="nav-link <?php echo is_active('manual-deposits.php'); ?>"><i class="nav-icon fas fa-university"></i> Manual Deposits</a></li>
                             <li class="nav-item"><a href="crypto-methods.php" class="nav-link <?php echo is_active('crypto-methods.php'); ?>"><i class="nav-icon fab fa-bitcoin"></i> Crypto Methods</a></li>

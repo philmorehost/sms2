@@ -10,7 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_notification']))
     $id = $_POST['id'] ?? null;
     $message_text = trim($_POST['message']);
     $type = $_POST['type'];
-    $placement = trim($_POST['placement']);
+    $placement_array = $_POST['placement'] ?? ['all'];
+    if (in_array('all', $placement_array)) {
+        $placement = 'all';
+    } else {
+        $placement = implode(',', $placement_array);
+    }
     $start_time = !empty($_POST['start_time']) ? $_POST['start_time'] : null;
     $end_time = !empty($_POST['end_time']) ? $_POST['end_time'] : null;
     $is_active = isset($_POST['is_active']) ? 1 : 0;
@@ -98,9 +103,34 @@ if ($stmt) {
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="placement" class="form-label">Placement</label>
-                            <input type="text" class="form-control" id="placement" name="placement" value="<?php echo htmlspecialchars($edit_notification['placement'] ?? 'all'); ?>" required>
-                            <small class="form-text text-muted">Use 'all' for all pages, or a page name like 'dashboard.php'. Separate multiple pages with commas.</small>
+                            <label class="form-label d-block">Placement</label>
+                            <?php
+                            $current_placement = $edit_notification['placement'] ?? 'all';
+                            $selected_pages = explode(',', $current_placement);
+                            $pages = [
+                                'all' => 'All Pages',
+                                'dashboard.php' => 'Dashboard',
+                                'send-sms.php' => 'Send SMS',
+                                'global-sms.php' => 'Global SMS',
+                                'add-funds.php' => 'Add Funds',
+                                'reports.php' => 'Reports',
+                                'sender-id.php' => 'Sender ID',
+                                'profile.php' => 'Profile/Account'
+                            ];
+                            ?>
+                            <div class="row">
+                                <?php foreach ($pages as $val => $label): ?>
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="placement[]" value="<?php echo $val; ?>" id="page-<?php echo $val; ?>" <?php echo (in_array($val, $selected_pages)) ? 'checked' : ''; ?>>
+                                            <label class="form-check-label" for="page-<?php echo $val; ?>">
+                                                <?php echo $label; ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <small class="form-text text-muted">Select where this notification should appear.</small>
                         </div>
                     </div>
                     <div class="row">

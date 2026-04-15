@@ -2,6 +2,12 @@
 $page_title = 'Message Reports';
 require_once 'app/bootstrap.php';
 
+// Authenticate user
+if (!isset($current_user)) {
+    header("Location: login.php");
+    exit();
+}
+
 // --- Search and Filter Logic ---
 $search_term = $_GET['search'] ?? '';
 $type_filter = $_GET['type'] ?? '';
@@ -124,7 +130,6 @@ include 'includes/header.php';
                 <select name="type" class="form-select">
                     <option value="">All Types</option>
                     <option value="sms" <?php if(($_GET['type'] ?? '') == 'sms') echo 'selected'; ?>>SMS</option>
-                    <option value="whatsapp" <?php if(($_GET['type'] ?? '') == 'whatsapp') echo 'selected'; ?>>WhatsApp</option>
                     <option value="voice_otp" <?php if(($_GET['type'] ?? '') == 'voice_otp') echo 'selected'; ?>>Voice OTP</option>
                 </select>
             </div>

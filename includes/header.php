@@ -24,17 +24,6 @@ function is_active($page_name) {
 // Fetch all settings for logo/favicon
 $settings = get_settings();
 
-// Fetch admin contact for WhatsApp icon
-$admin_stmt = $conn->prepare("SELECT phone_number FROM users WHERE id = 1");
-$admin_phone_number = '';
-if ($admin_stmt) {
-    $admin_stmt->execute();
-    $admin_result = $admin_stmt->get_result();
-    if($admin_contact = $admin_result->fetch_assoc()) {
-        $admin_phone_number = $admin_contact['phone_number'];
-    }
-    $admin_stmt->close();
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -131,7 +120,6 @@ if ($admin_stmt) {
                                 <li><a class="dropdown-item" href="global-sms.php">Send Global SMS</a></li>
                                 <li><a class="dropdown-item" href="send-voice-sms.php">Voice SMS (TTS)</a></li>
                                 <li><a class="dropdown-item" href="send-voice-audio.php">Voice From File</a></li>
-                                <li><a class="dropdown-item" href="send-whatsapp.php">WhatsApp</a></li>
                                 <li><a class="dropdown-item" href="otp-templates.php">OTP Templates</a></li>
                                 <li><a class="dropdown-item" href="birthday-scheduler.php">Birthday Scheduler</a></li>
 								<li><a class="dropdown-item" href="phonebook.php">Phone Book</a></li>
@@ -177,8 +165,8 @@ if ($admin_stmt) {
                             echo '<li class="nav-item dropdown">';
                             echo '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="nav-icon fas fa-file-alt"></i> <span class="nav-link-text">Pages</span></a>';
                             echo '<ul class="dropdown-menu">';
-                            foreach ($visible_pages as $page) {
-                                echo '<li><a class="dropdown-item" href="page.php?slug=' . htmlspecialchars($page['slug']) . '">' . htmlspecialchars($page['title']) . '</a></li>';
+                            foreach ($visible_pages as $pg) {
+                                echo '<li><a class="dropdown-item" href="page.php?slug=' . htmlspecialchars($pg['slug']) . '">' . htmlspecialchars($pg['title']) . '</a></li>';
                             }
                             echo '</ul></li>';
                         }
@@ -276,7 +264,6 @@ if ($admin_stmt) {
                                    <li><a class="dropdown-item" href="global-sms.php">Send Global SMS</a></li>
                                    <li><a class="dropdown-item" href="send-voice-sms.php">Voice SMS (TTS)</a></li>
                                    <li><a class="dropdown-item" href="send-voice-audio.php">Voice From File</a></li>
-                                   <li><a class="dropdown-item" href="send-whatsapp.php">WhatsApp</a></li>
                                    <li><a class="dropdown-item" href="otp-templates.php">OTP Templates</a></li>
                                    <li><a class="dropdown-item" href="birthday-scheduler.php">Birthday Scheduler</a></li>
                                </ul>
@@ -322,8 +309,8 @@ if ($admin_stmt) {
                                echo '<li class="nav-item dropdown">';
                                echo '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="nav-icon fas fa-file-alt"></i> Pages</a>';
                                echo '<ul class="dropdown-menu">';
-                               foreach ($visible_pages as $page) {
-                                   echo '<li><a class="dropdown-item" href="page.php?slug=' . htmlspecialchars($page['slug']) . '">' . htmlspecialchars($page['title']) . '</a></li>';
+                               foreach ($visible_pages as $pg) {
+                                   echo '<li><a class="dropdown-item" href="page.php?slug=' . htmlspecialchars($pg['slug']) . '">' . htmlspecialchars($pg['title']) . '</a></li>';
                                }
                                echo '</ul></li>';
                            }

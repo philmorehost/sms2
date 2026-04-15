@@ -70,9 +70,10 @@ function run_installer_and_migrations($conn) {
         // Create the lock file to prevent this from running again
         file_put_contents($lock_file, 'Installed on: ' . date('Y-m-d H:i:s'));
     }
+}
 
-    // --- Always run migrations for future updates ---
-
+// Run installer and migrations
+function run_migrations($conn) {
     // First, ensure the migrations table itself exists to prevent fatal errors.
     $conn->query("CREATE TABLE IF NOT EXISTS `migrations` (
       `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -110,25 +111,17 @@ function run_installer_and_migrations($conn) {
                     try {
                         $conn->query($query);
                     } catch (mysqli_sql_exception $e) {
-                        // If an exception is caught, check if the error code is ignorable.
-                        // These errors happen if a migration is re-run after a partial failure.
-                        // 1060: Duplicate column name
-                        // 1061: Duplicate key name
-                        // 1050: Table already exists
-                        // 1022: Can't write; duplicate key in table (for constraints)
                         $ignorable_errors = [1060, 1061, 1050, 1022];
                         if (!in_array($e->getCode(), $ignorable_errors)) {
-                            // If it's not an ignorable error, this is a real problem.
                             $all_successful = false;
-                            die("Error running migration: $filename. Query: [$query]. Error: " . $e->getMessage() . " (Code: " . $e->getCode() . ")");
+                            error_log("Error running migration: $filename. Query: [$query]. Error: " . $e->getMessage());
+                            break;
                         }
-                        // If the error code is in the ignorable list, we simply continue.
                     }
                 }
             }
 
             if ($all_successful) {
-                // Log the migration only if all queries were successful
                 $stmt = $conn->prepare("INSERT INTO migrations (migration) VALUES (?)");
                 $stmt->bind_param("s", $filename);
                 $stmt->execute();
@@ -137,7 +130,11 @@ function run_installer_and_migrations($conn) {
         }
     }
 }
-run_installer_and_migrations($conn);
+
+if (!file_exists(__DIR__ . '/install.lock')) {
+    run_installer_and_migrations($conn);
+}
+run_migrations($conn);
 
 
 // 4.5. Load Site Settings and Define Constants

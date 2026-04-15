@@ -237,7 +237,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_api_settings'])) 
     $settings_to_update = [];
     $api_keys = [
         'kudisms_api_key_sms', 'kudisms_api_key_senderid', 'kudisms_api_key_tts',
-        'otp_api_key', 'whatsapp_api_token'
+        'otp_api_key'
     ];
 
     foreach ($api_keys as $key) {
@@ -377,8 +377,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_service_pricing']
         'price_sms_corp'    => $_POST['price_sms_corp'],
         'price_voice_tts'   => $_POST['price_voice_tts'],
         'price_otp'         => $_POST['price_otp'],
-        'price_whatsapp'    => $_POST['price_whatsapp'],
         'price_voice_audio' => $_POST['price_voice_audio'],
+        'sms_chars_1unit'   => $_POST['sms_chars_1unit'],
+        'sms_chars_multunit' => $_POST['sms_chars_multunit'],
+        'sms_max_units'     => $_POST['sms_max_units'],
     ];
 
     $stmt = $conn->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
@@ -653,14 +655,26 @@ include 'includes/header.php';
                             <div class="form-text">Cost per Voice call recipient from an audio file.</div>
                         </div>
                     </div>
-                     <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="price_whatsapp" class="form-label">WhatsApp Message Price</label>
-                            <input type="number" step="0.001" class="form-control" id="price_whatsapp" name="price_whatsapp" value="<?php echo htmlspecialchars($_POST['price_whatsapp'] ?? $settings['price_whatsapp'] ?? '25'); ?>">
-                            <div class="form-text">Cost per WhatsApp message sent.</div>
+                    <hr>
+                    <h4>SMS Unit Configuration</h4>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="sms_chars_1unit" class="form-label">Characters per Page (1 Unit)</label>
+                            <input type="number" class="form-control" id="sms_chars_1unit" name="sms_chars_1unit" value="<?php echo htmlspecialchars($_POST['sms_chars_1unit'] ?? $settings['sms_chars_1unit'] ?? '160'); ?>">
+                            <div class="form-text">Standard: 160 characters.</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="sms_chars_multunit" class="form-label">Characters per Page (> 1 Unit)</label>
+                            <input type="number" class="form-control" id="sms_chars_multunit" name="sms_chars_multunit" value="<?php echo htmlspecialchars($_POST['sms_chars_multunit'] ?? $settings['sms_chars_multunit'] ?? '153'); ?>">
+                            <div class="form-text">Standard: 153 characters for multi-page messages.</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="sms_max_units" class="form-label">Maximum SMS Pages (Units)</label>
+                            <input type="number" class="form-control" id="sms_max_units" name="sms_max_units" value="<?php echo htmlspecialchars($_POST['sms_max_units'] ?? $settings['sms_max_units'] ?? '10'); ?>">
+                            <div class="form-text">Maximum pages a customer can send per phone number.</div>
                         </div>
                     </div>
-                    <button type="submit" name="save_service_pricing" class="btn btn-primary">Save Pricing</button>
+                    <button type="submit" name="save_service_pricing" class="btn btn-primary">Save Pricing & Configuration</button>
                 </form>
             </div>
 
@@ -769,7 +783,7 @@ include 'includes/header.php';
             <!-- API Keys Tab -->
             <div class="tab-pane fade <?php if($active_tab == 'api') echo 'show active'; ?>" id="api">
                 <h4>Service API Settings</h4>
-                <p>Manage third-party API keys for services like SMS, Voice, and WhatsApp.</p>
+                <p>Manage third-party API keys for services like SMS and Voice.</p>
                 <hr>
                  <?php if ($success && $active_tab == 'api'): ?>
                     <div class="alert alert-success"><?php echo $success; ?></div>
@@ -798,12 +812,6 @@ include 'includes/header.php';
                     <div class="mb-3">
                         <label for="otp_api_key" class="form-label">OTP API Key</label>
                         <input type="password" class="form-control" id="otp_api_key" name="otp_api_key" value="<?php echo htmlspecialchars($settings['otp_api_key'] ?? ''); ?>">
-                    </div>
-                    <hr>
-                    <h5 class="mt-4">WhatsApp Gateway API</h5>
-                    <div class="mb-3">
-                        <label for="whatsapp_api_token" class="form-label">WhatsApp API Token</label>
-                        <input type="password" class="form-control" id="whatsapp_api_token" name="whatsapp_api_token" value="<?php echo htmlspecialchars($settings['whatsapp_api_token'] ?? ''); ?>">
                     </div>
                     <button type="submit" name="save_api_settings" class="btn btn-primary">Save API Settings</button>
                 </form>

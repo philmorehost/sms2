@@ -156,7 +156,7 @@ $users = [];
                 <th>ID</th>
             <th>Username</th>
             <th>Email</th>
-            <th>Balance</th>
+            <th>Balance (L/G)</th>
             <th>Is Admin?</th>
             <th>Email Verified?</th>
             <th>API Access</th>

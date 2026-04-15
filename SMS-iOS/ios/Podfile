@@ -4,17 +4,12 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 platform :ios, '13.0'
 install! 'cocoapods', :deterministic_uuids => false
 
-target 'SMSApp' do
+target 'PhilmoreSMS' do
   config = use_native_modules!
   use_react_native!(
     :path => "../node_modules/react-native",
     :hermes_enabled => true
   )
-
-  target 'SMSAppTests' do
-    inherit! :complete
-    # Pods for testing
-  end
 
   post_install do |installer|
     react_native_post_install(installer)

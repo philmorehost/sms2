@@ -20,7 +20,7 @@ This directory contains the React Native source code for the iOS application.
    ```bash
    npx react-native eject
    # OR if using a specific template
-   npx react-native init SMSApp --template react-native-template-typescript --directory .
+   npx react-native init PhilmoreSMS --template react-native-template-typescript --directory .
    ```
 
 3. **Install CocoaPods**
@@ -41,6 +41,6 @@ This directory contains the React Native source code for the iOS application.
 
 To build for iOS, open the workspace in Xcode:
 ```bash
-open ios/SMSApp.xcworkspace
+open ios/PhilmoreSMS.xcworkspace
 ```
 Configure your signing certificates and click **Archive** under the **Product** menu.

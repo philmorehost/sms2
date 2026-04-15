@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `banned_items` (
 
 -- Insert some default settings
 INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`) VALUES
-('site_name', 'Bulk SMS Platform'),
+('site_name', 'PhilmoreSMS'),
 ('admin_email', 'admin@example.com'),
 ('referral_commission_rate', '10.00'),
 ('paystack_secret_key', ''),

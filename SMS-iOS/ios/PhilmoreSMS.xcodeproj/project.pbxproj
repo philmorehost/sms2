@@ -10,42 +10,42 @@
 /* END PBXBuildFile */
 
 /* BEGIN PBXFileReference */
-		13B07F961A680F5B00A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = SMSApp/AppDelegate.h; sourceTree = "<group>"; };
-		13B07F971A680F5B00A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = SMSApp/AppDelegate.mm; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = PhilmoreSMS/AppDelegate.h; sourceTree = "<group>"; };
+		13B07F971A680F5B00A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = PhilmoreSMS/AppDelegate.mm; sourceTree = "<group>"; };
 /* END PBXFileReference */
 
 /* BEGIN PBXGroup */
-		13B07FAE1A68108700A75B9A /* SMSApp */ = {
+		13B07FAE1A68108700A75B9A /* PhilmoreSMS */ = {
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* AppDelegate.h */,
 				13B07F971A680F5B00A75B9A /* AppDelegate.mm */,
 			);
-			name = SMSApp;
+			name = PhilmoreSMS;
 			sourceTree = "<group>";
 		};
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* SMSApp */,
+				13B07FAE1A68108700A75B9A /* PhilmoreSMS */,
 			);
 			sourceTree = "<group>";
 		};
 /* END PBXGroup */
 
 /* BEGIN PBXNativeTarget */
-		13B07F861A680F5B00A75B9A /* SMSApp */ = {
+		13B07F861A680F5B00A75B9A /* PhilmoreSMS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "SMSApp" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "PhilmoreSMS" */;
 			buildPhases = (
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = SMSApp;
-			productName = SMSApp;
-			productReference = 13B07F961A680F5B00A75B9A /* SMSApp.app */;
+			name = PhilmoreSMS;
+			productName = PhilmoreSMS;
+			productReference = 13B07F961A680F5B00A75B9A /* PhilmoreSMS.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* END PBXNativeTarget */
@@ -61,10 +61,9 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "SMSApp" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "PhilmoreSMS" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
-			hasScannedForLocalization = 0;
 			knownRegions = (
 				en,
 				Base,
@@ -74,7 +73,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* SMSApp */,
+				13B07F861A680F5B00A75B9A /* PhilmoreSMS */,
 			);
 		};
 /* END PBXProject */
@@ -84,14 +83,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = SMSApp/Info.plist;
+				INFOPLIST_FILE = PhilmoreSMS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = SMSApp;
+				PRODUCT_NAME = PhilmoreSMS;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -100,14 +99,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = SMSApp/Info.plist;
+				INFOPLIST_FILE = PhilmoreSMS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = SMSApp;
+				PRODUCT_NAME = PhilmoreSMS;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -129,7 +128,7 @@
 /* END XCBuildConfiguration */
 
 /* BEGIN XCConfigurationList */
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "SMSApp" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "PhilmoreSMS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -138,7 +137,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "SMSApp" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "PhilmoreSMS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

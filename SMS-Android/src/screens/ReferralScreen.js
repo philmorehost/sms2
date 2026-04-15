@@ -19,7 +19,7 @@ const ReferralScreen = () => {
     const onShare = async () => {
         try {
             await Share.share({
-                message: `Join me on Bulk SMS Platform! Use my referral code ${data.referral_code} to get started.`,
+                message: `Join me on PhilmoreSMS! Use my referral code ${data.referral_code} to get started.`,
             });
         } catch (error) {
             console.error(error);

@@ -1,3 +1,13 @@
 // Minimal android/settings.gradle to allow Gradle to recognize the project
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
 rootProject.name = 'PhilmoreSMS'
 include ':app'
+
+includeBuild('../node_modules/@react-native/gradle-plugin')

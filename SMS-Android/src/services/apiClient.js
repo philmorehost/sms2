@@ -1,6 +1,6 @@
 // SMS-Android/src/services/apiClient.js
 // Automatically configured for Bulk SMS Platform
-let BASE_URL = 'https://philmoresms.com/web/api';
+let BASE_URL = 'https://app.philmoresms.com/web/api';
 
 let userToken = null;
 

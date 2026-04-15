@@ -101,7 +101,7 @@ const FundWalletScreen = () => {
                         <FintechButton
                             title="Go to Web Checkout"
                             type="success"
-                            onPress={() => Linking.openURL('https://philmoresms.com/add-funds.php')}
+                            onPress={() => Linking.openURL('https://app.philmoresms.com/add-funds.php')}
                         />
                     </View>
                 )}

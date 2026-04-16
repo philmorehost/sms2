@@ -6,6 +6,7 @@ import { colors } from '../theme/colors';
 import { typography } from '../theme/typography';
 import smsService from '../services/smsService';
 import senderService from '../services/senderService';
+import apiClient from '../services/apiClient';
 
 const MessagingScreen = ({ route }) => {
     const { type, route: msgRoute } = route.params || { type: 'sms', route: 'promotional' };

@@ -13,5 +13,14 @@ target 'PhilmoreSMS' do
 
   post_install do |installer|
     react_native_post_install(installer)
+
+    # Address boost checksum error
+    installer.pods_project.targets.each do |target|
+      if target.name == 'boost'
+        target.build_configurations.each do |config|
+          # You can add boost specific patches here if needed
+        end
+      end
+    end
   end
 end

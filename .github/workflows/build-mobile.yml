@@ -70,8 +70,10 @@ jobs:
         run: |
           if [ -d "ios" ]; then
             cd ios
-            # Address boost checksum error by clearing cache
-            pod cache clean --all
+            # Use a more robust way to handle boost checksum issues
+            rm -rf Pods
+            rm -rf ~/Library/Caches/CocoaPods
+            rm -rf ~/.cocoapods/repos/trunk
             pod install
           else
             echo "iOS native folder not found. Skipping pod install."

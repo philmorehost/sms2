@@ -11,9 +11,9 @@ android {
     ndkVersion rootProject.ext.ndkVersion
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.smsapp"
+    namespace "com.philmoresms"
     defaultConfig {
-        applicationId "com.smsapp"
+        applicationId "com.philmoresms"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

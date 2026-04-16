@@ -1,4 +1,4 @@
-package com.smsapp;
+package com.philmoresms;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

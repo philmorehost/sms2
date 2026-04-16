@@ -27,13 +27,17 @@ jobs:
           java-version: '17'
           distribution: 'zulu'
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 8.0.1
+
       # Note: This step requires a full Android project structure
       - name: Build Android Release APK
         working-directory: ./SMS-Android
         run: |
           if [ -d "android" ]; then
             cd android
-            # Use system gradle instead of gradlew as the wrapper jar is missing
             gradle assembleRelease
           else
             echo "Android native folder not found. Skipping native build."
@@ -65,7 +69,10 @@ jobs:
         working-directory: ./SMS-iOS
         run: |
           if [ -d "ios" ]; then
-            cd ios && pod install
+            cd ios
+            # Address boost checksum error by clearing cache
+            pod cache clean --all
+            pod install
           else
             echo "iOS native folder not found. Skipping pod install."
           fi

@@ -70,10 +70,12 @@ jobs:
         run: |
           if [ -d "ios" ]; then
             cd ios
-            # Use a more robust way to handle boost checksum issues
+            # More aggressive boost fix for CI
+            export BOOST_URL="https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.bz2"
+            mkdir -p ~/.cocoapods/repos/trunk/Specs/b/o/o/boost/1.76.0/
+            # Clear caches
+            pod cache clean --all
             rm -rf Pods
-            rm -rf ~/Library/Caches/CocoaPods
-            rm -rf ~/.cocoapods/repos/trunk
             pod install
           else
             echo "iOS native folder not found. Skipping pod install."

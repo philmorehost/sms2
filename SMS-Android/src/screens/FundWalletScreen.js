@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, Alert, Linking } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, Alert, Linking, TouchableOpacity } from 'react-native';
 import FintechInput from '../components/FintechInput';
 import FintechButton from '../components/FintechButton';
 import FintechCard from '../components/FintechCard';

@@ -1,4 +1,4 @@
-// SMS-iOS/src/services/authService.js
+// SMS-Android/src/services/authService.js
 import apiClient, { setToken } from './apiClient';
 
 const authService = {

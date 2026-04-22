@@ -21,23 +21,26 @@ const FintechInput = ({ label, value, onChangeText, placeholder, secureTextEntry
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 20,
+        marginBottom: 24,
     },
     label: {
         fontSize: 14,
-        color: colors.text,
-        marginBottom: 8,
-        fontWeight: '500',
+        color: colors.textSecondary,
+        marginBottom: 10,
+        fontWeight: '600',
+        textTransform: 'uppercase',
+        letterSpacing: 0.5,
     },
     input: {
-        backgroundColor: colors.white,
-        borderWidth: 1,
+        backgroundColor: colors.surface,
+        borderWidth: 1.5,
         borderColor: colors.border,
-        borderRadius: 12,
-        paddingHorizontal: 15,
-        paddingVertical: 12,
+        borderRadius: 14,
+        paddingHorizontal: 16,
+        paddingVertical: 14,
         fontSize: 16,
         color: colors.text,
+        fontWeight: '500',
     }
 });
 

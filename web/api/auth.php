@@ -20,9 +20,12 @@ if ($action === 'login') {
     $stmt->close();
 
     if ($user && password_verify($password, $user['password'])) {
+        // Bypass email verification check for mobile users to allow smooth usage
+        /*
         if ($user['is_email_verified'] == 0) {
             mobile_api_error('Account not verified. Please verify your email.');
         }
+        */
 
         mobile_api_success([
             'token' => $user['api_key'],
@@ -55,7 +58,8 @@ if ($action === 'login') {
     $api_key = 'sk_' . bin2hex(random_bytes(16));
     $ref_code = strtoupper(substr($username, 0, 3)) . bin2hex(random_bytes(2));
 
-    $stmt = $conn->prepare("INSERT INTO users (username, email, password, phone_number, api_key, referral_code, is_email_verified) VALUES (?, ?, ?, ?, ?, ?, 0)");
+    // Set is_email_verified = 1 by default for mobile registrations
+    $stmt = $conn->prepare("INSERT INTO users (username, email, password, phone_number, api_key, referral_code, is_email_verified) VALUES (?, ?, ?, ?, ?, ?, 1)");
     $stmt->bind_param("ssssss", $username, $email, $hashed_password, $phone, $api_key, $ref_code);
 
     if ($stmt->execute()) {

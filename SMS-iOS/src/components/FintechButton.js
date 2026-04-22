@@ -16,29 +16,36 @@ const FintechButton = ({ title, onPress, type = 'primary', style }) => {
 
 const styles = StyleSheet.create({
     button: {
-        paddingVertical: 15,
-        borderRadius: 12,
+        paddingVertical: 16,
+        paddingHorizontal: 24,
+        borderRadius: 14,
         alignItems: 'center',
         justifyContent: 'center',
-        elevation: 2,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
+        elevation: 4,
+        shadowColor: colors.primary,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 8,
     },
     primary: {
         backgroundColor: colors.primary,
     },
     secondary: {
-        backgroundColor: colors.secondary,
+        backgroundColor: colors.textSecondary,
     },
     success: {
         backgroundColor: colors.success,
+        shadowColor: colors.success,
+    },
+    danger: {
+        backgroundColor: colors.danger,
+        shadowColor: colors.danger,
     },
     text: {
         color: colors.white,
-        fontSize: typography.button.fontSize,
-        fontWeight: typography.button.fontWeight,
+        fontSize: 16,
+        fontWeight: '700',
+        letterSpacing: 0.5,
     }
 });
 

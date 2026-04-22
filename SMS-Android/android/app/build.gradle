@@ -4,7 +4,7 @@ apply plugin: "com.facebook.react"
 react {
 }
 
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 def jscFlavor = 'org.webkit:android-jsc:+'
 
 android {
@@ -20,9 +20,19 @@ android {
         applicationId "com.philmoresms"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 100
+        versionName "1.0.100"
     }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+            universalApk true
+        }
+    }
+
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -30,14 +40,23 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('c:/apk/philmoresms.jks')
+            storePassword 'OMOTERE@234.com'
+            keyAlias 'philmore-SMS-Android'
+            keyPassword 'OMOTERE@234.com'
+        }
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
         release {
-            signingConfig signingConfigs.debug
-            minifyEnabled enableProguardInReleaseBuilds
+            // Caution! In production, you need to generate your own keystore file.
+            // see https://reactnative.dev/docs/signed-apk-android.
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
@@ -46,4 +65,7 @@ android {
 dependencies {
     implementation("com.facebook.react:react-android")
     implementation("com.facebook.react:hermes-android")
+    implementation "androidx.appcompat:appcompat:1.6.1"
 }
+
+apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

@@ -1,8 +1,23 @@
-# SMS-Android/android/app/proguard-rules.pro
-# Add project specific ProGuard rules here.
-# By default, the flags in this file are appended to flags specified
-# in /usr/local/Cellar/android-sdk/24.3.3/tools/proguard/proguard-android.txt
-# You can edit the include path and import scan below to matching your setup.
+# PhilmoreSMS ProGuard Rules
 
--keep class com.facebook.hermes.unicode.** { *; }
--keep class com.facebook.jni.** { *; }
+# React Native core
+-keep class com.facebook.react.bridge.CatalystInstanceImpl { *; }
+-keep class com.facebook.react.bridge.WritableNativeMap { *; }
+-keep class com.facebook.react.bridge.WritableNativeArray { *; }
+-keep class com.facebook.react.bridge.ReadableNativeMap { *; }
+-keep class com.facebook.react.bridge.ReadableNativeArray { *; }
+
+# React Native Biometrics / Keychain
+-keep class com.rnbiometrics.** { *; }
+-keep class com.oblot.keychain.** { *; }
+
+# OkHttp/Okio
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+-dontwarn okhttp3.**
+-dontwarn okio.**
+
+# Android 14 compatibility
+-keep class android.os.Bundle { *; }

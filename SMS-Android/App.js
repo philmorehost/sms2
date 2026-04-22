@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 import { StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { enableScreens } from 'react-native-screens';
 import AppNavigator from './src/navigation/AppNavigator';
+
+enableScreens();
 
 const App = () => {
   useEffect(() => {
@@ -10,8 +14,10 @@ const App = () => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <StatusBar barStyle="dark-content" />
-      <AppNavigator />
+      <SafeAreaProvider>
+        <StatusBar barStyle="dark-content" />
+        <AppNavigator />
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 };

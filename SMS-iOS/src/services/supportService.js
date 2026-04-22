@@ -1,4 +1,4 @@
-// SMS-iOS/src/services/supportService.js
+// SMS-Android/src/services/supportService.js
 import apiClient from './apiClient';
 
 const supportService = {

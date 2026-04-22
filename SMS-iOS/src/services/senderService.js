@@ -1,4 +1,4 @@
-// SMS-iOS/src/services/senderService.js
+// SMS-Android/src/services/senderService.js
 import apiClient from './apiClient';
 
 const senderService = {

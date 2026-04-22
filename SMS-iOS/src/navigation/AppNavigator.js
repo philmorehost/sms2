@@ -28,6 +28,9 @@ import GlobalWalletScreen from '../screens/GlobalWalletScreen';
 import BirthdaySchedulerScreen from '../screens/BirthdaySchedulerScreen';
 import GlobalCoverageScreen from '../screens/GlobalCoverageScreen';
 import SchedulesScreen from '../screens/SchedulesScreen';
+import SettingsScreen from '../screens/SettingsScreen';
+import NotificationCenterScreen from '../screens/NotificationCenterScreen';
+import HelpCenterScreen from '../screens/HelpCenterScreen';
 import { colors } from '../theme/colors';
 
 const Stack = createStackNavigator();
@@ -74,6 +77,9 @@ const AppNavigator = () => {
                 <Stack.Screen name="BirthdayScheduler" component={BirthdaySchedulerScreen} />
                 <Stack.Screen name="GlobalCoverage" component={GlobalCoverageScreen} />
                 <Stack.Screen name="Schedules" component={SchedulesScreen} />
+                <Stack.Screen name="Settings" component={SettingsScreen} />
+                <Stack.Screen name="Notifications" component={NotificationCenterScreen} />
+                <Stack.Screen name="HelpCenter" component={HelpCenterScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );

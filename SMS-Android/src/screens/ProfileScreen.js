@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, RefreshControl, TouchableOpacity } from 'react-native';
 import FintechCard from '../components/FintechCard';
+import Icon from '../components/Icons';
 import { colors } from '../theme/colors';
-import { typography } from '../theme/typography';
 import userService from '../services/userService';
 
 const ProfileScreen = ({ navigation }) => {
@@ -41,42 +41,52 @@ const ProfileScreen = ({ navigation }) => {
         <SafeAreaView style={styles.container}>
             <ScrollView
                 contentContainerStyle={styles.content}
-                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.primary} />}
             >
                 <View style={styles.header}>
-                    <View style={styles.avatar}>
-                        <Text style={styles.avatarText}>{user.username.substring(0, 1).toUpperCase()}</Text>
+                    <View style={styles.avatarContainer}>
+                        <View style={styles.avatar}>
+                            <Text style={styles.avatarText}>{user.username.substring(0, 1).toUpperCase()}</Text>
+                        </View>
+                        <TouchableOpacity style={styles.editBadge}>
+                            <Icon name="plus" size={12} color={colors.white} />
+                        </TouchableOpacity>
                     </View>
                     <Text style={styles.username}>{user.username}</Text>
                     <Text style={styles.email}>{user.email}</Text>
                 </View>
 
-                <FintechCard>
-                    <View style={styles.infoRow}>
-                        <Text style={styles.infoLabel}>Account ID</Text>
-                        <Text style={styles.infoValue}>#{user.id}</Text>
-                    </View>
-                    <View style={styles.infoRow}>
-                        <Text style={styles.infoLabel}>Phone</Text>
-                        <Text style={styles.infoValue}>{user.phone || 'Not set'}</Text>
-                    </View>
-                    <View style={styles.infoRow}>
-                        <Text style={styles.infoLabel}>Referral Code</Text>
-                        <Text style={styles.infoValue}>{user.referral_code}</Text>
-                    </View>
-                    <View style={[styles.infoRow, { borderBottomWidth: 0 }]}>
-                        <Text style={styles.infoLabel}>Member Since</Text>
-                        <Text style={styles.infoValue}>{new Date(user.created_at).toLocaleDateString()}</Text>
-                    </View>
+                <View style={styles.sectionHeader}>
+                    <Text style={styles.sectionTitle}>Account Information</Text>
+                </View>
+
+                <FintechCard style={styles.profileCard}>
+                    <InfoRow icon="user" label="Account ID" value={`#${user.id}`} />
+                    <InfoRow icon="sms" label="Phone Number" value={user.phone || 'Not set'} />
+                    <InfoRow icon="global" label="Referral Code" value={user.referral_code} />
+                    <InfoRow icon="calendar" label="Member Since" value={new Date(user.created_at).toLocaleDateString()} isLast />
                 </FintechCard>
 
                 <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-                    <Text style={styles.logoutText}>Logout</Text>
+                    <Icon name="sms" size={20} color={colors.danger} style={{ marginRight: 10 }} />
+                    <Text style={styles.logoutText}>Sign Out</Text>
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
     );
 };
+
+const InfoRow = ({ icon, label, value, isLast }) => (
+    <View style={[styles.infoRow, isLast && { borderBottomWidth: 0 }]}>
+        <View style={styles.infoLeft}>
+            <View style={styles.iconCircle}>
+                <Icon name={icon} size={18} color={colors.primary} />
+            </View>
+            <Text style={styles.infoLabel}>{label}</Text>
+        </View>
+        <Text style={styles.infoValue}>{value}</Text>
+    </View>
+);
 
 const styles = StyleSheet.create({
     container: {
@@ -88,60 +98,116 @@ const styles = StyleSheet.create({
     },
     header: {
         alignItems: 'center',
-        marginBottom: 32,
+        marginBottom: 40,
+        marginTop: 20,
+    },
+    avatarContainer: {
+        position: 'relative',
+        marginBottom: 16,
     },
     avatar: {
-        width: 80,
-        height: 80,
-        borderRadius: 40,
+        width: 100,
+        height: 100,
+        borderRadius: 50,
         backgroundColor: colors.primary,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 16,
+        elevation: 8,
+        shadowColor: colors.primary,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 10,
+        borderWidth: 4,
+        borderColor: colors.white,
+    },
+    editBadge: {
+        position: 'absolute',
+        bottom: 5,
+        right: 5,
+        backgroundColor: colors.success,
+        width: 28,
+        height: 28,
+        borderRadius: 14,
+        borderWidth: 3,
+        borderColor: colors.white,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     avatarText: {
-        fontSize: 32,
+        fontSize: 36,
         color: colors.white,
-        fontWeight: '700',
+        fontWeight: '800',
     },
     username: {
-        fontSize: 22,
+        fontSize: 24,
         fontWeight: '700',
         color: colors.text,
     },
     email: {
-        fontSize: 16,
-        color: colors.textLight,
+        fontSize: 14,
+        color: colors.textSecondary,
+        marginTop: 4,
+    },
+    sectionHeader: {
+        marginBottom: 16,
+    },
+    sectionTitle: {
+        fontSize: 14,
+        fontWeight: '700',
+        color: colors.textSecondary,
+        textTransform: 'uppercase',
+        letterSpacing: 1,
+    },
+    profileCard: {
+        padding: 4,
     },
     infoRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingVertical: 15,
+        alignItems: 'center',
+        paddingVertical: 18,
+        paddingHorizontal: 16,
         borderBottomWidth: 1,
         borderBottomColor: colors.border,
     },
+    infoLeft: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    iconCircle: {
+        width: 36,
+        height: 36,
+        borderRadius: 18,
+        backgroundColor: colors.primaryLight,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 12,
+    },
     infoLabel: {
-        fontSize: 16,
-        color: colors.textLight,
+        fontSize: 14,
+        color: colors.textSecondary,
+        fontWeight: '600',
     },
     infoValue: {
-        fontSize: 16,
-        fontWeight: '600',
+        fontSize: 15,
+        fontWeight: '700',
         color: colors.text,
     },
     logoutButton: {
-        marginTop: 24,
-        padding: 18,
-        backgroundColor: colors.white,
-        borderRadius: 12,
+        marginTop: 32,
+        padding: 16,
+        backgroundColor: colors.dangerLight,
+        borderRadius: 16,
+        flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
         borderWidth: 1,
         borderColor: colors.danger,
     },
     logoutText: {
         color: colors.danger,
         fontSize: 16,
-        fontWeight: '600',
+        fontWeight: '700',
     }
 });
 

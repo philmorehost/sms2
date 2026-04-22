@@ -27,8 +27,15 @@ const apiClient = async (endpoint, options = {}) => {
 
     try {
         const response = await fetch(url, config);
-        const data = await response.json();
-        return data;
+        const responseText = await response.text();
+        
+        try {
+            const data = JSON.parse(responseText);
+            return data;
+        } catch (parseError) {
+            console.error('JSON Parse Error. Raw Response:', responseText);
+            throw new Error(`Invalid server response: ${responseText.substring(0, 50)}...`);
+        }
     } catch (error) {
         console.error('API Error:', error);
         throw error;

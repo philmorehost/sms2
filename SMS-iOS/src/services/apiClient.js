@@ -1,4 +1,4 @@
-// SMS-iOS/src/services/apiClient.js
+// SMS-Android/src/services/apiClient.js
 // Automatically configured for PhilmoreSMS
 let BASE_URL = 'https://app.philmoresms.com/web/api';
 

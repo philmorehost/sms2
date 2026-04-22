@@ -12,15 +12,17 @@ const FintechCard = ({ children, style }) => {
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: colors.white,
-        borderRadius: 16,
-        padding: 20,
+        backgroundColor: colors.surface,
+        borderRadius: 20,
+        padding: 24,
         marginBottom: 20,
-        elevation: 3,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.05,
-        shadowRadius: 10,
+        borderWidth: 1,
+        borderColor: colors.border,
+        elevation: 2,
+        shadowColor: '#1E293B',
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.06,
+        shadowRadius: 16,
     }
 });
 

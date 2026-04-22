@@ -1,4 +1,4 @@
-// SMS-iOS/src/services/dashboardService.js
+// SMS-Android/src/services/dashboardService.js
 import apiClient from './apiClient';
 
 const dashboardService = {

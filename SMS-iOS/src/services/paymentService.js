@@ -1,4 +1,4 @@
-// SMS-iOS/src/services/paymentService.js
+// SMS-Android/src/services/paymentService.js
 import apiClient from './apiClient';
 
 const paymentService = {

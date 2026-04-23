@@ -14,8 +14,9 @@
 -keepattributes *Annotation*
 
 # App Network Models
--keepclassmembers class com.philmoresms.app.network.** { *; }
+-keep interface com.philmoresms.app.network.PhilmoreApiService { *; }
 -keep class com.philmoresms.app.network.** { *; }
+-keepclassmembers class com.philmoresms.app.network.** { *; }
 -keep @androidx.annotation.Keep class *
 -keepclassmembers class * {
     @androidx.annotation.Keep *;

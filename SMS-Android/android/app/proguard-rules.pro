@@ -11,6 +11,13 @@
 -keep class com.rnbiometrics.** { *; }
 -keep class com.oblot.keychain.** { *; }
 
+# React Navigation and other dependencies
+-keep class com.swmansion.gesturehandler.** { *; }
+-keep class com.swmansion.rnscreens.** { *; }
+-keep class com.th3rdwave.safeareacontext.** { *; }
+-keep class com.horcrux.svg.** { *; }
+-keep class com.reactnativecommunity.clipboard.** { *; }
+
 # OkHttp/Okio
 -keepattributes Signature
 -keepattributes *Annotation*

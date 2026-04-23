@@ -1,0 +1,162 @@
+import { StyleSheet } from 'react-native';
+import { colors } from './colors';
+
+export const dashboardStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: colors.background,
+    },
+    content: {
+        padding: 20,
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 30,
+        marginTop: 10,
+    },
+    greeting: {
+        fontSize: 14,
+        color: colors.textSecondary,
+        fontWeight: '500',
+    },
+    username: {
+        fontSize: 22,
+        fontWeight: '700',
+        color: colors.text,
+        marginTop: 4,
+    },
+    profileBtn: {
+        elevation: 8,
+        shadowColor: colors.primary,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 8,
+    },
+    avatar: {
+        width: 46,
+        height: 46,
+        borderRadius: 23,
+        backgroundColor: colors.primary,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
+        borderColor: colors.white,
+    },
+    walletCard: {
+        backgroundColor: colors.primary,
+        borderRadius: 24,
+        padding: 24,
+        marginBottom: 32,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        overflow: 'hidden',
+        elevation: 10,
+        shadowColor: colors.primary,
+        shadowOffset: { width: 0, height: 10 },
+        shadowOpacity: 0.3,
+        shadowRadius: 20,
+    },
+    walletInfo: {
+        zIndex: 2,
+    },
+    walletLabel: {
+        color: 'rgba(255,255,255,0.7)',
+        fontSize: 14,
+        fontWeight: '600',
+        textTransform: 'uppercase',
+        letterSpacing: 1,
+    },
+    walletAmount: {
+        color: colors.white,
+        fontSize: 28,
+        fontWeight: '800',
+        marginTop: 8,
+    },
+    addFundsBtn: {
+        backgroundColor: colors.white,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderRadius: 12,
+        flexDirection: 'row',
+        alignItems: 'center',
+        zIndex: 2,
+    },
+    addFundsText: {
+        color: colors.primary,
+        fontWeight: '700',
+        fontSize: 14,
+    },
+    walletDecoration: {
+        position: 'absolute',
+        right: -30,
+        top: -30,
+        width: 150,
+        height: 150,
+        borderRadius: 75,
+        backgroundColor: 'rgba(255,255,255,0.1)',
+        zIndex: 1,
+    },
+    sectionTitleMain: {
+        fontSize: 18,
+        fontWeight: '700',
+        color: colors.text,
+        marginBottom: 20,
+    },
+    servicesGrid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        marginBottom: 30,
+    },
+    sectionHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    sectionTitle: {
+        fontSize: 18,
+        fontWeight: '700',
+        color: colors.text,
+    },
+    seeAll: {
+        color: colors.primary,
+        fontWeight: '700',
+        fontSize: 14,
+    },
+    transactionItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 16,
+        marginBottom: 12,
+    },
+    transactionIconContainer: {
+        width: 44,
+        height: 44,
+        borderRadius: 12,
+        backgroundColor: colors.background,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 16,
+    },
+    transactionInfo: {
+        flex: 1,
+    },
+    transactionDesc: {
+        fontSize: 15,
+        fontWeight: '600',
+        color: colors.text,
+    },
+    transactionDate: {
+        fontSize: 12,
+        color: colors.textSecondary,
+        marginTop: 4,
+    },
+    transactionAmount: {
+        fontSize: 16,
+        fontWeight: '700',
+    }
+});

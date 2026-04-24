@@ -8,13 +8,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.philmoresms.app.ui.MainScreen
-import com.philmoresms.app.ui.theme.PhilmoreSMSTheme
+import com.philmoresms.app.ui.theme.PhilmoreTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            PhilmoreSMSTheme {
+            PhilmoreTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

@@ -23,16 +23,22 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("philmoresms-release.jks")
-            storePassword = "philmore123"
-            keyAlias = "philmore-key"
-            keyPassword = "philmore123"
+            val keystoreFile = file("philmoresms-release.jks")
+            if (keystoreFile.exists()) {
+                storeFile = keystoreFile
+                storePassword = "philmore123"
+                keyAlias = "philmore-key"
+                keyPassword = "philmore123"
+            }
         }
     }
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("release")
+            val isSigningConfigSet = signingConfigs.getByName("release").storeFile != null
+            if (isSigningConfigSet) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(

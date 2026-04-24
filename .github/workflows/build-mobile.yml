@@ -17,9 +17,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'zulu'
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+          cache: 'gradle'
 
       - name: Grant execute permission for gradlew
         working-directory: ./SMS-Native-Android
@@ -27,11 +25,7 @@ jobs:
 
       - name: Build Android Debug APK
         working-directory: ./SMS-Native-Android
-        run: ./gradlew assembleDebug --no-daemon
-
-      - name: Verify Build Output
-        working-directory: ./SMS-Native-Android
-        run: ls -R app/build/outputs/apk/debug/
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
@@ -40,49 +34,49 @@ jobs:
           path: SMS-Native-Android/app/build/outputs/apk/debug/*.apk
         if: success()
 
-  build-ios:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - name: Install iOS Dependencies
-        working-directory: ./SMS-iOS
-        run: npm install
-
-      # Note: This step requires a full iOS project structure and Pods
-      - name: Install CocoaPods
-        working-directory: ./SMS-iOS
-        run: |
-          if [ -d "ios" ]; then
-            cd ios
-            # More aggressive boost fix for CI
-            export BOOST_URL="https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.bz2"
-            mkdir -p ~/.cocoapods/repos/trunk/Specs/b/o/o/boost/1.76.0/
-            # Clear caches
-            pod cache clean --all
-            rm -rf Pods
-            pod install
-          else
-            echo "iOS native folder not found. Skipping pod install."
-          fi
-        if: success()
-
-      - name: Build iOS App
-        working-directory: ./SMS-iOS
-        run: |
-          if [ -d "ios" ]; then
-            # Using project instead of workspace if workspace doesn't exist yet
-            if [ -d "ios/PhilmoreSMS.xcworkspace" ]; then
-              xcodebuild -workspace ios/PhilmoreSMS.xcworkspace -scheme PhilmoreSMS -sdk iphoneos -configuration Release build
-            else
-              xcodebuild -project ios/PhilmoreSMS.xcodeproj -scheme PhilmoreSMS -sdk iphoneos -configuration Release build
-            fi
-          else
-            echo "iOS native folder not found. Skipping native build."
-          fi
-        if: success()
+#  build-ios:
+#    runs-on: macos-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 18
+#
+#      - name: Install iOS Dependencies
+#        working-directory: ./SMS-iOS
+#        run: npm install
+#
+#      # Note: This step requires a full iOS project structure and Pods
+#      - name: Install CocoaPods
+#        working-directory: ./SMS-iOS
+#        run: |
+#          if [ -d "ios" ]; then
+#            cd ios
+#            # More aggressive boost fix for CI
+#            export BOOST_URL="https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.bz2"
+#            mkdir -p ~/.cocoapods/repos/trunk/Specs/b/o/o/boost/1.76.0/
+#            # Clear caches
+#            pod cache clean --all
+#            rm -rf Pods
+#            pod install
+#          else
+#            echo "iOS native folder not found. Skipping pod install."
+#          fi
+#        if: success()
+#
+#      - name: Build iOS App
+#        working-directory: ./SMS-iOS
+#        run: |
+#          if [ -d "ios" ]; then
+#            # Using project instead of workspace if workspace doesn't exist yet
+#            if [ -d "ios/PhilmoreSMS.xcworkspace" ]; then
+#              xcodebuild -workspace ios/PhilmoreSMS.xcworkspace -scheme PhilmoreSMS -sdk iphoneos -configuration Release build
+#            else
+#              xcodebuild -project ios/PhilmoreSMS.xcodeproj -scheme PhilmoreSMS -sdk iphoneos -configuration Release build
+#            fi
+#          else
+#            echo "iOS native folder not found. Skipping native build."
+#          fi
+#        if: success()

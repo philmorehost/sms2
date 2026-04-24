@@ -16,22 +16,27 @@ import com.philmoresms.app.ui.theme.Primary
 
 @Composable
 fun FintechButton(
-    title: String,
-    onPress: () -> Unit,
+    text: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     backgroundColor: Color = Primary
 ) {
     Button(
-        onClick = onPress,
+        onClick = onClick,
+        enabled = enabled,
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp),
         shape = RoundedCornerShape(14.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = backgroundColor),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = backgroundColor,
+            disabledContainerColor = Color.LightGray
+        ),
         elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
     ) {
         Text(
-            text = title,
+            text = text,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White,

@@ -130,8 +130,8 @@ fun LoginScreen(
             }
 
             FintechButton(
-                title = if (viewModel.loading) "Verifying..." else "Login",
-                onPress = { viewModel.onLoginClick() },
+                text = if (viewModel.loading) "Verifying..." else "Login",
+                onClick = { viewModel.onLoginClick() },
                 modifier = Modifier.padding(top = 10.dp)
             )
 

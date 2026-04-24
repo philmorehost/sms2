@@ -26,6 +26,7 @@ import com.philmoresms.app.ui.screens.login.LoginScreen
 import com.philmoresms.app.ui.screens.messaging.SmsScreen
 import com.philmoresms.app.ui.screens.profile.ProfileScreen
 import com.philmoresms.app.ui.screens.senderid.SenderIdScreen
+import com.philmoresms.app.ui.screens.payment.PaymentScreen
 
 @Composable
 fun MainScreen() {
@@ -111,6 +112,8 @@ fun MainScreen() {
                             "Global SMS" -> navController.navigate(Screen.Sms.createRoute("global"))
                             "OTP" -> navController.navigate(Screen.Otp.route)
                             "Sender ID" -> navController.navigate(Screen.SenderId.route)
+                            "Payment" -> navController.navigate(Screen.Payment.route)
+                            "History" -> navController.navigate(Screen.History.route)
                             else -> {}
                         }
                     },
@@ -145,6 +148,9 @@ fun MainScreen() {
                     type = "otp",
                     onBack = { navController.popBackStack() }
                 )
+            }
+            composable(Screen.Payment.route) {
+                PaymentScreen(onBack = { navController.popBackStack() })
             }
         }
     }

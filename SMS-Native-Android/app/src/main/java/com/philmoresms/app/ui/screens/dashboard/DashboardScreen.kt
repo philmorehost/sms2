@@ -95,7 +95,7 @@ fun DashboardScreen(
             }
             
             Button(
-                onClick = { /* TODO: Top Up flow */ },
+                onClick = { onNavigateToService("Payment") },
                 modifier = Modifier.align(Alignment.BottomEnd),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White),
                 shape = RoundedCornerShape(12.dp),

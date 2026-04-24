@@ -52,6 +52,23 @@ interface PhilmoreApiService {
     @GET("reports.php")
     suspend fun getReports(): Response<BaseResponse<Map<String, List<Transaction>>>>
 
+    @GET("payment.php?action=settings")
+    suspend fun getPaymentSettings(): Response<BaseResponse<Map<String, Any>>>
+
+    @FormUrlEncoded
+    @POST("payment.php?action=submit_manual")
+    suspend fun submitManualPayment(
+        @Field("amount") amount: Double,
+        @Field("reference") reference: String,
+        @Field("date") date: String
+    ): Response<BaseResponse<Map<String, Any>>>
+
+    @FormUrlEncoded
+    @POST("payment.php?action=init_paystack")
+    suspend fun initPaystack(
+        @Field("amount") amount: Double
+    ): Response<BaseResponse<Map<String, String>>>
+
     @POST("dashboard.php")
     suspend fun getSummary(): Response<BaseResponse>
 

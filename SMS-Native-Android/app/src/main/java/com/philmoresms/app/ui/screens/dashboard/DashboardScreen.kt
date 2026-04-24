@@ -155,8 +155,10 @@ fun DashboardScreen(
             )
         }
 
-        data?.recent_transactions?.forEach { transaction ->
-            TransactionItem(transaction)
+        data?.recent_transactions?.let { transactions ->
+            transactions.forEach { transaction: com.philmoresms.app.network.Transaction ->
+                TransactionItem(transaction)
+            }
         }
     }
 }

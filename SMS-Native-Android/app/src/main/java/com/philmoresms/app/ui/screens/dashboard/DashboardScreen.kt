@@ -28,7 +28,9 @@ import com.philmoresms.app.ui.theme.*
 
 @Composable
 fun DashboardScreen(
-    viewModel: DashboardViewModel = viewModel()
+    viewModel: DashboardViewModel = viewModel(),
+    onNavigateToService: (String) -> Unit = {},
+    onProfileClick: () -> Unit = {}
 ) {
     LaunchedEffect(Unit) {
         viewModel.fetchSummary()
@@ -62,7 +64,7 @@ fun DashboardScreen(
                 )
             }
             Surface(
-                modifier = Modifier.size(46.dp),
+                modifier = Modifier.size(46.dp).clickable { onProfileClick() },
                 shape = CircleShape,
                 color = Primary,
                 shadowElevation = 8.dp
@@ -93,7 +95,7 @@ fun DashboardScreen(
             }
             
             Button(
-                onClick = { /* TODO */ },
+                onClick = { /* TODO: Top Up flow */ },
                 modifier = Modifier.align(Alignment.BottomEnd),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White),
                 shape = RoundedCornerShape(12.dp),
@@ -112,19 +114,23 @@ fun DashboardScreen(
             modifier = Modifier.padding(top = 32.dp, bottom = 20.dp)
         )
 
-        // Services Grid (Simplification for now as LazyVerticalGrid doesn't work well inside verticalScroll)
+        // Services Grid
         Column {
             val services = listOf(
                 ServiceData("Bulk SMS", Icons.Default.Sms, SmsColor),
                 ServiceData("Global SMS", Icons.Default.Public, GlobalColor),
                 ServiceData("Voice SMS", Icons.Default.RecordVoiceOver, VoiceColor),
-                ServiceData("OTP", Icons.Default.VpnKey, OtpColor)
+                ServiceData("OTP", Icons.Default.VpnKey, OtpColor),
+                ServiceData("Sender ID", Icons.Default.AssignmentInd, Primary)
             )
             
             services.chunked(2).forEach { row ->
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                     row.forEach { service ->
-                        ServiceCard(service, modifier = Modifier.weight(1f))
+                        ServiceCard(service, modifier = Modifier.weight(1f), onClick = { onNavigateToService(service.label) })
+                    }
+                    if (row.size == 1) {
+                        Spacer(modifier = Modifier.weight(1f))
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
@@ -140,7 +146,13 @@ fun DashboardScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = "Recent Transactions", fontSize = 18.sp, fontWeight = FontWeight.Bold)
-            Text(text = "History", color = Primary, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+            Text(
+                text = "History", 
+                color = Primary, 
+                fontWeight = FontWeight.Bold, 
+                fontSize = 14.sp,
+                modifier = Modifier.clickable { onNavigateToService("History") }
+            )
         }
 
         data?.recent_transactions?.forEach { transaction ->
@@ -152,9 +164,9 @@ fun DashboardScreen(
 data class ServiceData(val label: String, val icon: ImageVector, val color: Color)
 
 @Composable
-fun ServiceCard(service: ServiceData, modifier: Modifier = Modifier) {
+fun ServiceCard(service: ServiceData, modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
     Surface(
-        modifier = modifier.height(100.dp),
+        modifier = modifier.height(100.dp).clickable { onClick() },
         shape = RoundedCornerShape(16.dp),
         color = Color.White,
         shadowElevation = 2.dp

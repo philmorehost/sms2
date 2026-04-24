@@ -16,6 +16,42 @@ interface PhilmoreApiService {
         @Field("password") password: String
     ): Response<BaseResponse>
 
+    @FormUrlEncoded
+    @POST("messaging.php?action=send_sms")
+    suspend fun sendSms(
+        @Field("senderID") senderId: String,
+        @Field("recipients") recipients: String,
+        @Field("message") message: String,
+        @Field("route") route: String = "promotional"
+    ): Response<BaseResponse<Map<String, Any>>>
+
+    @FormUrlEncoded
+    @POST("messaging.php?action=send_voice")
+    suspend fun sendVoice(
+        @Field("callerID") callerId: String,
+        @Field("recipients") recipients: String,
+        @Field("message") message: String
+    ): Response<BaseResponse<Map<String, Any>>>
+
+    @GET("sender-ids.php?action=list")
+    suspend fun getSenderIds(): Response<BaseResponse<Map<String, List<Map<String, Any>>>>>
+
+    @FormUrlEncoded
+    @POST("sender-ids.php?action=request")
+    suspend fun requestSenderId(
+        @Field("senderID") senderId: String,
+        @Field("message") sampleMessage: String,
+        @Field("type") type: String,
+        @Field("company_name") companyName: String = "",
+        @Field("nature_of_business") natureOfBusiness: String = ""
+    ): Response<BaseResponse<Map<String, Any>>>
+
+    @GET("user.php")
+    suspend fun getUserProfile(): Response<BaseResponse<Map<String, Any>>>
+
+    @GET("reports.php")
+    suspend fun getReports(): Response<BaseResponse<Map<String, List<Transaction>>>>
+
     @POST("dashboard.php")
     suspend fun getSummary(): Response<BaseResponse>
 

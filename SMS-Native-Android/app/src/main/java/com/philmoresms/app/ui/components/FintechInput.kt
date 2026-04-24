@@ -2,6 +2,7 @@ package com.philmoresms.app.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -29,6 +30,7 @@ fun FintechInput(
     onValueChange: (String) -> Unit,
     placeholder: String = "",
     secureTextEntry: Boolean = false,
+    isMultiline: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     modifier: Modifier = Modifier
 ) {
@@ -43,10 +45,14 @@ fun FintechInput(
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .then(if (isMultiline) Modifier.heightIn(min = 100.dp) else Modifier),
             placeholder = { Text(text = placeholder, color = TextSecondary) },
             visualTransformation = if (secureTextEntry) PasswordVisualTransformation() else VisualTransformation.None,
             keyboardOptions = keyboardOptions,
+            singleLine = !isMultiline,
+            maxLines = if (isMultiline) 10 else 1,
             shape = RoundedCornerShape(14.dp),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Primary,

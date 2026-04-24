@@ -14,7 +14,7 @@ interface PhilmoreApiService {
     suspend fun login(
         @Field("login") login: String,
         @Field("password") password: String
-    ): Response<BaseResponse>
+    ): Response<BaseResponse<Unit>>
 
     @FormUrlEncoded
     @POST("messaging.php?action=send_sms")
@@ -70,7 +70,7 @@ interface PhilmoreApiService {
     ): Response<BaseResponse<Map<String, String>>>
 
     @POST("dashboard.php")
-    suspend fun getSummary(): Response<BaseResponse>
+    suspend fun getSummary(): Response<BaseResponse<Unit>>
 
     @FormUrlEncoded
     @POST("auth.php?action=register")
@@ -79,11 +79,11 @@ interface PhilmoreApiService {
         @Field("email") email: String,
         @Field("password") password: String,
         @Field("phone") phone: String
-    ): Response<BaseResponse>
+    ): Response<BaseResponse<Unit>>
 
     @FormUrlEncoded
     @POST("auth.php?action=forgot_password")
     suspend fun forgotPassword(
         @Field("email") email: String
-    ): Response<BaseResponse>
+    ): Response<BaseResponse<Unit>>
 }

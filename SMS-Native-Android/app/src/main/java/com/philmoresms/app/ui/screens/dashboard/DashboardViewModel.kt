@@ -10,7 +10,7 @@ import com.philmoresms.app.network.RetrofitClient
 import kotlinx.coroutines.launch
 
 class DashboardViewModel : ViewModel() {
-    var data by mutableStateOf<BaseResponse?>(null)
+    var data by mutableStateOf<BaseResponse<Unit>?>(null)
     var loading by mutableStateOf(false)
     var error by mutableStateOf<String?>(null)
 

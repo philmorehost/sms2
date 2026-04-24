@@ -33,10 +33,15 @@ class LoginViewModel : ViewModel() {
                     }
                     loginSuccess = true
                 } else {
-                    error = response.body()?.message ?: "Login failed"
+                    error = response.body()?.message ?: "Login failed (Server Error)"
                 }
             } catch (e: Exception) {
-                error = e.message ?: "An unexpected error occurred"
+                val msg = e.message ?: ""
+                error = if (msg.contains("JsonReader") || msg.contains("malformed")) {
+                    "Server Error: The server returned an invalid response. Please check your Database configuration in app/config.php."
+                } else {
+                    msg.ifBlank { "Network Error: Please check your internet connection" }
+                }
             } finally {
                 loading = false
             }

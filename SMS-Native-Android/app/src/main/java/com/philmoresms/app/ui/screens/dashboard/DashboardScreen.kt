@@ -13,8 +13,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
@@ -34,6 +33,8 @@ import com.philmoresms.app.ui.theme.*
 fun DashboardScreen(
     viewModel: DashboardViewModel = viewModel(),
     onNavigateToService: (String) -> Unit = {},
+    onProfileClick: () -> Unit = {}
+) {
     val isRefreshing by viewModel.isRefreshing
     val pullRefreshState = rememberPullToRefreshState()
 

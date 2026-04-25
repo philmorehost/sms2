@@ -19,6 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import com.philmoresms.app.ui.navigation.Screen
 import com.philmoresms.app.ui.screens.dashboard.DashboardScreen
 import com.philmoresms.app.ui.screens.history.HistoryScreen
+import com.philmoresms.app.ui.screens.history.MessageHistoryScreen
 import com.philmoresms.app.ui.screens.login.LoginScreen
 import com.philmoresms.app.ui.screens.messaging.SmsScreen
 import com.philmoresms.app.ui.screens.profile.ProfileScreen
@@ -51,14 +52,14 @@ fun MainScreen() {
                                 tint = if (currentDestination?.route == Screen.Dashboard.route) MaterialTheme.colorScheme.primary else Color.Gray)
                         }
                         IconButton(onClick = {
-                            navController.navigate(Screen.SenderId.route) {
+                            navController.navigate(Screen.MessageHistory.route) {
                                 popUpTo(navController.graph.findStartDestination().id) { saveState = true }
                                 launchSingleTop = true
                                 restoreState = true
                             }
                         }) {
-                            Icon(Icons.Default.AssignmentInd, contentDescription = "Sender IDs",
-                                tint = if (currentDestination?.route == Screen.SenderId.route) MaterialTheme.colorScheme.primary else Color.Gray)
+                            Icon(Icons.Default.Sms, contentDescription = "SMS History",
+                                tint = if (currentDestination?.route == Screen.MessageHistory.route) MaterialTheme.colorScheme.primary else Color.Gray)
                         }
                         
                         Spacer(Modifier.weight(1f))
@@ -70,7 +71,7 @@ fun MainScreen() {
                                 restoreState = true
                             }
                         }) {
-                            Icon(Icons.Default.History, contentDescription = "History",
+                            Icon(Icons.Default.History, contentDescription = "Transactions",
                                 tint = if (currentDestination?.route == Screen.History.route) MaterialTheme.colorScheme.primary else Color.Gray)
                         }
                         IconButton(onClick = {
@@ -137,6 +138,9 @@ fun MainScreen() {
             }
             composable(Screen.SenderId.route) {
                 SenderIdScreen(onBack = { navController.popBackStack() })
+            }
+            composable(Screen.MessageHistory.route) {
+                MessageHistoryScreen(onBack = { navController.popBackStack() })
             }
             composable(Screen.History.route) {
                 HistoryScreen(onBack = { navController.popBackStack() })

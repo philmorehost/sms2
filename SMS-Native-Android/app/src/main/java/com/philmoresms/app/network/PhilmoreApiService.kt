@@ -51,10 +51,14 @@ interface PhilmoreApiService {
     suspend fun getUserProfile(): Response<BaseResponse<Map<String, Any>>>
 
     @GET("reports.php")
-    suspend fun getReports(
-        @retrofit2.http.Query("action") action: String = "transactions",
-        @retrofit2.http.Query("type") type: String = "all"
-    ): Response<BaseResponse<Map<String, Any>>>
+    suspend fun getTransactionReports(
+        @retrofit2.http.Query("action") action: String = "transactions"
+    ): Response<BaseResponse<Map<String, List<Transaction>>>>
+
+    @GET("reports.php")
+    suspend fun getMessageReports(
+        @retrofit2.http.Query("action") action: String = "messages"
+    ): Response<BaseResponse<Map<String, List<Message>>>>
 
     @FormUrlEncoded
     @POST("user.php?action=update")

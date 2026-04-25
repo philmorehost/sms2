@@ -129,17 +129,16 @@ fun ProfileScreen(
             }
 
             Text(
-                text = user?.get("username")?.toString() ?: "Loading...",
-                fontSize = 20.sp,
+                text = user?.get("username")?.toString() ?: "User Profile",
+                fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(top = 16.dp),
                 color = TextPrimary
             )
             Text(
-                text = "Wallet Balance: ₦${user?.get("balance") ?: 0.0}",
+                text = user?.get("email")?.toString() ?: "",
                 fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
-                color = Primary
+                color = TextSecondary
             )
 
             Spacer(modifier = Modifier.height(24.dp))

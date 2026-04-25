@@ -197,11 +197,12 @@ fun ServiceCard(service: ServiceData, modifier: Modifier = Modifier, onClick: ()
 }
 
 @Composable
-fun TransactionItem(transaction: com.philmoresms.app.network.Transaction) {
+fun TransactionItem(transaction: com.philmoresms.app.network.Transaction, onClick: () -> Unit = {}) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 12.dp),
+            .padding(bottom = 12.dp)
+            .clickable { onClick() },
         shape = RoundedCornerShape(16.dp),
         color = Color.White,
         shadowElevation = 1.dp

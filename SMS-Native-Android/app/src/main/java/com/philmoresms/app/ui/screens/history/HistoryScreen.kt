@@ -30,10 +30,9 @@ class HistoryViewModel : ViewModel() {
         loading = true
         viewModelScope.launch {
             try {
-                val response = RetrofitClient.apiService.getReports()
+                val response = RetrofitClient.apiService.getTransactionReports()
                 if (response.isSuccessful && response.body()?.status == "success") {
-                    @Suppress("UNCHECKED_CAST")
-                    transactions = response.body()?.data?.get("transactions") as? List<Transaction> ?: emptyList()
+                    transactions = response.body()?.data?.get("transactions") ?: emptyList()
                 } else {
                     error = response.body()?.message ?: "Failed to fetch history"
                 }
@@ -55,6 +54,8 @@ fun HistoryScreen(
     LaunchedEffect(Unit) {
         viewModel.fetchHistory()
     }
+
+    var selectedTransaction by remember { mutableStateOf<Transaction?>(null) }
 
     Scaffold(
         topBar = {
@@ -82,7 +83,9 @@ fun HistoryScreen(
                 contentPadding = PaddingValues(vertical = 20.dp)
             ) {
                 items(viewModel.transactions) { transaction ->
-                    TransactionItem(transaction)
+                    TransactionItem(transaction) {
+                        selectedTransaction = transaction
+                    }
                 }
                 
                 if (viewModel.transactions.isEmpty()) {
@@ -97,5 +100,37 @@ fun HistoryScreen(
                 }
             }
         }
+
+        if (selectedTransaction != null) {
+            AlertDialog(
+                onDismissRequest = { selectedTransaction = null },
+                title = { Text("Transaction Details", fontWeight = FontWeight.Bold) },
+                text = {
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        DetailRow("ID", selectedTransaction!!.id)
+                        DetailRow("Description", selectedTransaction!!.description)
+                        DetailRow("Amount", "₦${selectedTransaction!!.amount}")
+                        DetailRow("Date", selectedTransaction!!.created_at)
+                        DetailRow("Status", "Completed")
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = { selectedTransaction = null }) {
+                        Text("Close")
+                    }
+                }
+            )
+        }
+    }
+}
+
+@Composable
+fun DetailRow(label: String, value: String) {
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(text = "$label:", fontWeight = FontWeight.Bold, color = androidx.compose.ui.graphics.Color.Gray, fontSize = 14.sp)
+        Text(text = value, fontWeight = FontWeight.Medium, color = com.philmoresms.app.ui.theme.TextPrimary, fontSize = 14.sp)
     }
 }

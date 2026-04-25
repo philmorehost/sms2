@@ -8,6 +8,7 @@ sealed class Screen(val route: String) {
     }
     object SenderId : Screen("sender_id")
     object History : Screen("history")
+    object MessageHistory : Screen("message_history")
     object Profile : Screen("profile")
     object Payment : Screen("payment")
 }

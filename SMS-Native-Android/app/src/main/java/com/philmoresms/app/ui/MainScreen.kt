@@ -63,9 +63,19 @@ fun MainScreen() {
                             Icon(Icons.Default.History, contentDescription = "History",
                                 tint = if (currentDestination?.route == Screen.History.route) MaterialTheme.colorScheme.primary else Color.Gray)
                         }
-                        // Spacer for the FAB
-                        Text("     ") 
-                        Text("     ")
+                        
+                        Spacer(Modifier.weight(1f))
+                        
+                        IconButton(onClick = {
+                            navController.navigate(Screen.SenderId.route) {
+                                popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }) {
+                            Icon(Icons.Default.AssignmentInd, contentDescription = "Sender IDs",
+                                tint = if (currentDestination?.route == Screen.SenderId.route) MaterialTheme.colorScheme.primary else Color.Gray)
+                        }
                         IconButton(onClick = {
                             navController.navigate(Screen.Profile.route) {
                                 popUpTo(navController.graph.findStartDestination().id) { saveState = true }
@@ -82,7 +92,8 @@ fun MainScreen() {
                             onClick = { navController.navigate(Screen.Sms.createRoute("bulk")) },
                             shape = CircleShape,
                             containerColor = MaterialTheme.colorScheme.primary,
-                            contentColor = Color.White
+                            contentColor = Color.White,
+                            elevation = FloatingActionButtonDefaults.bottomAppBarElevation()
                         ) {
                             Icon(Icons.Default.Send, contentDescription = "Send SMS")
                         }

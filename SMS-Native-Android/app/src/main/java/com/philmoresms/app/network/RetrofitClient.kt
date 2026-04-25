@@ -29,10 +29,14 @@ object RetrofitClient {
         }
         .build()
 
+    private val gson = com.google.gson.GsonBuilder()
+        .setLenient()
+        .create()
+
     val apiService: PhilmoreApiService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()
             .create(PhilmoreApiService::class.java)

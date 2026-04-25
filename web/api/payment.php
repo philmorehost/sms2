@@ -130,34 +130,55 @@ if ($action === 'settings') {
         $conn->query("UPDATE invoices SET transaction_id = $transaction_id WHERE id = $invoice_id");
         $conn->commit();
 
-        $paystack_secret_key = $settings['paystack_secret_key'] ?? '';
-        if (empty($paystack_secret_key)) mobile_api_error('Payment gateway not configured');
-
-        $post_data = [
-            'email' => $email,
-            'amount' => $amount_in_kobo,
-            'reference' => $reference,
-            'callback_url' => SITE_URL . '/payment-callback.php',
-            'metadata' => ['user_id' => $user['id'], 'transaction_id' => $transaction_id]
-        ];
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://api.paystack.co/transaction/initialize');
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post_data));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $paystack_secret_key, 'Content-Type: application/json']);
-        $response = curl_exec($ch);
-        $result = json_decode($response, true);
-
-        if ($result['status'] == true) {
-            mobile_api_success(['authorization_url' => $result['data']['authorization_url'], 'reference' => $reference]);
-        } else {
-            mobile_api_error($result['message'] ?? 'Paystack initialization failed');
-        }
-    } catch (Exception $e) {
-        $conn->rollback();
-        mobile_api_error('Payment initialization failed');
+    $paystack_secret_key = $settings['paystack_secret_key'] ?? '';
+    if (empty($paystack_secret_key)) {
+        error_log("Paystack Error: Secret key missing in settings");
+        mobile_api_error('Payment gateway not configured');
     }
+
+    $post_data = [
+        'email' => $email,
+        'amount' => $amount_in_kobo,
+        'reference' => $reference,
+        'callback_url' => SITE_URL . '/payment-callback.php',
+        'metadata' => ['user_id' => $user['id'], 'transaction_id' => $transaction_id]
+    ];
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://api.paystack.co/transaction/initialize');
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post_data));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Authorization: Bearer ' . $paystack_secret_key,
+        'Content-Type: application/json'
+    ]);
+    
+    $response = curl_exec($ch);
+    if (curl_errno($ch)) {
+        $error_msg = curl_error($ch);
+        error_log("Paystack cURL Error: " . $error_msg);
+        curl_close($ch);
+        mobile_api_error("Connection to payment gateway failed: " . $error_msg);
+    }
+    curl_close($ch);
+
+    $result = json_decode($response, true);
+    if (!$result) {
+        error_log("Paystack Error: Invalid JSON response: " . $response);
+        mobile_api_error("Invalid response from payment gateway");
+    }
+
+    if (isset($result['status']) && $result['status'] == true) {
+        mobile_api_success(['authorization_url' => $result['data']['authorization_url'], 'reference' => $reference]);
+    } else {
+        $error_msg = $result['message'] ?? 'Paystack initialization failed';
+        error_log("Paystack Error: " . $error_msg);
+        mobile_api_error($error_msg);
+    }
+} catch (Exception $e) {
+    error_log("Payment Initialization Exception: " . $e->getMessage());
+    if ($conn->connect_errno) $conn->rollback();
+    mobile_api_error('Payment initialization failed: ' . $e->getMessage());
 }
 ?>

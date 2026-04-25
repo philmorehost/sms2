@@ -28,8 +28,14 @@ import kotlinx.coroutines.launch
 
 class ProfileViewModel : ViewModel() {
     var userData by mutableStateOf<Map<String, Any>?>(null)
+    var email by mutableStateOf("")
+    var phone by mutableStateOf("")
+    var password by mutableStateOf("")
+    
     var loading by mutableStateOf(false)
+    var isUpdating by mutableStateOf(false)
     var error by mutableStateOf<String?>(null)
+    var successMessage by mutableStateOf<String?>(null)
 
     fun fetchProfile() {
         loading = true
@@ -38,6 +44,8 @@ class ProfileViewModel : ViewModel() {
                 val response = RetrofitClient.apiService.getUserProfile()
                 if (response.isSuccessful && response.body()?.status == "success") {
                     userData = response.body()?.data?.get("user") as? Map<String, Any>
+                    email = userData?.get("email")?.toString() ?: ""
+                    phone = userData?.get("phone")?.toString() ?: ""
                 } else {
                     error = response.body()?.message ?: "Failed to fetch profile"
                 }
@@ -45,6 +53,28 @@ class ProfileViewModel : ViewModel() {
                 error = e.message
             } finally {
                 loading = false
+            }
+        }
+    }
+
+    fun updateProfile() {
+        isUpdating = true
+        error = null
+        successMessage = null
+        viewModelScope.launch {
+            try {
+                val response = RetrofitClient.apiService.updateProfile(email, phone, password)
+                if (response.isSuccessful && response.body()?.status == "success") {
+                    successMessage = "Profile updated successfully"
+                    password = ""
+                    fetchProfile()
+                } else {
+                    error = response.body()?.message ?: "Update failed"
+                }
+            } catch (e: Exception) {
+                error = e.message
+            } finally {
+                isUpdating = false
             }
         }
     }
@@ -61,6 +91,7 @@ fun ProfileScreen(
     }
 
     val user = viewModel.userData
+    val scrollState = androidx.compose.foundation.rememberScrollState()
 
     Scaffold(
         topBar = {
@@ -79,17 +110,18 @@ fun ProfileScreen(
                 .fillMaxSize()
                 .background(Background)
                 .padding(padding)
+                .verticalScroll(scrollState)
                 .padding(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Profile Image Placeholder
             Surface(
-                modifier = Modifier.size(100.dp),
+                modifier = Modifier.size(80.dp),
                 shape = CircleShape,
                 color = Primary.copy(alpha = 0.1f)
             ) {
                 Box(contentAlignment = Alignment.Center) {
-                    Icon(Icons.Default.Person, contentDescription = null, modifier = Modifier.size(60.dp), tint = Primary)
+                    Icon(Icons.Default.Person, contentDescription = null, modifier = Modifier.size(50.dp), tint = Primary)
                 }
             }
 
@@ -101,21 +133,58 @@ fun ProfileScreen(
                 color = TextPrimary
             )
             Text(
-                text = user?.get("email")?.toString() ?: "",
+                text = "Wallet Balance: ₦${user?.get("balance") ?: 0.0}",
                 fontSize = 14.sp,
-                color = TextSecondary
+                fontWeight = FontWeight.Bold,
+                color = Primary
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Editable Fields
+            Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                com.philmoresms.app.ui.components.FintechInput(
+                    value = viewModel.email,
+                    onValueChange = { viewModel.email = it },
+                    label = "Email Address",
+                    placeholder = "Enter your email"
+                )
+                com.philmoresms.app.ui.components.FintechInput(
+                    value = viewModel.phone,
+                    onValueChange = { viewModel.phone = it },
+                    label = "Phone Number",
+                    placeholder = "Enter your phone"
+                )
+                com.philmoresms.app.ui.components.FintechInput(
+                    value = viewModel.password,
+                    onValueChange = { viewModel.password = it },
+                    label = "New Password (Optional)",
+                    placeholder = "Leave blank to keep current"
+                )
+            }
+
+            if (viewModel.error != null) {
+                Text(text = viewModel.error!!, color = MaterialTheme.colorScheme.error, fontSize = 14.sp, modifier = Modifier.padding(top = 12.dp))
+            }
+            if (viewModel.successMessage != null) {
+                Text(text = viewModel.successMessage!!, color = Color(0xFF4CAF50), fontSize = 14.sp, modifier = Modifier.padding(top = 12.dp))
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            com.philmoresms.app.ui.components.FintechButton(
+                text = if (viewModel.isUpdating) "Saving..." else "Update Profile",
+                onClick = { viewModel.updateProfile() },
+                enabled = !viewModel.isUpdating
             )
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Profile Details
-            ProfileItem(Icons.Default.Phone, "Phone Number", user?.get("phone")?.toString() ?: "N/A")
-            ProfileItem(Icons.Default.AccountBalanceWallet, "Wallet Balance", "₦${user?.get("balance") ?: 0.0}")
+            // Other Info
             ProfileItem(Icons.Default.Share, "Referral Code", user?.get("referral_code")?.toString() ?: "N/A")
             ProfileItem(Icons.Default.CalendarToday, "Joined Date", user?.get("created_at")?.toString()?.split(" ")?.get(0) ?: "N/A")
 
-            Spacer(modifier = Modifier.weight(1f))
-
+            Spacer(modifier = Modifier.height(32.dp))
             Text(text = "App Version 1.0.0", fontSize = 12.sp, color = Color.LightGray)
         }
     }
@@ -135,8 +204,8 @@ fun ProfileItem(icon: ImageVector, label: String, value: String) {
             Icon(icon, contentDescription = null, tint = Primary, modifier = Modifier.size(20.dp))
             Spacer(modifier = Modifier.width(16.dp))
             Column {
-                Text(text = label, fontSize = 12.sp, color = TextSecondary)
-                Text(text = value, fontSize = 15.sp, fontWeight = FontWeight.Bold, color = TextPrimary)
+                Text(text = label, fontSize = 11.sp, color = TextSecondary)
+                Text(text = value, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = TextPrimary)
             }
         }
     }

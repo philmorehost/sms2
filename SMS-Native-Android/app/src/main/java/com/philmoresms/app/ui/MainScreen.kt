@@ -1,12 +1,9 @@
 package com.philmoresms.app.ui
 
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -93,7 +90,7 @@ fun MainScreen() {
                             shape = CircleShape,
                             containerColor = MaterialTheme.colorScheme.primary,
                             contentColor = Color.White,
-                            elevation = FloatingActionButtonDefaults.bottomAppBarElevation()
+                            elevation = FloatingActionButtonDefaults.elevation()
                         ) {
                             Icon(Icons.Default.Send, contentDescription = "Send SMS")
                         }

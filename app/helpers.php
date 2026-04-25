@@ -565,13 +565,18 @@ function send_bulk_sms($user, $sender_id, $recipients, $message, $route, $conn) 
                 $message_id = $conn->insert_id;
                 $stmt_log->close();
 
-                // Log recipients
+                // Log recipients with their respective API IDs
                 if ($message_id > 0 && !empty($recipient_numbers)) {
-                    $stmt_recipient = $conn->prepare("INSERT INTO message_recipients (message_id, recipient_number, status) VALUES (?, ?, 'Sent')");
-                    foreach ($recipient_numbers as $number) {
+                    $stmt_recipient = $conn->prepare("INSERT INTO message_recipients (message_id, recipient_number, status, api_message_id) VALUES (?, ?, 'Sent', ?)");
+                    
+                    // RouteMobile response is typically "msgid1,msgid2,..." mapping to recipients in order
+                    $api_ids = explode(',', trim($response));
+                    
+                    foreach ($recipient_numbers as $index => $number) {
                         $clean_number = trim($number);
                         if (!empty($clean_number)) {
-                            $stmt_recipient->bind_param("is", $message_id, $clean_number);
+                            $api_id = isset($api_ids[$index]) ? explode('|', $api_ids[$index])[1] ?? $api_ids[$index] : null;
+                            $stmt_recipient->bind_param("iss", $message_id, $clean_number, $api_id);
                             $stmt_recipient->execute();
                         }
                     }
@@ -603,16 +608,30 @@ function send_bulk_sms($user, $sender_id, $recipients, $message, $route, $conn) 
         $sms_api_key = $settings['kudisms_api_key_sms'] ?? '';
         if (empty($sms_api_key)) return ['success' => false, 'message' => 'SMS API is not configured by the administrator.'];
 
+        $callback_url = SITE_URL . '/api/webhook-dlr.php';
         $ch = curl_init();
         if ($route === 'corporate') {
-            $post_data = ['token' => $sms_api_key, 'senderID' => $sender_id, 'recipients' => $recipients, 'message' => $message];
+            $post_data = [
+                'token' => $sms_api_key, 
+                'senderID' => $sender_id, 
+                'recipients' => $recipients, 
+                'message' => $message,
+                'callback' => $callback_url
+            ];
             curl_setopt($ch, CURLOPT_URL, "https://my.kudisms.net/api/corporate/sms");
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_data));
         } else {
             $exploded_key_parts = array_filter(explode(":", trim($sms_api_key)));
             $api_token = $exploded_key_parts[0];
-            $query_params = http_build_query(['token' => $api_token, 'senderID' => $sender_id, 'recipients' => $recipients, 'message' => $message, 'gateway' => '2']);
+            $query_params = http_build_query([
+                'token' => $api_token, 
+                'senderID' => $sender_id, 
+                'recipients' => $recipients, 
+                'message' => $message, 
+                'gateway' => '2',
+                'callback' => $callback_url
+            ]);
             curl_setopt($ch, CURLOPT_URL, "https://my.kudisms.net/api/sms?" . $query_params);
             curl_setopt($ch, CURLOPT_HTTPGET, true);
         }
@@ -646,11 +665,14 @@ function send_bulk_sms($user, $sender_id, $recipients, $message, $route, $conn) 
                 $stmt_log->close();
 
                 if ($message_id > 0 && !empty($recipient_numbers)) {
-                    $stmt_recipient = $conn->prepare("INSERT INTO message_recipients (message_id, recipient_number, status) VALUES (?, ?, 'Sent')");
+                    // Try to get msgid from API result if it exists (KudiSMS usually returns it)
+                    $api_msg_id = $api_result['msgid'] ?? $api_result['id'] ?? null;
+                    
+                    $stmt_recipient = $conn->prepare("INSERT INTO message_recipients (message_id, recipient_number, status, api_message_id) VALUES (?, ?, 'Sent', ?)");
                     foreach ($recipient_numbers as $number) {
                         $clean_number = trim($number);
                         if (!empty($clean_number)) {
-                            $stmt_recipient->bind_param("is", $message_id, $clean_number);
+                            $stmt_recipient->bind_param("iss", $message_id, $clean_number, $api_msg_id);
                             $stmt_recipient->execute();
                         }
                     }

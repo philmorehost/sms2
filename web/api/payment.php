@@ -15,6 +15,13 @@ if ($action === 'settings') {
             'account_number' => $settings['manual_account_number'] ?? '',
             'instructions' => $settings['manual_payment_instructions'] ?? ''
         ],
+        'sms_config' => [
+            'chars_1unit' => (int)($settings['sms_chars_1unit'] ?? 160),
+            'chars_multunit' => (int)($settings['sms_chars_multunit'] ?? 153),
+            'max_units' => (int)($settings['sms_max_units'] ?? 0),
+            'price_promo' => (float)($settings['price_sms_promo'] ?? 10.0),
+            'price_corp' => (float)($settings['price_sms_corp'] ?? 20.0)
+        ],
         'vat_percentage' => (float)($settings['vat_percentage'] ?? 0),
         'currency' => get_currency_code(),
         'currency_symbol' => get_currency_symbol()

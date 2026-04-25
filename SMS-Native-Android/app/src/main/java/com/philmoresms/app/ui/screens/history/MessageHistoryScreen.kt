@@ -28,14 +28,18 @@ import com.philmoresms.app.ui.theme.SmsColor
 import com.philmoresms.app.ui.theme.TextPrimary
 import com.philmoresms.app.ui.theme.TextSecondary
 import kotlinx.coroutines.launch
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 
 class MessageHistoryViewModel : ViewModel() {
     var messages by mutableStateOf<List<Message>>(emptyList())
     var loading by mutableStateOf(false)
+    var isRefreshing = mutableStateOf(false)
     var error by mutableStateOf<String?>(null)
 
     fun fetchMessages() {
-        loading = true
+        if (!isRefreshing.value) loading = true
         viewModelScope.launch {
             try {
                 val response = RetrofitClient.apiService.getMessageReports()
@@ -48,6 +52,7 @@ class MessageHistoryViewModel : ViewModel() {
                 error = e.message
             } finally {
                 loading = false
+                isRefreshing.value = false
             }
         }
     }
@@ -59,6 +64,22 @@ fun MessageHistoryScreen(
     onBack: () -> Unit,
     viewModel: MessageHistoryViewModel = viewModel()
 ) {
+    val isRefreshing by viewModel.isRefreshing
+    val pullRefreshState = rememberPullToRefreshState()
+
+    if (pullRefreshState.isRefreshing) {
+        LaunchedEffect(Unit) {
+            viewModel.isRefreshing.value = true
+            viewModel.fetchMessages()
+        }
+    }
+
+    LaunchedEffect(isRefreshing) {
+        if (!isRefreshing) {
+            pullRefreshState.endRefresh()
+        }
+    }
+
     LaunchedEffect(Unit) {
         viewModel.fetchMessages()
     }
@@ -77,36 +98,45 @@ fun MessageHistoryScreen(
             )
         }
     ) { padding ->
-        if (viewModel.loading && viewModel.messages.isEmpty()) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
-            }
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Background)
-                    .padding(padding)
-                    .padding(horizontal = 20.dp),
-                contentPadding = PaddingValues(vertical = 20.dp)
-            ) {
-                items(viewModel.messages) { message ->
-                    MessageItem(message) {
-                        selectedMessage = message
-                    }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Background)
+                .padding(padding)
+                .nestedScroll(pullRefreshState.nestedScrollConnection)
+        ) {
+            if (viewModel.loading && viewModel.messages.isEmpty()) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
                 }
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp),
+                    contentPadding = PaddingValues(vertical = 20.dp)
+                ) {
+                    items(viewModel.messages) { message ->
+                        MessageItem(message) {
+                            selectedMessage = message
+                        }
+                    }
 
-                if (viewModel.messages.isEmpty()) {
-                    item {
-                        Text(
-                            text = "No sent messages found.",
-                            modifier = Modifier.fillMaxWidth().padding(top = 100.dp),
-                            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                            color = Color.Gray
-                        )
+                    if (viewModel.messages.isEmpty()) {
+                        item {
+                            Text(
+                                text = "No sent messages found.",
+                                modifier = Modifier.fillMaxWidth().padding(top = 100.dp),
+                                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                                color = Color.Gray
+                            )
+                        }
                     }
                 }
             }
+
+            PullToRefreshContainer(
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
         }
 
         if (selectedMessage != null) {

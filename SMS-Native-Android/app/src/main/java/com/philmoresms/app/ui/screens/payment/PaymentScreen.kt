@@ -45,15 +45,21 @@ class PaymentViewModel : ViewModel() {
     var error by mutableStateOf<String?>(null)
     var success by mutableStateOf<String?>(null)
 
+    var vatPercentage by mutableStateOf(0.0)
+
     fun fetchSettings() {
         viewModelScope.launch {
             try {
                 val response = RetrofitClient.apiService.getPaymentSettings()
                 if (response.isSuccessful && response.body()?.status == "success") {
+                    val data = response.body()?.data
                     @Suppress("UNCHECKED_CAST")
-                    manualSettings = response.body()?.data?.get("bank_details") as? Map<String, Any>
+                    manualSettings = data?.get("manual_payment") as? Map<String, Any>
+                    vatPercentage = (data?.get("vat_percentage") as? Number)?.toDouble() ?: 0.0
                 }
-            } catch (e: Exception) {}
+            } catch (e: Exception) {
+                error = "Failed to load payment settings: ${e.message}"
+            }
         }
     }
 
@@ -72,16 +78,20 @@ class PaymentViewModel : ViewModel() {
                 if (paymentMethod == "paystack") {
                     val response = RetrofitClient.apiService.initPaystack(amt)
                     if (response.isSuccessful && response.body()?.status == "success") {
-                        authorizationUrl = response.body()?.data?.get("authorization_url")
+                        val authUrl = response.body()?.data?.get("authorization_url")
+                        if (!authUrl.isNullOrBlank()) {
+                            authorizationUrl = authUrl
+                        } else {
+                            error = "Could not get authorization URL from Paystack"
+                        }
                     } else {
                         error = response.body()?.message ?: "Initialization failed"
                     }
                 } else {
-                    // Manual submission is handled in a separate step after showing details
                     loading = false
                 }
             } catch (e: Exception) {
-                error = e.message
+                error = "Paystack Error: ${e.message}"
             } finally {
                 if (paymentMethod == "paystack") loading = false
             }
@@ -166,6 +176,27 @@ fun PaymentScreen(
                     label = "Amount to Fund",
                     placeholder = "0.00"
                 )
+
+                if (viewModel.vatPercentage > 0) {
+                    val amt = viewModel.amount.toDoubleOrNull() ?: 0.0
+                    val charge = amt * (viewModel.vatPercentage / 100)
+                    val total = amt - charge
+                    
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text("Service Charge (${viewModel.vatPercentage}%):", fontSize = 12.sp, color = TextSecondary)
+                        Text("₦${String.format("%.2f", charge)}", fontSize = 12.sp, color = Color.Red)
+                    }
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text("Amount to be Credited:", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                        Text("₦${String.format("%.2f", total)}", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Primary)
+                    }
+                }
 
                 if (viewModel.paymentMethod == "manual") {
                     ManualPaymentDetails(viewModel)
@@ -265,6 +296,7 @@ fun PaystackWebView(url: String, onClose: () -> Unit) {
             factory = { context ->
                 WebView(context).apply {
                     settings.javaScriptEnabled = true
+                    settings.domStorageEnabled = true
                     webViewClient = object : WebViewClient() {
                         override fun shouldOverrideUrlLoading(view: WebView?, request: android.webkit.WebResourceRequest?): Boolean {
                             val interceptedUrl = request?.url?.toString()

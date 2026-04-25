@@ -20,14 +20,19 @@ import com.philmoresms.app.network.Transaction
 import com.philmoresms.app.ui.screens.dashboard.TransactionItem
 import com.philmoresms.app.ui.theme.Background
 import kotlinx.coroutines.launch
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.ui.Alignment
 
 class HistoryViewModel : ViewModel() {
     var transactions by mutableStateOf<List<Transaction>>(emptyList())
     var loading by mutableStateOf(false)
+    var isRefreshing = mutableStateOf(false)
     var error by mutableStateOf<String?>(null)
 
     fun fetchHistory() {
-        loading = true
+        if (!isRefreshing.value) loading = true
         viewModelScope.launch {
             try {
                 val response = RetrofitClient.apiService.getTransactionReports()
@@ -40,6 +45,7 @@ class HistoryViewModel : ViewModel() {
                 error = e.message
             } finally {
                 loading = false
+                isRefreshing.value = false
             }
         }
     }
@@ -51,6 +57,22 @@ fun HistoryScreen(
     onBack: () -> Unit,
     viewModel: HistoryViewModel = viewModel()
 ) {
+    val isRefreshing by viewModel.isRefreshing
+    val pullRefreshState = rememberPullToRefreshState()
+
+    if (pullRefreshState.isRefreshing) {
+        LaunchedEffect(Unit) {
+            viewModel.isRefreshing.value = true
+            viewModel.fetchHistory()
+        }
+    }
+
+    LaunchedEffect(isRefreshing) {
+        if (!isRefreshing) {
+            pullRefreshState.endRefresh()
+        }
+    }
+
     LaunchedEffect(Unit) {
         viewModel.fetchHistory()
     }
@@ -69,36 +91,45 @@ fun HistoryScreen(
             )
         }
     ) { padding ->
-        if (viewModel.loading && viewModel.transactions.isEmpty()) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) {
-                CircularProgressIndicator()
-            }
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Background)
-                    .padding(padding)
-                    .padding(horizontal = 20.dp),
-                contentPadding = PaddingValues(vertical = 20.dp)
-            ) {
-                items(viewModel.transactions) { transaction ->
-                    TransactionItem(transaction) {
-                        selectedTransaction = transaction
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Background)
+                .padding(padding)
+                .nestedScroll(pullRefreshState.nestedScrollConnection)
+        ) {
+            if (viewModel.loading && viewModel.transactions.isEmpty()) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp),
+                    contentPadding = PaddingValues(vertical = 20.dp)
+                ) {
+                    items(viewModel.transactions) { transaction ->
+                        TransactionItem(transaction) {
+                            selectedTransaction = transaction
+                        }
+                    }
+                    
+                    if (viewModel.transactions.isEmpty()) {
+                        item {
+                            Text(
+                                text = "No transactions found.",
+                                modifier = Modifier.fillMaxWidth().padding(top = 100.dp),
+                                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                                color = androidx.compose.ui.graphics.Color.Gray
+                            )
+                        }
                     }
                 }
-                
-                if (viewModel.transactions.isEmpty()) {
-                    item {
-                        Text(
-                            text = "No transactions found.",
-                            modifier = Modifier.fillMaxWidth().padding(top = 100.dp),
-                            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                            color = androidx.compose.ui.graphics.Color.Gray
-                        )
-                    }
-                }
             }
+
+            PullToRefreshContainer(
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
         }
 
         if (selectedTransaction != null) {

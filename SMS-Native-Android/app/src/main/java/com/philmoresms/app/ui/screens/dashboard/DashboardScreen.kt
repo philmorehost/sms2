@@ -14,7 +14,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,12 +29,27 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.philmoresms.app.ui.theme.*
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
     viewModel: DashboardViewModel = viewModel(),
     onNavigateToService: (String) -> Unit = {},
-    onProfileClick: () -> Unit = {}
-) {
+    val isRefreshing by viewModel.isRefreshing
+    val pullRefreshState = rememberPullToRefreshState()
+
+    if (pullRefreshState.isRefreshing) {
+        LaunchedEffect(Unit) {
+            viewModel.isRefreshing.value = true
+            viewModel.fetchSummary()
+        }
+    }
+
+    LaunchedEffect(isRefreshing) {
+        if (!isRefreshing) {
+            pullRefreshState.endRefresh()
+        }
+    }
+
     LaunchedEffect(Unit) {
         viewModel.fetchSummary()
     }
@@ -39,13 +57,18 @@ fun DashboardScreen(
     val scrollState = rememberScrollState()
     val data = viewModel.data
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Background)
-            .verticalScroll(scrollState)
-            .padding(20.dp)
+            .nestedScroll(pullRefreshState.nestedScrollConnection)
     ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+                .padding(20.dp)
+        ) {
         // Header
         Row(
             modifier = Modifier
@@ -154,11 +177,17 @@ fun DashboardScreen(
             )
         }
 
-        data?.recent_transactions?.let { transactions ->
-            transactions.forEach { transaction: com.philmoresms.app.network.Transaction ->
-                TransactionItem(transaction)
+            data?.recent_transactions?.let { transactions ->
+                transactions.forEach { transaction: com.philmoresms.app.network.Transaction ->
+                    TransactionItem(transaction)
+                }
             }
         }
+
+        PullToRefreshContainer(
+            state = pullRefreshState,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
     }
 }
 

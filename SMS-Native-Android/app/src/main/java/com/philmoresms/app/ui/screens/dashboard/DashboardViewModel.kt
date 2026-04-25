@@ -12,10 +12,11 @@ import kotlinx.coroutines.launch
 class DashboardViewModel : ViewModel() {
     var data by mutableStateOf<BaseResponse<Unit>?>(null)
     var loading by mutableStateOf(false)
+    var isRefreshing = mutableStateOf(false)
     var error by mutableStateOf<String?>(null)
 
     fun fetchSummary() {
-        loading = true
+        if (!isRefreshing.value) loading = true
         error = null
         viewModelScope.launch {
             try {
@@ -29,6 +30,7 @@ class DashboardViewModel : ViewModel() {
                 error = e.message ?: "An unexpected error occurred"
             } finally {
                 loading = false
+                isRefreshing.value = false
             }
         }
     }

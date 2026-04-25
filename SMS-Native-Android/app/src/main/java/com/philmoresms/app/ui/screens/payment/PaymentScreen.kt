@@ -267,8 +267,8 @@ fun PaystackWebView(url: String, onClose: () -> Unit) {
                     settings.javaScriptEnabled = true
                     webViewClient = object : WebViewClient() {
                         override fun shouldOverrideUrlLoading(view: WebView?, request: android.webkit.WebResourceRequest?): Boolean {
-                            val url = request?.url?.toString()
-                            if (url != null && (url.contains("callback") || url.contains("success"))) {
+                            val interceptedUrl = request?.url?.toString()
+                            if (interceptedUrl != null && (interceptedUrl.contains("callback") || interceptedUrl.contains("success"))) {
                                 onClose()
                                 return true
                             }

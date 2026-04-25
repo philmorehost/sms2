@@ -9,6 +9,5 @@ sealed class Screen(val route: String) {
     object SenderId : Screen("sender_id")
     object History : Screen("history")
     object Profile : Screen("profile")
-    object Otp : Screen("otp")
     object Payment : Screen("payment")
 }

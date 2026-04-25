@@ -89,6 +89,9 @@ dependencies {
     // Image loading
     implementation("io.coil-kt:coil-compose:2.4.0")
 
+    // Biometric
+    implementation("androidx.biometric:biometric:1.1.0")
+
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.7.4")
 

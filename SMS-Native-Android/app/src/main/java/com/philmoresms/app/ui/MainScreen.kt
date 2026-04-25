@@ -51,19 +51,6 @@ fun MainScreen() {
                                 tint = if (currentDestination?.route == Screen.Dashboard.route) MaterialTheme.colorScheme.primary else Color.Gray)
                         }
                         IconButton(onClick = {
-                            navController.navigate(Screen.History.route) {
-                                popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        }) {
-                            Icon(Icons.Default.History, contentDescription = "History",
-                                tint = if (currentDestination?.route == Screen.History.route) MaterialTheme.colorScheme.primary else Color.Gray)
-                        }
-                        
-                        Spacer(Modifier.weight(1f))
-                        
-                        IconButton(onClick = {
                             navController.navigate(Screen.SenderId.route) {
                                 popUpTo(navController.graph.findStartDestination().id) { saveState = true }
                                 launchSingleTop = true
@@ -72,6 +59,19 @@ fun MainScreen() {
                         }) {
                             Icon(Icons.Default.AssignmentInd, contentDescription = "Sender IDs",
                                 tint = if (currentDestination?.route == Screen.SenderId.route) MaterialTheme.colorScheme.primary else Color.Gray)
+                        }
+                        
+                        Spacer(Modifier.weight(1f))
+                        
+                        IconButton(onClick = {
+                            navController.navigate(Screen.History.route) {
+                                popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }) {
+                            Icon(Icons.Default.History, contentDescription = "History",
+                                tint = if (currentDestination?.route == Screen.History.route) MaterialTheme.colorScheme.primary else Color.Gray)
                         }
                         IconButton(onClick = {
                             navController.navigate(Screen.Profile.route) {
@@ -116,9 +116,7 @@ fun MainScreen() {
                     onNavigateToService = { service ->
                         when (service) {
                             "Bulk SMS" -> navController.navigate(Screen.Sms.createRoute("bulk"))
-                            "Voice SMS" -> navController.navigate(Screen.Sms.createRoute("voice"))
                             "Global SMS" -> navController.navigate(Screen.Sms.createRoute("global"))
-                            "OTP" -> navController.navigate(Screen.Otp.route)
                             "Sender ID" -> navController.navigate(Screen.SenderId.route)
                             "Payment" -> navController.navigate(Screen.Payment.route)
                             "History" -> navController.navigate(Screen.History.route)
@@ -149,13 +147,6 @@ fun MainScreen() {
                         popUpTo(0) { inclusive = true }
                     }
                 })
-            }
-            composable(Screen.Otp.route) {
-                // Using SmsScreen for OTP for now as it's similar
-                SmsScreen(
-                    type = "otp",
-                    onBack = { navController.popBackStack() }
-                )
             }
             composable(Screen.Payment.route) {
                 PaymentScreen(onBack = { navController.popBackStack() })

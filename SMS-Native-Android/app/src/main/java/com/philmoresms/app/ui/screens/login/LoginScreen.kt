@@ -129,11 +129,34 @@ fun LoginScreen(
                 )
             }
 
+            val context = androidx.compose.ui.platform.LocalContext.current
+            val activity = context as? androidx.fragment.app.FragmentActivity
+
             FintechButton(
                 text = if (viewModel.loading) "Verifying..." else "Login",
                 onClick = { viewModel.onLoginClick() },
                 modifier = Modifier.padding(top = 10.dp)
             )
+
+            if (viewModel.showBiometricOption && activity != null) {
+                OutlinedButton(
+                    onClick = {
+                        com.philmoresms.app.utils.BiometricHelper.showBiometricPrompt(
+                            activity = activity,
+                            onSuccess = { viewModel.onBiometricSuccess() },
+                            onError = { _, err -> viewModel.error = err.toString() },
+                            onFailed = { viewModel.error = "Biometric authentication failed" }
+                        )
+                    },
+                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    contentPadding = PaddingValues(16.dp)
+                ) {
+                    Icon(androidx.compose.material.icons.Icons.Default.Fingerprint, contentDescription = null)
+                    Spacer(Modifier.width(8.dp))
+                    Text("Login with Biometrics", fontWeight = FontWeight.Bold)
+                }
+            }
 
             // Register Link
             Row(

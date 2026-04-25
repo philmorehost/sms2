@@ -119,9 +119,8 @@ fun DashboardScreen(
             val services = listOf(
                 ServiceData("Bulk SMS", Icons.Default.Sms, SmsColor),
                 ServiceData("Global SMS", Icons.Default.Public, GlobalColor),
-                ServiceData("Voice SMS", Icons.Default.RecordVoiceOver, VoiceColor),
-                ServiceData("OTP", Icons.Default.VpnKey, OtpColor),
-                ServiceData("Sender ID", Icons.Default.AssignmentInd, Primary)
+                ServiceData("Sender ID", Icons.Default.AssignmentInd, Primary),
+                ServiceData("History", Icons.Default.History, Color(0xFF673AB7))
             )
             
             services.chunked(2).forEach { row ->

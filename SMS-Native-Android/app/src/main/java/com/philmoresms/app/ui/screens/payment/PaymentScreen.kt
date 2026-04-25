@@ -51,7 +51,7 @@ class PaymentViewModel : ViewModel() {
                 val response = RetrofitClient.apiService.getPaymentSettings()
                 if (response.isSuccessful && response.body()?.status == "success") {
                     @Suppress("UNCHECKED_CAST")
-                    manualSettings = response.body()?.data?.get("manual_payment") as? Map<String, Any>
+                    manualSettings = response.body()?.data?.get("bank_details") as? Map<String, Any>
                 }
             } catch (e: Exception) {}
         }

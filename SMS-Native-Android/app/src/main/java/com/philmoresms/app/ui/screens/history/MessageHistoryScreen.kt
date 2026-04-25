@@ -117,7 +117,7 @@ fun MessageHistoryScreen(
                     Column(modifier = Modifier.fillMaxWidth()) {
                         DetailRow("Sender ID", selectedMessage!!.senderId)
                         DetailRow("Recipients", selectedMessage!!.recipients)
-                        DetailRow("Units", selectedMessage!!.units.toString())
+                        DetailRow("Cost", "₦${selectedMessage!!.cost}")
                         DetailRow("Status", selectedMessage!!.status)
                         DetailRow("Date", selectedMessage!!.created_at)
                         Spacer(modifier = Modifier.height(8.dp))
@@ -168,7 +168,7 @@ fun MessageItem(message: Message, onClick: () -> Unit) {
                 Text(text = message.created_at, fontSize = 12.sp, color = TextSecondary)
             }
             Text(
-                text = "${message.units} Units",
+                text = "₦${message.cost}",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 color = Primary

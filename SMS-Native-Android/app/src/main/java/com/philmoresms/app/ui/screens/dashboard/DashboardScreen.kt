@@ -211,6 +211,7 @@ fun TransactionItem(transaction: com.philmoresms.app.network.Transaction, onClic
             modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            val isCredit = transaction.type?.lowercase() == "credit" || transaction.amount > 0
             Box(
                 modifier = Modifier
                     .size(44.dp)
@@ -218,9 +219,9 @@ fun TransactionItem(transaction: com.philmoresms.app.network.Transaction, onClic
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    if (transaction.amount > 0) Icons.Default.ArrowUpward else Icons.Default.Sms,
+                    if (isCredit) Icons.Default.ArrowUpward else Icons.Default.Sms,
                     contentDescription = null,
-                    tint = if (transaction.amount > 0) Success else SmsColor
+                    tint = if (isCredit) Success else SmsColor
                 )
             }
             Column(modifier = Modifier.weight(1f).padding(horizontal = 16.dp)) {
@@ -228,10 +229,10 @@ fun TransactionItem(transaction: com.philmoresms.app.network.Transaction, onClic
                 Text(text = transaction.created_at, fontSize = 12.sp, color = TextSecondary)
             }
             Text(
-                text = "${if (transaction.amount > 0) "+" else ""}₦${transaction.amount}",
+                text = "${if (isCredit) "+" else "-"}₦${transaction.amount}",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                color = if (transaction.amount > 0) Success else Danger
+                color = if (isCredit) Success else Danger
             )
         }
     }

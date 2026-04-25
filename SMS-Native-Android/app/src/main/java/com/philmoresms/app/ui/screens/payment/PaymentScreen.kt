@@ -8,7 +8,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -156,7 +156,7 @@ fun PaymentScreen(
                     title = { Text("Add Funds", fontWeight = FontWeight.Bold) },
                     navigationIcon = {
                         IconButton(onClick = onBack) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                            Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                         }
                     }
                 )
@@ -199,7 +199,7 @@ fun PaymentScreen(
                                     horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
                                     Text("Charges (${viewModel.vatPercentage}%):", fontSize = 13.sp, color = TextSecondary)
-                                    Text("₦${String.format("%.2f", charge)}", fontSize = 13.sp, color = Color.Red, fontWeight = FontWeight.Bold)
+                                    Text("₦${"%.2f".format(charge)}", fontSize = 13.sp, color = Color.Red, fontWeight = FontWeight.Bold)
                                 }
                                 HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.LightGray.copy(alpha = 0.3f))
                                 Row(
@@ -207,7 +207,7 @@ fun PaymentScreen(
                                     horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
                                     Text("Net Credit:", fontSize = 14.sp, fontWeight = FontWeight.Bold)
-                                    Text("₦${String.format("%.2f", total)}", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Primary)
+                                    Text("₦${"%.2f".format(total)}", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Primary)
                                 }
                             }
                         }

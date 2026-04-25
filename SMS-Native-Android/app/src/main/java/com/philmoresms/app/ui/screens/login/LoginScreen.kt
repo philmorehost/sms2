@@ -7,6 +7,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Fingerprint
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -152,7 +154,7 @@ fun LoginScreen(
                     shape = RoundedCornerShape(12.dp),
                     contentPadding = PaddingValues(16.dp)
                 ) {
-                    Icon(androidx.compose.material.icons.Icons.Default.Fingerprint, contentDescription = null)
+                    Icon(Icons.Default.Fingerprint, contentDescription = null)
                     Spacer(Modifier.width(8.dp))
                     Text("Login with Biometrics", fontWeight = FontWeight.Bold)
                 }

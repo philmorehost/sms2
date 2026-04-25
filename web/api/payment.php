@@ -102,5 +102,62 @@ if ($action === 'settings') {
         $conn->rollback();
         mobile_api_error('Conversion failed');
     }
+} elseif ($action === 'init_paystack') {
+    $total_amount = (float)$_POST['amount'];
+    if ($total_amount <= 0) mobile_api_error('Invalid amount');
+
+    $email = $user['email'];
+    $settings = get_settings();
+    $vat_percentage = (float)($settings['vat_percentage'] ?? 0);
+    $vat_amount = $total_amount * ($vat_percentage / 100);
+    $subtotal = $total_amount - $vat_amount;
+    $amount_in_kobo = round($total_amount * 100);
+    $reference = 'psk_m_' . bin2hex(random_bytes(10));
+
+    $conn->begin_transaction();
+    try {
+        $stmt_inv = $conn->prepare("INSERT INTO invoices (user_id, status, subtotal, vat_percentage, vat_amount, total_amount) VALUES (?, 'unpaid', ?, ?, ?, ?)");
+        $stmt_inv->bind_param("idddd", $user['id'], $subtotal, $vat_percentage, $vat_amount, $total_amount);
+        $stmt_inv->execute();
+        $invoice_id = $conn->insert_id;
+
+        $desc = "Paystack Mobile Deposit. Ref: " . $reference;
+        $stmt_trans = $conn->prepare("INSERT INTO transactions (user_id, invoice_id, reference, type, amount, total_amount, status, gateway, description) VALUES (?, ?, ?, 'deposit', ?, ?, 'pending', 'paystack', ?)");
+        $stmt_trans->bind_param("iisdds", $user['id'], $invoice_id, $reference, $subtotal, $total_amount, $desc);
+        $stmt_trans->execute();
+        $transaction_id = $conn->insert_id;
+
+        $conn->query("UPDATE invoices SET transaction_id = $transaction_id WHERE id = $invoice_id");
+        $conn->commit();
+
+        $paystack_secret_key = $settings['paystack_secret_key'] ?? '';
+        if (empty($paystack_secret_key)) mobile_api_error('Payment gateway not configured');
+
+        $post_data = [
+            'email' => $email,
+            'amount' => $amount_in_kobo,
+            'reference' => $reference,
+            'callback_url' => SITE_URL . '/payment-callback.php',
+            'metadata' => ['user_id' => $user['id'], 'transaction_id' => $transaction_id]
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.paystack.co/transaction/initialize');
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post_data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $paystack_secret_key, 'Content-Type: application/json']);
+        $response = curl_exec($ch);
+        $result = json_decode($response, true);
+
+        if ($result['status'] == true) {
+            mobile_api_success(['authorization_url' => $result['data']['authorization_url'], 'reference' => $reference]);
+        } else {
+            mobile_api_error($result['message'] ?? 'Paystack initialization failed');
+        }
+    } catch (Exception $e) {
+        $conn->rollback();
+        mobile_api_error('Payment initialization failed');
+    }
 }
 ?>

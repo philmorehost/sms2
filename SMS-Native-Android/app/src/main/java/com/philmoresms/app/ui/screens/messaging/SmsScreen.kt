@@ -62,6 +62,7 @@ class SmsViewModel : ViewModel() {
             try {
                 val response = RetrofitClient.apiService.getPaymentSettings()
                 if (response.isSuccessful && response.body()?.status == "success") {
+                    @Suppress("UNCHECKED_CAST")
                     smsConfig = response.body()?.data?.get("sms_config") as? Map<String, Any>
                 }
             } catch (e: Exception) {}

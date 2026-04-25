@@ -32,9 +32,8 @@ class HistoryViewModel : ViewModel() {
             try {
                 val response = RetrofitClient.apiService.getReports()
                 if (response.isSuccessful && response.body()?.status == "success") {
-                    val dataMap = response.body()?.data as? Map<String, Any>
                     @Suppress("UNCHECKED_CAST")
-                    transactions = dataMap?.get("transactions") as? List<Transaction> ?: emptyList()
+                    transactions = response.body()?.data?.get("transactions") as? List<Transaction> ?: emptyList()
                 } else {
                     error = response.body()?.message ?: "Failed to fetch history"
                 }

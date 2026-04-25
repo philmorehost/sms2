@@ -50,6 +50,7 @@ class PaymentViewModel : ViewModel() {
             try {
                 val response = RetrofitClient.apiService.getPaymentSettings()
                 if (response.isSuccessful && response.body()?.status == "success") {
+                    @Suppress("UNCHECKED_CAST")
                     manualSettings = response.body()?.data?.get("manual_payment") as? Map<String, Any>
                 }
             } catch (e: Exception) {}
@@ -265,7 +266,8 @@ fun PaystackWebView(url: String, onClose: () -> Unit) {
                 WebView(context).apply {
                     settings.javaScriptEnabled = true
                     webViewClient = object : WebViewClient() {
-                        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                        override fun shouldOverrideUrlLoading(view: WebView?, request: android.webkit.WebResourceRequest?): Boolean {
+                            val url = request?.url?.toString()
                             if (url != null && (url.contains("callback") || url.contains("success"))) {
                                 onClose()
                                 return true

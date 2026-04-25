@@ -45,6 +45,7 @@ class ProfileViewModel : ViewModel() {
             try {
                 val response = RetrofitClient.apiService.getUserProfile()
                 if (response.isSuccessful && response.body()?.status == "success") {
+                    @Suppress("UNCHECKED_CAST")
                     userData = response.body()?.data?.get("user") as? Map<String, Any>
                     email = userData?.get("email")?.toString() ?: ""
                     phone = userData?.get("phone")?.toString() ?: ""

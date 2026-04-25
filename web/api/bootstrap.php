@@ -15,10 +15,13 @@ function mobile_api_error($message, $code = 400) {
 
 function mobile_api_success($data = [], $message = 'Success') {
     http_response_code(200);
-    echo json_encode(array_merge([
+    $response = [
         'status' => 'success',
-        'message' => $message
-    ], $data));
+        'message' => $message,
+        'data' => $data
+    ];
+    // Merge $data into top level as well to support legacy fields like 'token', 'stats' etc.
+    echo json_encode(array_merge($response, $data));
     exit;
 }
 

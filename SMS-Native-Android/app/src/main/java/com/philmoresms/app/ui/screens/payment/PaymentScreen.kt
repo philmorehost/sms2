@@ -42,12 +42,15 @@ class PaymentViewModel : ViewModel() {
     var authorizationUrl by mutableStateOf<String?>(null)
     
     var loading by mutableStateOf(false)
+    var settingsLoading by mutableStateOf(false)
     var error by mutableStateOf<String?>(null)
     var success by mutableStateOf<String?>(null)
 
     var vatPercentage by mutableStateOf(0.0)
 
     fun fetchSettings() {
+        settingsLoading = true
+        error = null
         viewModelScope.launch {
             try {
                 val response = RetrofitClient.apiService.getPaymentSettings()
@@ -56,9 +59,13 @@ class PaymentViewModel : ViewModel() {
                     @Suppress("UNCHECKED_CAST")
                     manualSettings = data?.get("manual_payment") as? Map<String, Any>
                     vatPercentage = (data?.get("vat_percentage") as? Number)?.toDouble() ?: 0.0
+                } else {
+                    error = "Settings Error: ${response.body()?.message ?: response.code()}"
                 }
             } catch (e: Exception) {
-                error = "Failed to load payment settings: ${e.message}"
+                error = "Network Error: ${e.message}"
+            } finally {
+                settingsLoading = false
             }
         }
     }
@@ -82,18 +89,17 @@ class PaymentViewModel : ViewModel() {
                         if (!authUrl.isNullOrBlank()) {
                             authorizationUrl = authUrl
                         } else {
-                            error = "Could not get authorization URL from Paystack"
+                            error = "Paystack: Authorization URL not found in response"
                         }
                     } else {
-                        error = response.body()?.message ?: "Initialization failed"
+                        val errorMsg = response.body()?.message ?: "Initialization failed (HTTP ${response.code()})"
+                        error = "Paystack Error: $errorMsg"
                     }
-                } else {
-                    loading = false
                 }
             } catch (e: Exception) {
-                error = "Paystack Error: ${e.message}"
+                error = "Connection Error: ${e.message}"
             } finally {
-                if (paymentMethod == "paystack") loading = false
+                loading = false
             }
         }
     }
@@ -106,18 +112,21 @@ class PaymentViewModel : ViewModel() {
         }
 
         loading = true
+        error = null
+        success = null
+        
         viewModelScope.launch {
             try {
                 val response = RetrofitClient.apiService.submitManualPayment(amt, reference, "")
                 if (response.isSuccessful && response.body()?.status == "success") {
-                    success = "Proof submitted! Your wallet will be credited after verification."
+                    success = "Payment proof submitted successfully! We will verify and fund your wallet soon."
                     amount = ""
                     reference = ""
                 } else {
-                    error = response.body()?.message ?: "Submission failed"
+                    error = "Submission Error: ${response.body()?.message ?: "Failed (HTTP ${response.code()})"}"
                 }
             } catch (e: Exception) {
-                error = e.message
+                error = "Network Error: ${e.message}"
             } finally {
                 loading = false
             }
@@ -147,75 +156,123 @@ fun PaymentScreen(
                     title = { Text("Add Funds", fontWeight = FontWeight.Bold) },
                     navigationIcon = {
                         IconButton(onClick = onBack) {
-                            Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                         }
                     }
                 )
             }
         ) { padding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Background)
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-                    .padding(20.dp)
-            ) {
-                Text("Select Payment Method", fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 16.dp))
-                
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    MethodCard("Paystack", viewModel.paymentMethod == "paystack", Modifier.weight(1f)) { viewModel.paymentMethod = "paystack" }
-                    MethodCard("Bank Transfer", viewModel.paymentMethod == "manual", Modifier.weight(1f)) { viewModel.paymentMethod = "manual" }
-                }
+            Box(modifier = Modifier.fillMaxSize()) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Background)
+                        .padding(padding)
+                        .verticalScroll(rememberScrollState())
+                        .padding(20.dp)
+                ) {
+                    // Header Card
+                    Surface(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(20.dp),
+                        color = Color.White,
+                        shadowElevation = 2.dp
+                    ) {
+                        Column(modifier = Modifier.padding(20.dp)) {
+                            Text("Funding Amount", fontSize = 14.sp, color = TextSecondary)
+                            Spacer(modifier = Modifier.height(8.dp))
+                            FintechInput(
+                                value = viewModel.amount,
+                                onValueChange = { viewModel.amount = it },
+                                label = "",
+                                placeholder = "0.00"
+                            )
+                            
+                            if (viewModel.vatPercentage > 0) {
+                                val amt = viewModel.amount.toDoubleOrNull() ?: 0.0
+                                val charge = amt * (viewModel.vatPercentage / 100)
+                                val total = amt - charge
+                                
+                                Spacer(modifier = Modifier.height(16.dp))
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Text("Charges (${viewModel.vatPercentage}%):", fontSize = 13.sp, color = TextSecondary)
+                                    Text("₦${String.format("%.2f", charge)}", fontSize = 13.sp, color = Color.Red, fontWeight = FontWeight.Bold)
+                                }
+                                Divider(modifier = Modifier.padding(vertical = 8.dp), color = Color.LightGray.copy(alpha = 0.3f))
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Text("Net Credit:", fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                                    Text("₦${String.format("%.2f", total)}", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Primary)
+                                }
+                            }
+                        }
+                    }
 
-                Spacer(modifier = Modifier.height(24.dp))
-
-                FintechInput(
-                    value = viewModel.amount,
-                    onValueChange = { viewModel.amount = it },
-                    label = "Amount to Fund",
-                    placeholder = "0.00"
-                )
-
-                if (viewModel.vatPercentage > 0) {
-                    val amt = viewModel.amount.toDoubleOrNull() ?: 0.0
-                    val charge = amt * (viewModel.vatPercentage / 100)
-                    val total = amt - charge
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Text("Payment Method", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                    Spacer(modifier = Modifier.height(16.dp))
                     
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text("Service Charge (${viewModel.vatPercentage}%):", fontSize = 12.sp, color = TextSecondary)
-                        Text("₦${String.format("%.2f", charge)}", fontSize = 12.sp, color = Color.Red)
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                        MethodCard("Online (Paystack)", viewModel.paymentMethod == "paystack", Modifier.weight(1f)) { viewModel.paymentMethod = "paystack" }
+                        MethodCard("Bank Transfer", viewModel.paymentMethod == "manual", Modifier.weight(1f)) { viewModel.paymentMethod = "manual" }
                     }
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text("Amount to be Credited:", fontSize = 12.sp, fontWeight = FontWeight.Bold)
-                        Text("₦${String.format("%.2f", total)}", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Primary)
+
+                    if (viewModel.paymentMethod == "manual") {
+                        ManualPaymentDetails(viewModel)
+                    } else {
+                        Spacer(modifier = Modifier.height(24.dp))
+                        Surface(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(16.dp),
+                            color = Primary.copy(alpha = 0.05f)
+                        ) {
+                            Text(
+                                "Secure payment via Paystack. Your wallet will be funded instantly.",
+                                modifier = Modifier.padding(16.dp),
+                                fontSize = 13.sp,
+                                color = Primary
+                            )
+                        }
+                    }
+
+                    if (viewModel.error != null) {
+                        Surface(
+                            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                            shape = RoundedCornerShape(12.dp),
+                            color = Color(0xFFFFEBEE)
+                        ) {
+                            Text(text = viewModel.error!!, color = Color.Red, fontSize = 13.sp, modifier = Modifier.padding(12.dp))
+                        }
+                    }
+                    if (viewModel.success != null) {
+                        Surface(
+                            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                            shape = RoundedCornerShape(12.dp),
+                            color = Color(0xFFE8F5E9)
+                        ) {
+                            Text(text = viewModel.success!!, color = Color(0xFF2E7D32), fontSize = 13.sp, modifier = Modifier.padding(12.dp))
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(32.dp))
+
+                    FintechButton(
+                        text = if (viewModel.loading) "Processing..." else "Continue",
+                        onClick = { if (viewModel.paymentMethod == "paystack") viewModel.initPayment() else viewModel.submitManual() },
+                        enabled = !viewModel.loading && !viewModel.settingsLoading
+                    )
+                }
+                
+                if (viewModel.settingsLoading) {
+                    Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.1f)), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator(color = Primary)
                     }
                 }
-
-                if (viewModel.paymentMethod == "manual") {
-                    ManualPaymentDetails(viewModel)
-                }
-
-                if (viewModel.error != null) {
-                    Text(text = viewModel.error!!, color = MaterialTheme.colorScheme.error, fontSize = 14.sp, modifier = Modifier.padding(vertical = 8.dp))
-                }
-                if (viewModel.success != null) {
-                    Text(text = viewModel.success!!, color = Color(0xFF4CAF50), fontSize = 14.sp, modifier = Modifier.padding(vertical = 8.dp))
-                }
-
-                Spacer(modifier = Modifier.height(32.dp))
-
-                FintechButton(
-                    text = if (viewModel.loading) "Processing..." else if (viewModel.paymentMethod == "paystack") "Pay with Paystack" else "Submit Proof",
-                    onClick = { if (viewModel.paymentMethod == "paystack") viewModel.initPayment() else viewModel.submitManual() },
-                    enabled = !viewModel.loading
-                )
             }
         }
     }

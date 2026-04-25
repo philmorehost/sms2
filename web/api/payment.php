@@ -137,10 +137,13 @@ if ($action === 'settings') {
         $conn->query("UPDATE invoices SET transaction_id = $transaction_id WHERE id = $invoice_id");
         $conn->commit();
 
+    if (!extension_loaded('curl')) {
+        mobile_api_error('Server error: CURL extension is not installed');
+    }
+
     $paystack_secret_key = $settings['paystack_secret_key'] ?? '';
     if (empty($paystack_secret_key)) {
-        error_log("Paystack Error: Secret key missing in settings");
-        mobile_api_error('Payment gateway not configured');
+        mobile_api_error('Payment gateway not configured (missing secret key)');
     }
 
     $post_data = [
@@ -162,30 +165,26 @@ if ($action === 'settings') {
     ]);
     
     $response = curl_exec($ch);
-    if (curl_errno($ch)) {
-        $error_msg = curl_error($ch);
-        error_log("Paystack cURL Error: " . $error_msg);
-        curl_close($ch);
-        mobile_api_error("Connection to payment gateway failed: " . $error_msg);
-    }
+    $curl_error = curl_error($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
+
+    if ($response === false) {
+        mobile_api_error("Paystack connection failed: " . $curl_error);
+    }
 
     $result = json_decode($response, true);
     if (!$result) {
-        error_log("Paystack Error: Invalid JSON response: " . $response);
-        mobile_api_error("Invalid response from payment gateway");
+        mobile_api_error("Invalid response from Paystack (HTTP $http_code)");
     }
 
     if (isset($result['status']) && $result['status'] == true) {
         mobile_api_success(['authorization_url' => $result['data']['authorization_url'], 'reference' => $reference]);
     } else {
-        $error_msg = $result['message'] ?? 'Paystack initialization failed';
-        error_log("Paystack Error: " . $error_msg);
-        mobile_api_error($error_msg);
+        mobile_api_error($result['message'] ?? 'Paystack initialization failed');
     }
 } catch (Exception $e) {
-    error_log("Payment Initialization Exception: " . $e->getMessage());
-    if ($conn->connect_errno) $conn->rollback();
-    mobile_api_error('Payment initialization failed: ' . $e->getMessage());
+    if (isset($conn) && $conn->connect_errno == 0) $conn->rollback();
+    mobile_api_error('System error during payment initialization: ' . $e->getMessage());
 }
 ?>
